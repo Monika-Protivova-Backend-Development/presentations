@@ -69,6 +69,54 @@
 
 		<section>
 			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Development Environment</h2>
+				<em>IDE</em>
+			</section>
+			<section>
+				<h3>What is Integrated Development Environment (IDE)</h3>
+				<div class="summary">
+					Being able to efficiently use an IDE is just as important as being able to write code.<br />
+					Gives you a set of tools that you need as a developer.
+				</div>
+				<div class="content">
+					<ul>
+						<li>Provides code editor with syntax highlighting</li>
+						<li>Easy ways to manage code, project and builds</li>
+						<li>
+							Helps your productivity
+							<div>
+								<em>contextual suggestions</em>,
+								<em>autocomplete</em>,
+								<em>code navigation</em>,
+								<em>refactoring</em>,
+								<em>language tip</em>
+							</div>
+						</li>
+						<li>
+							Helps you avoid some errors in your programs
+							<div>
+								<em>can warn you about problematic code</em><br />
+								<em>gives you tools inspect your code</em><br />
+								<em>gives you tools test your code</em>
+							</div>
+						</li>
+						<li>Integrates tools
+							<div>
+								<em>source code management, such as git</em><br />
+								<em>database clients</em><br />
+								<em>documentation</em><br />
+								<em>project management tools</em><br />
+								<em>AI</em>
+							</div>
+						</li>
+						<li>Usually has a community led plugin ecosystem</li>
+					</ul>
+				</div>
+			</section>
+		</section>
+
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
 				<h2>Your first Kotlin program</h2>
 				<em>Exercises, Submission & Grading</em>
 			</section>
@@ -492,9 +540,9 @@
 					<ul>
 						<li>Monolithic Architecture</li>
 						<li>Microservice Architecture</li>
+						<li>API Gateway Architecture</li>
 						<li>Serverless Architecture</li>
 						<li>Event-Driven Architecture</li>
-						<li>API Gateway Architecture</li>
 					</ul>
 				</div>
 			</section>
@@ -541,6 +589,12 @@
 				</div>
 			</section>
 			<section>
+				<h3>Monolithic Architecture Diagram</h3>
+				<div class="content-center" style="margin-bottom: 20px;">
+					<img src="./src/img/monolith.png" alt="Monolithic Architecture" style="max-width: 500px;"/>
+				</div>
+			</section>
+			<section>
 				<h3>Microservice Architecture</h3>
 				<div class="summary">
 					An architecture that decomposes the system into smaller, (relatively) independent services.
@@ -578,6 +632,49 @@
 							</ul>
 						</li>
 					</ul>
+				</div>
+			</section>
+			<section>
+				<h3>Microservice Architecture Diagram</h3>
+				<div class="content-center" style="margin-bottom: 20px;">
+					<img src="./src/img/microservices.png" alt="Microservice Architecture" style="max-width: 500px;"/>
+				</div>
+			</section>
+			<section>
+				<h3>API Gateway Architecture</h3>
+				<div class="summary">
+					Centralizes all API traffic, often for microservices and serverless backends.
+				</div>
+				<div class="content">
+					<ul>
+						<li>
+							<strong class="highlight">When to use</strong>
+							<ul>
+								<li>Systems with multiple backend services.</li>
+								<li>Teams needing centralized authentication, logging, or throttling.</li>
+							</ul>
+						</li>
+						<li>
+							<strong class="highlight">Pros</strong>
+							<ul>
+								<li>Centralized management for APIs.</li>
+								<li>Reduced cross-cutting concerns (e.g., rate limiting, CORS).</li>
+							</ul>
+						</li>
+						<li>
+							<strong class="highlight">Cons</strong>
+							<ul>
+								<li>Can become a single point of failure.</li>
+								<li>Latency and complexity if overloaded.</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</section>
+			<section>
+				<h3>API Gateway Architecture Diagram</h3>
+				<div class="content-center" style="margin-bottom: 20px;">
+					<img src="./src/img/api-gateway.png" alt="API Gateway Architecture" style="max-width: 500px;"/>
 				</div>
 			</section>
 			<section>
@@ -640,37 +737,6 @@
 							<ul>
 								<li>Requires careful event design to avoid excessive coupling.</li>
 								<li>Complex debugging and replaying of events.</li>
-							</ul>
-						</li>
-					</ul>
-				</div>
-			</section>
-			<section>
-				<h3>API Gateway Architecture</h3>
-				<div class="summary">
-					Centralizes all API traffic, often for microservices and serverless backends.
-				</div>
-				<div class="content">
-					<ul>
-						<li>
-							<strong class="highlight">When to use</strong>
-							<ul>
-								<li>Systems with multiple backend services.</li>
-								<li>Teams needing centralized authentication, logging, or throttling.</li>
-							</ul>
-						</li>
-						<li>
-							<strong class="highlight">Pros</strong>
-							<ul>
-								<li>Centralized management for APIs.</li>
-								<li>Reduced cross-cutting concerns (e.g., rate limiting, CORS).</li>
-							</ul>
-						</li>
-						<li>
-							<strong class="highlight">Cons</strong>
-							<ul>
-								<li>Can become a single point of failure.</li>
-								<li>Latency and complexity if overloaded.</li>
 							</ul>
 						</li>
 					</ul>
@@ -1241,118 +1307,24 @@
 				</section>
 			</section>
 		</section>
-
 		<section>
 			<section data-background-gradient="var(--kotlin-gradient)">
-				<h2>Development Environment</h2>
-				<em>IDE</em>
+				<h2>Next Lesson</h2>
 			</section>
 			<section>
-				<h3>What is Integrated Development Environment (IDE)</h3>
-				<div class="summary">
-					Being able to efficiently use an IDE is just as important as being able to write code.<br />
-					Gives you a set of tools that you need as a developer.
-				</div>
-				<div class="content">
-					<ul>
-						<li>Provides code editor with syntax highlighting</li>
-						<li>Easy ways to manage code, project and builds</li>
-						<li>
-							Helps your productivity
-							<div>
-								<em>contextual suggestions</em>,
-								<em>autocomplete</em>,
-								<em>code navigation</em>,
-								<em>refactoring</em>,
-								<em>language tip</em>
-							</div>
-						</li>
-						<li>
-							Helps you avoid some errors in your programs
-							<div>
-								<em>can warn you about problematic code</em><br />
-								<em>gives you tools inspect your code</em><br />
-								<em>gives you tools test your code</em>
-							</div>
-						</li>
-						<li>Integrates tools
-							<div>
-								<em>source code management, such as git</em><br />
-								<em>database clients</em><br />
-								<em>documentation</em><br />
-								<em>project management tools</em><br />
-								<em>AI</em>
-							</div>
-						</li>
-						<li>Usually has a community led plugin ecosystem</li>
-					</ul>
+				<h3>Next Lesson: Kotlin Essentials</h3>
+				<div class="content content-center">
+					<ol>
+						<li>Basic syntax and data types</li>
+						<li>Control flow (if, when, loops)</li>
+						<li>Functions and lambdas</li>
+						<li>Arrays and Collections</li>
+						<li>Null safety</li>
+					</ol>
+					<p class="fragment fade-in">... and more!</p>
 				</div>
 			</section>
 		</section>
-
-<!--		<section>-->
-<!--			<section data-background-gradient="var(&#45;&#45;kotlin-gradient)">-->
-<!--				<h2>Your first Kotlin program</h2>-->
-<!--				<em>Let's write some code!</em>-->
-<!--				<br />-->
-<!--				<em>+</em>-->
-<!--				<br />-->
-<!--				<em>Exercises & grading</em>-->
-<!--			</section>-->
-<!--			<section>-->
-<!--				<h3>Your first Kotlin program</h3>-->
-<!--				<div class="content">-->
-<!--					<div>-->
-<!--						<h4>1.</h4>-->
-<!--						Download IntelliJ IDEA Community Edition from <a href="https://www.jetbrains.com/idea/download/">https://www.jetbrains.com/idea/download/</a>.-->
-<!--					</div>-->
-<!--					<br />-->
-<!--					<div>-->
-<!--						<h4>2.</h4>-->
-<!--						Open IntelliJ IDEA and create a new Kotlin project.-->
-<!--					</div>-->
-<!--					<br />-->
-<!--					<div>-->
-<!--						<h4>3.</h4>-->
-<!--						Create a new Kotlin file called <code class="inline">Main.kt</code> in the <code>src/kotlin</code> directory.-->
-<!--					</div>-->
-<!--					<br />-->
-<!--					<div>-->
-<!--						Write the following code in the <code class="inline">Main.kt</code> file.-->
-<!--						<pre>-->
-<!--							<code data-line-numbers data-trim data-noescape class="hljs kotlin">-->
-<!--								fun main(args: Array&lt;String&gt;) {-->
-<!--									println("Hello, Kotlin!")-->
-<!--									println("Program arguments: ${args.joinToString(", ")}")-->
-<!--								}-->
-<!--							</code>-->
-<!--						</pre>-->
-<!--					</div>-->
-<!--					<br />-->
-<!--					<div>-->
-<!--						<h4>4.</h4>-->
-<!--						Run the program by clicking the green arrow next to the <code>main</code> function.-->
-<!--					</div>-->
-<!--					<br />-->
-<!--					<div class="content content-center">-->
-<!--						<em>Submission and Grading ↓</em>-->
-<!--					</div>-->
-<!--				</div>-->
-<!--			</section>-->
-<!--			<section>-->
-<!--				<h3>Submission and Grading</h3>-->
-<!--				<div class="content">-->
-<!--					<div>-->
-<!--						<h4>5.</h4>-->
-<!--						Once your code is running, you need to submit it for grading.-->
-<!--						<br />-->
-<!--						<br />-->
-<!--						TODO-->
-<!--					</div>-->
-<!--				</div>-->
-<!--			</section>-->
-<!--		</section>-->
-
 	</div>
 </div>
 
