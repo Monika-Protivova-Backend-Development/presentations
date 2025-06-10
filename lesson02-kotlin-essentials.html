@@ -131,15 +131,15 @@
 								</code>
 							</pre>
 						</li>
-<!--						<li>-->
-<!--							Function can also be defined as a single expression function,-->
-<!--							in which case the return type can be omitted as it is inferred by the compiler.-->
-<!--							<pre>-->
-<!--								<code data-line-numbers data-trim data-noescape class="hljs kotlin">-->
-<!--									fun myFunction(arg1: Int, arg2: Int) = arg1 + arg2-->
-<!--								</code>-->
-<!--							</pre>-->
-<!--						</li>-->
+						<!--						<li>-->
+						<!--							Function can also be defined as a single expression function,-->
+						<!--							in which case the return type can be omitted as it is inferred by the compiler.-->
+						<!--							<pre>-->
+						<!--								<code data-line-numbers data-trim data-noescape class="hljs kotlin">-->
+						<!--									fun myFunction(arg1: Int, arg2: Int) = arg1 + arg2-->
+						<!--								</code>-->
+						<!--							</pre>-->
+						<!--						</li>-->
 					</ul>
 					<br />
 					<em>We will talk more about functions in lesson 2.</em>
@@ -276,9 +276,9 @@
 							<span class="highlight">Constants</span> name should be noun with each letter of internal word capitalized. Should be sufficiently descriptive.
 						</li>
 					</ul>
-				<!--				<em style="font-size: 80%">-->
-				<!--					Full set of recommendation by Oracle can be found <a href="https://www.oracle.com/java/technologies/javase/codeconventions-namingconventions.html">here</a>.-->
-				<!--				</em>-->
+					<!--				<em style="font-size: 80%">-->
+					<!--					Full set of recommendation by Oracle can be found <a href="https://www.oracle.com/java/technologies/javase/codeconventions-namingconventions.html">here</a>.-->
+					<!--				</em>-->
 				</div>
 			</section>
 		</section>
@@ -339,15 +339,15 @@
 				</div>
 				<div class="content">
 					<blockquote>
-					<ul>
-						<p>
-							Knowing what JVM primitive type they compile to is important for understanding how they are stored in memory.
-						</p>
-						<p>
-							Understanding memory management, garbage collection, and type systems is crucial for writing efficient code,
-							avoiding memory leaks, and preventing issues like data loss from type mismatches.
-						</p>
-					</ul>
+						<ul>
+							<p>
+								Knowing what JVM primitive type they compile to is important for understanding how they are stored in memory.
+							</p>
+							<p>
+								Understanding memory management, garbage collection, and type systems is crucial for writing efficient code,
+								avoiding memory leaks, and preventing issues like data loss from type mismatches.
+							</p>
+						</ul>
 					</blockquote>
 				</div>
 			</section>
@@ -590,7 +590,7 @@
 				<div class="content">
 					<p>
 						For example, this is how you can declare a variable with type inference:
-						<pre>
+					<pre>
 							<code data-trim data-noescape class="hljs kotlin">
 								val number = 42             // type inferred as Int
 								val text = "Hello, world!"  // type inferred as String
@@ -657,94 +657,94 @@
 					</p>
 				</div>
 			</section>
-<!--			<section>-->
-<!--				<h3>Advanced ...</h3>-->
-<!--			</section>-->
-<!--			<section>-->
-<!--				<h3>The two's complement</h3>-->
-<!--				<div class="summary">-->
-<!--					In Java/Kotlin, two's complement is used for the representation of signed integers.-->
-<!--					A negative number is represented as the two's complement of its absolute value.-->
-<!--					This allows positive and negative numbers to be added together directly.-->
-<!--				</div>-->
-<!--				<div class="content">-->
-<!--					<ul>-->
-<!--						<li>-->
-<!--							<strong>For positive integers</strong>, the two's complement representation is the same as their binary representation.-->
-<!--						</li>-->
-<!--						<li>-->
-<!--							<strong>For negative integers</strong>, you use binary representation of the absolute value of the number, then you invert each bit, and finally add 1 to the least significant bit (LSB).-->
-<!--						</li>-->
-<!--					</ul>-->
-<!--					<blockquote>-->
-<!--						<strong>Example: Binary representation of -5</strong>-->
-<!--						<ol>-->
-<!--							<li>The binary representation of absolute value of -5 (=5) is <code>0101</code></li>-->
-<!--							<li>Inverting each bit gives you <code>1010</code></li>-->
-<!--							<li>Adding 1 to the least significant bit gives you the binary representation of -5, which is: <code>1011</code></li>-->
-<!--						</ol>-->
-<!--					</blockquote>-->
-<!--				</div>-->
-<!--			</section>-->
-<!--			<section>-->
-<!--				<h3>Literal constants for numbers</h3>-->
-<!--				<div class="content">-->
-<!--					<p>-->
-<!--						It is sometimes practical to represent data in binary or hexadecimal format to make the code more readable.-->
-<!--					</p>-->
-<!--					<p>-->
-<!--						You do that by prefixing the number with <code><strong>0b</strong></code> followed by 1s and 0s for binary representation,-->
-<!--						<br />-->
-<!--						or <code><strong>0x</strong></code> followed by characters or hexadecimal representation.-->
-<!--					</p>-->
-<!--					<table style="width: 100%">-->
-<!--						<tbody>-->
-<!--						<tr>-->
-<!--							<td>-->
-<!--								<pre>-->
-<!--									<code data-trim data-noescape class="hljs kotlin">-->
-<!--										fun main() {-->
-<!--											val binaryInt = 0b00001010-->
-<!--											println(binaryInt) 			// prints 10-->
-<!--											println(binaryInt == 10) 	// prints true-->
-<!--										}-->
-<!--									</code>-->
-<!--								</pre>-->
-<!--							</td>-->
-<!--							<td>-->
-<!--								<strong>Examples:</strong>-->
-<!--								<br />-->
-<!--								<br />-->
-<!--								<code>0b0</code> = 0<br />-->
-<!--								<code>0b1</code> = 1<br />-->
-<!--								<code>0b00001010</code> = 10<br />-->
-<!--							</td>-->
-<!--						</tr>-->
-<!--						<tr>-->
-<!--							<td>-->
-<!--								<pre>-->
-<!--									<code data-trim data-noescape class="hljs kotlin">-->
-<!--										fun main() {-->
-<!--											val hexInt = 0x00AA-->
-<!--											println(hexInt) 		// prints 170-->
-<!--											println(hexInt == 170) 	// prints true-->
-<!--										}-->
-<!--									</code>-->
-<!--								</pre>-->
-<!--							</td>-->
-<!--							<td>-->
-<!--								<strong>Examples:</strong>-->
-<!--								<br />-->
-<!--								<br />-->
-<!--								<code>0x0</code> = 0<br />-->
-<!--								<code>0xF</code> = 15<br />-->
-<!--								<code>0x00AA</code> = 170<br />-->
-<!--							</td>-->
-<!--						</tr>-->
-<!--						</tbody>-->
-<!--					</table>-->
-<!--				</div>-->
-<!--			</section>-->
+			<!--			<section>-->
+			<!--				<h3>Advanced ...</h3>-->
+			<!--			</section>-->
+			<!--			<section>-->
+			<!--				<h3>The two's complement</h3>-->
+			<!--				<div class="summary">-->
+			<!--					In Java/Kotlin, two's complement is used for the representation of signed integers.-->
+			<!--					A negative number is represented as the two's complement of its absolute value.-->
+			<!--					This allows positive and negative numbers to be added together directly.-->
+			<!--				</div>-->
+			<!--				<div class="content">-->
+			<!--					<ul>-->
+			<!--						<li>-->
+			<!--							<strong>For positive integers</strong>, the two's complement representation is the same as their binary representation.-->
+			<!--						</li>-->
+			<!--						<li>-->
+			<!--							<strong>For negative integers</strong>, you use binary representation of the absolute value of the number, then you invert each bit, and finally add 1 to the least significant bit (LSB).-->
+			<!--						</li>-->
+			<!--					</ul>-->
+			<!--					<blockquote>-->
+			<!--						<strong>Example: Binary representation of -5</strong>-->
+			<!--						<ol>-->
+			<!--							<li>The binary representation of absolute value of -5 (=5) is <code>0101</code></li>-->
+			<!--							<li>Inverting each bit gives you <code>1010</code></li>-->
+			<!--							<li>Adding 1 to the least significant bit gives you the binary representation of -5, which is: <code>1011</code></li>-->
+			<!--						</ol>-->
+			<!--					</blockquote>-->
+			<!--				</div>-->
+			<!--			</section>-->
+			<!--			<section>-->
+			<!--				<h3>Literal constants for numbers</h3>-->
+			<!--				<div class="content">-->
+			<!--					<p>-->
+			<!--						It is sometimes practical to represent data in binary or hexadecimal format to make the code more readable.-->
+			<!--					</p>-->
+			<!--					<p>-->
+			<!--						You do that by prefixing the number with <code><strong>0b</strong></code> followed by 1s and 0s for binary representation,-->
+			<!--						<br />-->
+			<!--						or <code><strong>0x</strong></code> followed by characters or hexadecimal representation.-->
+			<!--					</p>-->
+			<!--					<table style="width: 100%">-->
+			<!--						<tbody>-->
+			<!--						<tr>-->
+			<!--							<td>-->
+			<!--								<pre>-->
+			<!--									<code data-trim data-noescape class="hljs kotlin">-->
+			<!--										fun main() {-->
+			<!--											val binaryInt = 0b00001010-->
+			<!--											println(binaryInt) 			// prints 10-->
+			<!--											println(binaryInt == 10) 	// prints true-->
+			<!--										}-->
+			<!--									</code>-->
+			<!--								</pre>-->
+			<!--							</td>-->
+			<!--							<td>-->
+			<!--								<strong>Examples:</strong>-->
+			<!--								<br />-->
+			<!--								<br />-->
+			<!--								<code>0b0</code> = 0<br />-->
+			<!--								<code>0b1</code> = 1<br />-->
+			<!--								<code>0b00001010</code> = 10<br />-->
+			<!--							</td>-->
+			<!--						</tr>-->
+			<!--						<tr>-->
+			<!--							<td>-->
+			<!--								<pre>-->
+			<!--									<code data-trim data-noescape class="hljs kotlin">-->
+			<!--										fun main() {-->
+			<!--											val hexInt = 0x00AA-->
+			<!--											println(hexInt) 		// prints 170-->
+			<!--											println(hexInt == 170) 	// prints true-->
+			<!--										}-->
+			<!--									</code>-->
+			<!--								</pre>-->
+			<!--							</td>-->
+			<!--							<td>-->
+			<!--								<strong>Examples:</strong>-->
+			<!--								<br />-->
+			<!--								<br />-->
+			<!--								<code>0x0</code> = 0<br />-->
+			<!--								<code>0xF</code> = 15<br />-->
+			<!--								<code>0x00AA</code> = 170<br />-->
+			<!--							</td>-->
+			<!--						</tr>-->
+			<!--						</tbody>-->
+			<!--					</table>-->
+			<!--				</div>-->
+			<!--			</section>-->
 		</section>
 		<section>
 			<section data-background-gradient="var(--kotlin-gradient)">
@@ -1244,244 +1244,244 @@
 					</div>
 				</blockquote>
 			</section>
-<!--			<section>-->
-<!--				<h3>Advanced ...</h3>-->
-<!--			</section>-->
-<!--			<section>-->
-<!--				<h3>Bitwise Operators</h3>-->
-<!--				<div class="content">-->
-<!--					<table style="font-size: 60%">-->
-<!--						<tbody>-->
-<!--						<tr>-->
-<!--							<td><code>and</code></td>-->
-<!--							<td>binary and</td>-->
-<!--							<td>sets bit to 1 if both bits at the same positions are 1</td>-->
-<!--							<td style="min-width: 450px">-->
-<!--									<pre>-->
-<!--										<code data-trim data-noescape class="hljs kotlin">-->
-<!--											val a = 5 // binary: 0101-->
-<!--											val b = 3 // binary: 0011-->
+			<!--			<section>-->
+			<!--				<h3>Advanced ...</h3>-->
+			<!--			</section>-->
+			<!--			<section>-->
+			<!--				<h3>Bitwise Operators</h3>-->
+			<!--				<div class="content">-->
+			<!--					<table style="font-size: 60%">-->
+			<!--						<tbody>-->
+			<!--						<tr>-->
+			<!--							<td><code>and</code></td>-->
+			<!--							<td>binary and</td>-->
+			<!--							<td>sets bit to 1 if both bits at the same positions are 1</td>-->
+			<!--							<td style="min-width: 450px">-->
+			<!--									<pre>-->
+			<!--										<code data-trim data-noescape class="hljs kotlin">-->
+			<!--											val a = 5 // binary: 0101-->
+			<!--											val b = 3 // binary: 0011-->
 
-<!--											val result = a and b // binary: 0001, decimal: 1-->
-<!--										</code>-->
-<!--									</pre>-->
-<!--							</td>-->
-<!--							<td>-->
-<!--								binary: <code>0001</code>, decimal: <code>1</code>-->
-<!--							</td>-->
-<!--						</tr>-->
-<!--						<tr>-->
-<!--							<td><code>or</code></td>-->
-<!--							<td>binary or</td>-->
-<!--							<td>sets bit to 1 if either of bits at the same positions are 1</td>-->
-<!--							<td style="min-width: 450px">-->
-<!--									<pre>-->
-<!--										<code data-trim data-noescape class="hljs kotlin">-->
-<!--											val a = 5 // binary: 0101-->
-<!--											val b = 3 // binary: 0011-->
+			<!--											val result = a and b // binary: 0001, decimal: 1-->
+			<!--										</code>-->
+			<!--									</pre>-->
+			<!--							</td>-->
+			<!--							<td>-->
+			<!--								binary: <code>0001</code>, decimal: <code>1</code>-->
+			<!--							</td>-->
+			<!--						</tr>-->
+			<!--						<tr>-->
+			<!--							<td><code>or</code></td>-->
+			<!--							<td>binary or</td>-->
+			<!--							<td>sets bit to 1 if either of bits at the same positions are 1</td>-->
+			<!--							<td style="min-width: 450px">-->
+			<!--									<pre>-->
+			<!--										<code data-trim data-noescape class="hljs kotlin">-->
+			<!--											val a = 5 // binary: 0101-->
+			<!--											val b = 3 // binary: 0011-->
 
-<!--											val result = a or b // binary: 0111, decimal: 7-->
-<!--										</code>-->
-<!--									</pre>-->
-<!--							</td>-->
-<!--							<td>-->
-<!--								binary: <code>0111</code>, decimal: <code>7</code>-->
-<!--							</td>-->
-<!--						</tr>-->
-<!--						<tr>-->
-<!--							<td><code>xor</code></td>-->
-<!--							<td>binary xor</td>-->
-<!--							<td>sets bit to 1 if of bits at the same positions are different</td>-->
-<!--							<td style="min-width: 450px">-->
-<!--									<pre>-->
-<!--										<code data-trim data-noescape class="hljs kotlin">-->
-<!--											val a = 5 // binary: 0101-->
-<!--											val b = 3 // binary: 0011-->
+			<!--											val result = a or b // binary: 0111, decimal: 7-->
+			<!--										</code>-->
+			<!--									</pre>-->
+			<!--							</td>-->
+			<!--							<td>-->
+			<!--								binary: <code>0111</code>, decimal: <code>7</code>-->
+			<!--							</td>-->
+			<!--						</tr>-->
+			<!--						<tr>-->
+			<!--							<td><code>xor</code></td>-->
+			<!--							<td>binary xor</td>-->
+			<!--							<td>sets bit to 1 if of bits at the same positions are different</td>-->
+			<!--							<td style="min-width: 450px">-->
+			<!--									<pre>-->
+			<!--										<code data-trim data-noescape class="hljs kotlin">-->
+			<!--											val a = 5 // binary: 0101-->
+			<!--											val b = 3 // binary: 0011-->
 
-<!--											val result = a xor b // binary: 0110, decimal: 6-->
-<!--										</code>-->
-<!--									</pre>-->
-<!--							</td>-->
-<!--							<td>-->
-<!--								binary: <code>0110</code>, decimal: <code>6</code>-->
-<!--							</td>-->
-<!--						</tr>-->
-<!--						<tr>-->
-<!--							<td><code>shl</code></td>-->
-<!--							<td>signed left shift</td>-->
-<!--							<td>moves all bits by a given number of bits to the left</td>-->
-<!--							<td>-->
-<!--									<pre>-->
-<!--										<code data-trim data-noescape class="hljs kotlin">-->
-<!--											val a = 5 // binary: 0101-->
+			<!--											val result = a xor b // binary: 0110, decimal: 6-->
+			<!--										</code>-->
+			<!--									</pre>-->
+			<!--							</td>-->
+			<!--							<td>-->
+			<!--								binary: <code>0110</code>, decimal: <code>6</code>-->
+			<!--							</td>-->
+			<!--						</tr>-->
+			<!--						<tr>-->
+			<!--							<td><code>shl</code></td>-->
+			<!--							<td>signed left shift</td>-->
+			<!--							<td>moves all bits by a given number of bits to the left</td>-->
+			<!--							<td>-->
+			<!--									<pre>-->
+			<!--										<code data-trim data-noescape class="hljs kotlin">-->
+			<!--											val a = 5 // binary: 0101-->
 
-<!--											val result = a shl 1 // binary: 1010, decimal: 10-->
-<!--										</code>-->
-<!--									</pre>-->
-<!--							</td>-->
-<!--							<td>-->
-<!--								binary: <code>1010</code>, decimal: <code>10</code>-->
-<!--							</td>-->
-<!--						</tr>-->
-<!--						<tr>-->
-<!--							<td><code>shr</code></td>-->
-<!--							<td>signed right shift</td>-->
-<!--							<td>moves all bits by a given number of bits to the right</td>-->
-<!--							<td>-->
-<!--									<pre>-->
-<!--										<code data-trim data-noescape class="hljs kotlin">-->
-<!--											val a = 5 // binary: 0101-->
+			<!--											val result = a shl 1 // binary: 1010, decimal: 10-->
+			<!--										</code>-->
+			<!--									</pre>-->
+			<!--							</td>-->
+			<!--							<td>-->
+			<!--								binary: <code>1010</code>, decimal: <code>10</code>-->
+			<!--							</td>-->
+			<!--						</tr>-->
+			<!--						<tr>-->
+			<!--							<td><code>shr</code></td>-->
+			<!--							<td>signed right shift</td>-->
+			<!--							<td>moves all bits by a given number of bits to the right</td>-->
+			<!--							<td>-->
+			<!--									<pre>-->
+			<!--										<code data-trim data-noescape class="hljs kotlin">-->
+			<!--											val a = 5 // binary: 0101-->
 
-<!--											val result = a shr 2 // binary: 0001, decimal: 1-->
-<!--										</code>-->
-<!--									</pre>-->
-<!--							</td>-->
-<!--							<td>-->
-<!--								binary: <code>0001</code>, decimal: <code>1</code>-->
-<!--							</td>-->
-<!--						</tr>-->
-<!--						<tr>-->
-<!--							<td><code>ushr</code></td>-->
-<!--							<td>unsigned right shift</td>-->
-<!--							<td>same as the signed right shift, but the vacant leftmost position is filled with 0 instead of the sign bit</td>-->
-<!--							<td>-->
-<!--								<pre>-->
-<!--									<code data-trim data-noescape class="hljs kotlin">-->
-<!--										val a = -5 // binary equivalent of -5: 11111111111111111111111111111011-->
+			<!--											val result = a shr 2 // binary: 0001, decimal: 1-->
+			<!--										</code>-->
+			<!--									</pre>-->
+			<!--							</td>-->
+			<!--							<td>-->
+			<!--								binary: <code>0001</code>, decimal: <code>1</code>-->
+			<!--							</td>-->
+			<!--						</tr>-->
+			<!--						<tr>-->
+			<!--							<td><code>ushr</code></td>-->
+			<!--							<td>unsigned right shift</td>-->
+			<!--							<td>same as the signed right shift, but the vacant leftmost position is filled with 0 instead of the sign bit</td>-->
+			<!--							<td>-->
+			<!--								<pre>-->
+			<!--									<code data-trim data-noescape class="hljs kotlin">-->
+			<!--										val a = -5 // binary equivalent of -5: 11111111111111111111111111111011-->
 
-<!--										val result = a ushr 1 // shifts right with zero fill-->
-<!--									</code>-->
-<!--								</pre>-->
-<!--							</td>-->
-<!--							<td>-->
-<!--	&lt;!&ndash;							binary: <code>01111111111111111111111111111101</code>, decimal: <code>2147483645</code>&ndash;&gt;-->
-<!--							</td>-->
-<!--						</tr>-->
-<!--						<tr>-->
-<!--							<td><code>.inv()</code></td>-->
-<!--							<td>binary complement operator</td>-->
-<!--							<td>flips all the bits of the operand 1s become 0s, and 0s become 1s</td>-->
-<!--							<td style="min-width: 450px">-->
-<!--									<pre>-->
-<!--										<code data-trim data-noescape class="hljs kotlin">-->
-<!--											val a = 5 // binary: 0101-->
+			<!--										val result = a ushr 1 // shifts right with zero fill-->
+			<!--									</code>-->
+			<!--								</pre>-->
+			<!--							</td>-->
+			<!--							<td>-->
+			<!--	&lt;!&ndash;							binary: <code>01111111111111111111111111111101</code>, decimal: <code>2147483645</code>&ndash;&gt;-->
+			<!--							</td>-->
+			<!--						</tr>-->
+			<!--						<tr>-->
+			<!--							<td><code>.inv()</code></td>-->
+			<!--							<td>binary complement operator</td>-->
+			<!--							<td>flips all the bits of the operand 1s become 0s, and 0s become 1s</td>-->
+			<!--							<td style="min-width: 450px">-->
+			<!--									<pre>-->
+			<!--										<code data-trim data-noescape class="hljs kotlin">-->
+			<!--											val a = 5 // binary: 0101-->
 
-<!--											val result = a.inv() // binary: 1010, decimal: -6-->
-<!--										</code>-->
-<!--									</pre>-->
-<!--							</td>-->
-<!--							<td>-->
-<!--								binary: <code>1010</code>, decimal: <code>-6</code>-->
-<!--							</td>-->
-<!--						</tr>-->
-<!--						</tbody>-->
-<!--					</table>-->
-<!--				</div>-->
-<!--			</section>-->
-<!--			<section>-->
-<!--				<h3>Bitwise Operators</h3>-->
-<!--				<blockquote style="min-width: 800px; font-size: 80%;">-->
-<!--					Imagine you have a <b>byte</b> stored in 1 byte (=8 bits), for example 8, which is stored as-->
-<!--					<code>00001000</code>-->
-<!--					<br />-->
-<!--					<br />-->
-<!--					If you perform following bit shift, what number do you get?-->
-<!--					<pre>A)-->
-<!--						<code data-line-numbers data-trim data-noescape class="hljs kotlin">-->
-<!--							val number: Byte = 8-->
-<!--							val result = number << 1-->
-<!--						</code>-->
-<!--						<span class="fragment fade-in">-->
-<!--							The result is 16:<br />-->
-<!--							In binary: 1000 <- 10000-->
-<!--						</span>-->
-<!--					</pre>-->
-<!--					<pre>B)-->
-<!--						<code data-line-numbers data-trim data-noescape class="hljs kotlin">-->
-<!--							val number: Byte = 8-->
-<!--							val result = number << 3-->
-<!--						</code>-->
-<!--						<span class="fragment fade-in">-->
-<!--							The result is 64:<br />-->
-<!--							In binary: 1000 <-&#45;&#45; 1000000-->
-<!--						</span>-->
-<!--					</pre>-->
-<!--					<pre>C)-->
-<!--						<code data-line-numbers data-trim data-noescape class="hljs kotlin">-->
-<!--							val number: Byet = -8-->
-<!--							val result = number >> 2-->
-<!--						</code>-->
-<!--						<span class="fragment fade-in">-->
-<!--							The result is -2:<br />-->
-<!--							In binary: 11111111111111111111111111111000 &ndash;&gt; 11111111111111111111111111111110-->
-<!--						</span>-->
-<!--					</pre>-->
-<!--					<pre>D)-->
-<!--						<code data-line-numbers data-trim data-noescape class="hljs kotlin">-->
-<!--							val number: Byte = -8-->
-<!--							val result = number >>> 2-->
-<!--						</code>-->
-<!--						<span class="fragment fade-in">-->
-<!--							The result is 1073741822:<br />-->
-<!--							In binary: 11111111111111111111111111111000 &ndash;&gt; __111111111111111111111111111110-->
-<!--						</span>-->
-<!--					</pre>-->
-<!--				</blockquote>-->
-<!--			</section>-->
-<!--			<section>-->
-<!--				<h3>Bitwise Operators</h3>-->
-<!--				<blockquote style="font-size: 80%">-->
+			<!--											val result = a.inv() // binary: 1010, decimal: -6-->
+			<!--										</code>-->
+			<!--									</pre>-->
+			<!--							</td>-->
+			<!--							<td>-->
+			<!--								binary: <code>1010</code>, decimal: <code>-6</code>-->
+			<!--							</td>-->
+			<!--						</tr>-->
+			<!--						</tbody>-->
+			<!--					</table>-->
+			<!--				</div>-->
+			<!--			</section>-->
+			<!--			<section>-->
+			<!--				<h3>Bitwise Operators</h3>-->
+			<!--				<blockquote style="min-width: 800px; font-size: 80%;">-->
+			<!--					Imagine you have a <b>byte</b> stored in 1 byte (=8 bits), for example 8, which is stored as-->
+			<!--					<code>00001000</code>-->
+			<!--					<br />-->
+			<!--					<br />-->
+			<!--					If you perform following bit shift, what number do you get?-->
+			<!--					<pre>A)-->
+			<!--						<code data-line-numbers data-trim data-noescape class="hljs kotlin">-->
+			<!--							val number: Byte = 8-->
+			<!--							val result = number << 1-->
+			<!--						</code>-->
+			<!--						<span class="fragment fade-in">-->
+			<!--							The result is 16:<br />-->
+			<!--							In binary: 1000 <- 10000-->
+			<!--						</span>-->
+			<!--					</pre>-->
+			<!--					<pre>B)-->
+			<!--						<code data-line-numbers data-trim data-noescape class="hljs kotlin">-->
+			<!--							val number: Byte = 8-->
+			<!--							val result = number << 3-->
+			<!--						</code>-->
+			<!--						<span class="fragment fade-in">-->
+			<!--							The result is 64:<br />-->
+			<!--							In binary: 1000 <-&#45;&#45; 1000000-->
+			<!--						</span>-->
+			<!--					</pre>-->
+			<!--					<pre>C)-->
+			<!--						<code data-line-numbers data-trim data-noescape class="hljs kotlin">-->
+			<!--							val number: Byet = -8-->
+			<!--							val result = number >> 2-->
+			<!--						</code>-->
+			<!--						<span class="fragment fade-in">-->
+			<!--							The result is -2:<br />-->
+			<!--							In binary: 11111111111111111111111111111000 &ndash;&gt; 11111111111111111111111111111110-->
+			<!--						</span>-->
+			<!--					</pre>-->
+			<!--					<pre>D)-->
+			<!--						<code data-line-numbers data-trim data-noescape class="hljs kotlin">-->
+			<!--							val number: Byte = -8-->
+			<!--							val result = number >>> 2-->
+			<!--						</code>-->
+			<!--						<span class="fragment fade-in">-->
+			<!--							The result is 1073741822:<br />-->
+			<!--							In binary: 11111111111111111111111111111000 &ndash;&gt; __111111111111111111111111111110-->
+			<!--						</span>-->
+			<!--					</pre>-->
+			<!--				</blockquote>-->
+			<!--			</section>-->
+			<!--			<section>-->
+			<!--				<h3>Bitwise Operators</h3>-->
+			<!--				<blockquote style="font-size: 80%">-->
 
-<!--					What will be the result of following bit operations?-->
+			<!--					What will be the result of following bit operations?-->
 
-<!--					<pre>A)-->
-<!--						<code data-line-numbers data-trim data-noescape class="hljs kotlin">-->
-<!--							val a: Byte = 21 // 00010101-->
-<!--							val b: Byte = 81 // 01010001-->
-<!--							val result = a & b-->
-<!--						</code>-->
-<!--						<span class="fragment fade-in">-->
-<!--							The result is 17:<br />-->
-<!--							In binary: 00010101 & 01010001 = 00010001-->
-<!--						</span>-->
-<!--					</pre>-->
+			<!--					<pre>A)-->
+			<!--						<code data-line-numbers data-trim data-noescape class="hljs kotlin">-->
+			<!--							val a: Byte = 21 // 00010101-->
+			<!--							val b: Byte = 81 // 01010001-->
+			<!--							val result = a & b-->
+			<!--						</code>-->
+			<!--						<span class="fragment fade-in">-->
+			<!--							The result is 17:<br />-->
+			<!--							In binary: 00010101 & 01010001 = 00010001-->
+			<!--						</span>-->
+			<!--					</pre>-->
 
-<!--					<pre>B)-->
-<!--						<code data-line-numbers data-trim data-noescape class="hljs kotlin">-->
-<!--							val a: Byte = 21 // 00010101-->
-<!--							val b: Byte = 81 // 01010001-->
-<!--							val result = a | b-->
-<!--						</code>-->
-<!--						<span class="fragment fade-in">-->
-<!--							The result is 85:<br />-->
-<!--							In binary: 00010101 & 01010001 = 01010101-->
-<!--						</span>-->
-<!--					</pre>-->
+			<!--					<pre>B)-->
+			<!--						<code data-line-numbers data-trim data-noescape class="hljs kotlin">-->
+			<!--							val a: Byte = 21 // 00010101-->
+			<!--							val b: Byte = 81 // 01010001-->
+			<!--							val result = a | b-->
+			<!--						</code>-->
+			<!--						<span class="fragment fade-in">-->
+			<!--							The result is 85:<br />-->
+			<!--							In binary: 00010101 & 01010001 = 01010101-->
+			<!--						</span>-->
+			<!--					</pre>-->
 
-<!--					<pre>C)-->
-<!--						<code data-line-numbers data-trim data-noescape class="hljs kotlin">-->
-<!--							val a: Byte = 21 // 00010101-->
-<!--							val b: Byte = 81 // 01010001-->
-<!--							val result = a ^ b-->
-<!--						</code>-->
-<!--						<span class="fragment fade-in">-->
-<!--							The result is 68:<br />-->
-<!--							In binary: 00010101 & 01010001 = 01000001-->
-<!--						</span>-->
-<!--					</pre>-->
+			<!--					<pre>C)-->
+			<!--						<code data-line-numbers data-trim data-noescape class="hljs kotlin">-->
+			<!--							val a: Byte = 21 // 00010101-->
+			<!--							val b: Byte = 81 // 01010001-->
+			<!--							val result = a ^ b-->
+			<!--						</code>-->
+			<!--						<span class="fragment fade-in">-->
+			<!--							The result is 68:<br />-->
+			<!--							In binary: 00010101 & 01010001 = 01000001-->
+			<!--						</span>-->
+			<!--					</pre>-->
 
-<!--					<pre>D)-->
-<!--						<code data-line-numbers data-trim data-noescape class="hljs kotlin">-->
-<!--							val a: Byte = 21 // 00010101-->
-<!--							val result = ~a-->
-<!--						</code>-->
-<!--						<span class="fragment fade-in">-->
-<!--							The result is -22:<br />-->
-<!--							In binary: 00010101 -> 11101010-->
-<!--						</span>-->
-<!--					</pre>-->
-<!--				</blockquote>-->
-<!--			</section>-->
+			<!--					<pre>D)-->
+			<!--						<code data-line-numbers data-trim data-noescape class="hljs kotlin">-->
+			<!--							val a: Byte = 21 // 00010101-->
+			<!--							val result = ~a-->
+			<!--						</code>-->
+			<!--						<span class="fragment fade-in">-->
+			<!--							The result is -22:<br />-->
+			<!--							In binary: 00010101 -> 11101010-->
+			<!--						</span>-->
+			<!--					</pre>-->
+			<!--				</blockquote>-->
+			<!--			</section>-->
 		</section>
 		<section>
 			<section data-background-gradient="var(--kotlin-gradient)">
@@ -1711,124 +1711,124 @@
 					</pre>
 				</blockquote>
 			</section>
-<!--			<section>-->
-<!--				<h4>For Loop</h4>-->
-<!--				<blockquote>-->
-<!--					How many times will this loop execute and what will be the values printed?-->
-<!--					<pre>-->
-<!--							<code data-line-numbers data-trim data-noescape class="hljs kotlin">-->
-<!--								for (i in 1 .. 10 step 2) {-->
-<!--									println(i)-->
-<!--								}-->
-<!--							</code>-->
-<!--						</pre>-->
-<!--					<div class="fragment fade-in">-->
-<!--						5 times. Values printed will be 1, 3, 5, 7 and 9.-->
-<!--					</div>-->
-<!--				</blockquote>-->
-<!--			</section>-->
-<!--			<section>-->
-<!--				<h4>For Each Loop</h4>-->
-<!--				<div style="text-align: left">-->
-<!--					<p>If you have an array, can iterate it using for loop.</p>-->
-<!--					<pre>-->
-<!--						<code data-line-numbers data-trim data-noescape class="hljs kotlin">-->
-<!--							String[] languages = {"Java", "Python", "C++", "JavaScript"}-->
+			<!--			<section>-->
+			<!--				<h4>For Loop</h4>-->
+			<!--				<blockquote>-->
+			<!--					How many times will this loop execute and what will be the values printed?-->
+			<!--					<pre>-->
+			<!--							<code data-line-numbers data-trim data-noescape class="hljs kotlin">-->
+			<!--								for (i in 1 .. 10 step 2) {-->
+			<!--									println(i)-->
+			<!--								}-->
+			<!--							</code>-->
+			<!--						</pre>-->
+			<!--					<div class="fragment fade-in">-->
+			<!--						5 times. Values printed will be 1, 3, 5, 7 and 9.-->
+			<!--					</div>-->
+			<!--				</blockquote>-->
+			<!--			</section>-->
+			<!--			<section>-->
+			<!--				<h4>For Each Loop</h4>-->
+			<!--				<div style="text-align: left">-->
+			<!--					<p>If you have an array, can iterate it using for loop.</p>-->
+			<!--					<pre>-->
+			<!--						<code data-line-numbers data-trim data-noescape class="hljs kotlin">-->
+			<!--							String[] languages = {"Java", "Python", "C++", "JavaScript"}-->
 
-<!--							for (int i = 0 i < languages.length i++) {-->
+			<!--							for (int i = 0 i < languages.length i++) {-->
 
-<!--								System.out.println(languages[i])-->
+			<!--								System.out.println(languages[i])-->
 
-<!--							}-->
-<!--						</code>-->
-<!--					</pre>-->
-<!--					<p>You can also use more convenient <b>for each</b> loop.</p>-->
-<!--					<pre>-->
-<!--						<code data-line-numbers data-trim data-noescape class="hljs kotlin">-->
-<!--							String[] languages = {"Java", "Python", "C++", "JavaScript"}-->
+			<!--							}-->
+			<!--						</code>-->
+			<!--					</pre>-->
+			<!--					<p>You can also use more convenient <b>for each</b> loop.</p>-->
+			<!--					<pre>-->
+			<!--						<code data-line-numbers data-trim data-noescape class="hljs kotlin">-->
+			<!--							String[] languages = {"Java", "Python", "C++", "JavaScript"}-->
 
-<!--							for (String language : languages) {-->
+			<!--							for (String language : languages) {-->
 
-<!--								System.out.println(language)-->
+			<!--								System.out.println(language)-->
 
-<!--							}-->
-<!--						</code>-->
-<!--					</pre>-->
-<!--				</div>-->
-<!--			</section>-->
-<!--			<section>-->
-<!--				<h4>Break / Continue</h4>-->
-<!--				<div style="text-align: left">-->
-<!--					<p>The <b>break</b> statement is used to end the loop immediately.</p>-->
-<!--					<pre>-->
-<!--						<code data-line-numbers data-trim data-noescape class="hljs kotlin">-->
-<!--							for (int i = 0 i < x i++) {-->
+			<!--							}-->
+			<!--						</code>-->
+			<!--					</pre>-->
+			<!--				</div>-->
+			<!--			</section>-->
+			<!--			<section>-->
+			<!--				<h4>Break / Continue</h4>-->
+			<!--				<div style="text-align: left">-->
+			<!--					<p>The <b>break</b> statement is used to end the loop immediately.</p>-->
+			<!--					<pre>-->
+			<!--						<code data-line-numbers data-trim data-noescape class="hljs kotlin">-->
+			<!--							for (int i = 0 i < x i++) {-->
 
-<!--								if (breakCondition) {-->
-<!--									break-->
-<!--								}-->
+			<!--								if (breakCondition) {-->
+			<!--									break-->
+			<!--								}-->
 
-<!--							}-->
-<!--							// if breakCondition was met, the loop will end-->
-<!--						</code>-->
-<!--					</pre>-->
-<!--					<p>The <b>continue</b> statement is end current iteration, but the loop will continue with next iteration.</p>-->
-<!--					<pre>-->
-<!--						<code data-line-numbers data-trim data-noescape class="hljs kotlin">-->
-<!--							for (int i = 0 i < x i++) {-->
+			<!--							}-->
+			<!--							// if breakCondition was met, the loop will end-->
+			<!--						</code>-->
+			<!--					</pre>-->
+			<!--					<p>The <b>continue</b> statement is end current iteration, but the loop will continue with next iteration.</p>-->
+			<!--					<pre>-->
+			<!--						<code data-line-numbers data-trim data-noescape class="hljs kotlin">-->
+			<!--							for (int i = 0 i < x i++) {-->
 
-<!--								if (continueCondition) {-->
-<!--									continue-->
-<!--								}-->
+			<!--								if (continueCondition) {-->
+			<!--									continue-->
+			<!--								}-->
 
-<!--								// if continueCondition was met, this code will not be executed-->
-<!--							}-->
-<!--						</code>-->
-<!--					</pre>-->
-<!--				</div>-->
-<!--			</section>-->
-<!--			<section>-->
-<!--				<h4>Break / Continue</h4>-->
-<!--				<blockquote>-->
-<!--					What values will be printed?-->
-<!--					<pre>-->
-<!--					<code data-line-numbers data-trim data-noescape class="hljs kotlin">-->
-<!--						int maxValue = 10-->
-<!--						int significantValue = 7-->
+			<!--								// if continueCondition was met, this code will not be executed-->
+			<!--							}-->
+			<!--						</code>-->
+			<!--					</pre>-->
+			<!--				</div>-->
+			<!--			</section>-->
+			<!--			<section>-->
+			<!--				<h4>Break / Continue</h4>-->
+			<!--				<blockquote>-->
+			<!--					What values will be printed?-->
+			<!--					<pre>-->
+			<!--					<code data-line-numbers data-trim data-noescape class="hljs kotlin">-->
+			<!--						int maxValue = 10-->
+			<!--						int significantValue = 7-->
 
-<!--						for (int i = 0 i < maxValue i++) {-->
+			<!--						for (int i = 0 i < maxValue i++) {-->
 
-<!--							if (i == significantValue) {-->
-<!--								break-->
-<!--							}-->
+			<!--							if (i == significantValue) {-->
+			<!--								break-->
+			<!--							}-->
 
-<!--							System.out.println(i)-->
-<!--						}-->
-<!--					</code>-->
-<!--					<span class="fragment fade-in">-->
-<!--						1, 2, 3, 4, 5, 6, 7-->
-<!--					</span>-->
-<!--				</pre>-->
-<!--					<pre>-->
-<!--					<code data-line-numbers data-trim data-noescape class="hljs kotlin">-->
-<!--						int maxValue = 10-->
-<!--						int significantValue = 7-->
+			<!--							System.out.println(i)-->
+			<!--						}-->
+			<!--					</code>-->
+			<!--					<span class="fragment fade-in">-->
+			<!--						1, 2, 3, 4, 5, 6, 7-->
+			<!--					</span>-->
+			<!--				</pre>-->
+			<!--					<pre>-->
+			<!--					<code data-line-numbers data-trim data-noescape class="hljs kotlin">-->
+			<!--						int maxValue = 10-->
+			<!--						int significantValue = 7-->
 
-<!--						for (int i = 0 i < maxValue i++) {-->
+			<!--						for (int i = 0 i < maxValue i++) {-->
 
-<!--							if (i == significantValue) {-->
-<!--								continue-->
-<!--							}-->
+			<!--							if (i == significantValue) {-->
+			<!--								continue-->
+			<!--							}-->
 
-<!--							System.out.println(i)-->
-<!--						}-->
-<!--					</code>-->
-<!--					<span class="fragment fade-in">-->
-<!--						1, 2, 3, 4, 5, 6, 8, 9-->
-<!--					</span>-->
-<!--				</pre>-->
-<!--				</blockquote>-->
-<!--			</section>-->
+			<!--							System.out.println(i)-->
+			<!--						}-->
+			<!--					</code>-->
+			<!--					<span class="fragment fade-in">-->
+			<!--						1, 2, 3, 4, 5, 6, 8, 9-->
+			<!--					</span>-->
+			<!--				</pre>-->
+			<!--				</blockquote>-->
+			<!--			</section>-->
 		</section>
 		<section>
 			<section data-background-gradient="var(--kotlin-gradient)">
@@ -2660,50 +2660,50 @@
 					</table>
 				</div>
 			</section>
-<!--			<section>-->
-<!--				<h3>Collections: Kotlin vs. Java</h3>-->
-<!--				<div class="summary">-->
-<!--					Collections in Kotlin are actually one of the most significant differences between Kotlin and Java,-->
-<!--					because they are implemented differently in Kotlin.-->
-<!--				</div>-->
-<!--				<div class="content">-->
-<!--					<table>-->
-<!--						<thead>-->
-<!--						<tr>-->
-<!--							<td style="font-weight: bold"></td>-->
-<!--							<td style="font-weight: bold">Java</td>-->
-<!--							<td style="font-weight: bold">Kotlin</td>-->
-<!--						</tr>-->
-<!--						</thead>-->
-<!--						<tbody>-->
-<!--						<tr>-->
-<!--							<td style="font-weight: bold">Null Safety</td>-->
-<!--							<td>Collections can contain null values unless explicitly handled.</td>-->
-<!--							<td>Collections are null-safe by default. You can explicitly declare nullable collections if needed.</td>-->
-<!--						</tr>-->
-<!--						<tr>-->
-<!--							<td style="font-weight: bold">Read-Only vs Mutable</td>-->
-<!--							<td>Collections are mutable by default. Read-only views can be created using utility methods.</td>-->
-<!--							<td>Distinguishes between read-only (List, Set, Map) and mutable (MutableList, MutableSet, MutableMap) collections.</td>-->
-<!--						</tr>-->
-<!--						<tr>-->
-<!--							<td style="font-weight: bold">Higher-Order Functions</td>-->
-<!--							<td>Introduced lambda expressions and streams in Java 8, but the syntax is more verbose compared to Kotlin.</td>-->
-<!--							<td>Supports higher-order functions and lambda expressions, making it easier to perform operations like filtering, mapping, and reducing.</td>-->
-<!--						</tr>-->
-<!--						<tr>-->
-<!--							<td style="font-weight: bold">Default Implementations</td>-->
-<!--							<td>Requires more boilerplate code for common operations.</td>-->
-<!--							<td>Provides default implementations for many collection operations, making the code more concise.</td>-->
-<!--						</tr>-->
-<!--						</tbody>-->
-<!--					</table>-->
-<!--					<blockquote>-->
-<!--						Note that because Java and Kotlin are fully interoperable,-->
-<!--						you can opt to use Java implementations of collections in Kotlin, if needed.-->
-<!--					</blockquote>-->
-<!--				</div>-->
-<!--			</section>-->
+			<!--			<section>-->
+			<!--				<h3>Collections: Kotlin vs. Java</h3>-->
+			<!--				<div class="summary">-->
+			<!--					Collections in Kotlin are actually one of the most significant differences between Kotlin and Java,-->
+			<!--					because they are implemented differently in Kotlin.-->
+			<!--				</div>-->
+			<!--				<div class="content">-->
+			<!--					<table>-->
+			<!--						<thead>-->
+			<!--						<tr>-->
+			<!--							<td style="font-weight: bold"></td>-->
+			<!--							<td style="font-weight: bold">Java</td>-->
+			<!--							<td style="font-weight: bold">Kotlin</td>-->
+			<!--						</tr>-->
+			<!--						</thead>-->
+			<!--						<tbody>-->
+			<!--						<tr>-->
+			<!--							<td style="font-weight: bold">Null Safety</td>-->
+			<!--							<td>Collections can contain null values unless explicitly handled.</td>-->
+			<!--							<td>Collections are null-safe by default. You can explicitly declare nullable collections if needed.</td>-->
+			<!--						</tr>-->
+			<!--						<tr>-->
+			<!--							<td style="font-weight: bold">Read-Only vs Mutable</td>-->
+			<!--							<td>Collections are mutable by default. Read-only views can be created using utility methods.</td>-->
+			<!--							<td>Distinguishes between read-only (List, Set, Map) and mutable (MutableList, MutableSet, MutableMap) collections.</td>-->
+			<!--						</tr>-->
+			<!--						<tr>-->
+			<!--							<td style="font-weight: bold">Higher-Order Functions</td>-->
+			<!--							<td>Introduced lambda expressions and streams in Java 8, but the syntax is more verbose compared to Kotlin.</td>-->
+			<!--							<td>Supports higher-order functions and lambda expressions, making it easier to perform operations like filtering, mapping, and reducing.</td>-->
+			<!--						</tr>-->
+			<!--						<tr>-->
+			<!--							<td style="font-weight: bold">Default Implementations</td>-->
+			<!--							<td>Requires more boilerplate code for common operations.</td>-->
+			<!--							<td>Provides default implementations for many collection operations, making the code more concise.</td>-->
+			<!--						</tr>-->
+			<!--						</tbody>-->
+			<!--					</table>-->
+			<!--					<blockquote>-->
+			<!--						Note that because Java and Kotlin are fully interoperable,-->
+			<!--						you can opt to use Java implementations of collections in Kotlin, if needed.-->
+			<!--					</blockquote>-->
+			<!--				</div>-->
+			<!--			</section>-->
 		</section>
 		<section>
 			<section data-background-gradient="var(--kotlin-gradient)">
@@ -3588,22 +3588,625 @@
 		</section>
 		<section>
 			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Advanced Functions (Optional)</h2>
+				<em>Anonymous Functions & Lambda Expressions</em><br />
+				<em>Extension Functions</em><br />
+				<em>Scope Functions</em>
+			</section>
+			<section>
+				<h3>Anonymous Function & Lambda Expression</h3>
+				<div class="summary">
+					Anonymous functions and lambda expressions are used to define functions without names.
+				</div>
+				<div class="content">
+					<h4>Lambda Expression</h4>
+					<p>
+						Lambda expressions are typically used for short, concise functions that are passed as arguments to higher-order functions.
+						They are commonly used in collection operations like <code class="inline"></code>, <code class="inline">filter</code>, and <code class="inline">forEach</code>.
+					</p>
+					<pre>
+						<code	data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val lambdaName: (Type) -> ReturnType = { argument: Type -> body }
+						</code>
+					</pre>
+					<blockquote>If lambda expression has a single parameter, you can use the default name <code class="inline">it</code>.</blockquote>
+					<br />
+					<h4>Anonymous Function</h4>
+					<p>
+						Anonymous functions are used when you need more control over the function's return type or when you need to use the <code class="inline">return</code> statement to exit the function itself rather than the enclosing function.
+					</p>
+					<pre>
+						<code	data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val lambdaName = fun(name: Type): Type {
+								return value
+							}
+						</code>
+					</pre>
+					<blockquote>
+						Opposite of anonymous function is called a named function.
+					</blockquote>
+				</div>
+			</section>
+			<section>
+				<h3>Lambda Expression</h3>
+				<div class="summary">
+					Examples
+				</div>
+				<div class="content">
+					<p>Function with one parameter and no return value:</p>
+					<pre>
+						<code	data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val greet: (String) -> Unit = { name -> println("Hello, $name!") }
+
+							greet("World")
+						</code>
+					</pre>
+					<p>If lambda expression has a single parameter, you can use the default name <code class="inline">it</code>:</p>
+					<pre>
+						<code	data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val greet: (String) -> Unit = { println("Hello, $it!") }
+
+							greet("World")
+						</code>
+					</pre>
+					<p>Function with two parameters and a return value:</p>
+					<pre>
+						<code	data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val multiply: (Int, Int) -> Int = { a, b -> a * b }
+
+							val result = multiply(10, 20)
+						</code>
+					</pre>
+					<p>
+						Common examples of lambda function is the <code class="inline">forEach</code>:
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val cities = listOf("Bangkok", "Barcelona", "Tokyo", "London", "New York")
+
+							cities.forEach { city ->
+								println(city)
+							}
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>Anonymous Function</h3>
+				<div class="summary">
+					Examples
+				</div>
+				<div class="content">
+					Anonymous function with one parameter and no return value:
+					<pre>
+							<code	data-trim data-noescape data-line-numbers class="hljs kotlin">
+								val greet = fun(name: String) {
+									println("Hello, $name!")
+								}
+
+								greet("World")
+							</code>
+						</pre>
+					Anonymous function with two parameters and a return value:
+					<pre>
+							<code	data-trim data-noescape data-line-numbers class="hljs kotlin">
+								val multiply = fun(a: Int, b: Int): Int {
+									return a * b
+								}
+
+								val result = multiply(10, 20)
+							</code>
+						</pre>
+				</div>
+			</section>
+			<section>
+				<h3>Anonymous Function & Lambda Expression</h3>
+				<div class="summary">
+					Usage
+				</div>
+				<div class="content">
+					<p>
+						In summary, lambda expressions are more concise and are typically used for simpler functions,
+						while anonymous functions provide more flexibility with explicit return types and return behavior.
+					</p>
+					<p>
+						There are few use cases for lambda expressions and anonymous functions:
+					</p>
+					<ul>
+						<li>Passing functions as arguments to higher-order functions</li>
+						<li>Returning functions from other functions</li>
+						<li>Defining local functions that are not needed outside the scope of the enclosing function</li>
+					</ul>
+				</div>
+			</section>
+			<section>
+				<h3>Anonymous Function & Lambda Expression</h3>
+				<div class="summary">
+					Usage
+				</div>
+				<div class="content">
+					<p>
+						In this example, the <code class="inline">operation</code> function takes two integers and a lambda function as arguments.
+					</p>
+					<pre>
+						<code	data-trim data-noescape data-line-numbers class="hljs kotlin">
+							fun operation(x: Int, y: Int, func: (Int, Int) -> Int): Int {
+								return func(x, y)
+							}
+						</code>
+					</pre>
+					<p>
+						The most common use way pass the function argument is:
+					</p>
+					<pre>
+						<code	data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val result = operation(10, 20) { x, y -> x + y }
+						</code>
+					</pre>
+					<p>
+						Another possibility is to pass a function reference (it can be a named function or a member function):
+					</p>
+					<pre>
+						<code	data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val multiply: (Int, Int) -> Int = { a, b -> a * b }
+
+							val result = operation(10, 20, multiply)
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>Anonymous Function & Lambda Expression</h3>
+				<div class="summary">
+					Usage
+				</div>
+				<div class="content">
+					<p>
+						You can also return functions from other functions.
+					</p>
+					<pre>
+						<code	data-trim data-noescape data-line-numbers class="hljs kotlin">
+							fun getCalculator(): (Int, Long, Double) -> Double {
+								return { a, b, c -> a + b + c }
+							}
+						</code>
+					</pre>
+					<pre>
+						<code	data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val calculator = getCalculator()
+
+							val result = calculator(1, 2, 3.0)
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>Extension functions</h3>
+				<div class="summary">
+					Extension functions allow adding new methods to existing classes without modifying their source code.
+				</div>
+				<div class="content">
+					<div>
+						<p>
+							Extension functions are one of the most powerful and popular features of Kotlin.
+							You define an extension function by prefixing the function name with the type you want to extend.
+						</p>
+					</div>
+					<br />
+					<div>
+						<strong>Benefits of extension functions include:</strong>
+						<ul>
+							<li>Adding new functionality to existing classes which you may not have access to.</li>
+							<li>Using extension functions to create a more fluent API and DSLs.</li>
+							<li>Improving readability and maintainability of code by encapsulating and naming logic in extension functions.</li>
+							<li>Using extension functions to transform objects into other objects.</li>
+						</ul>
+					</div>
+				</div>
+			</section>
+			<section>
+				<h3>Extension functions: Examples</h3>
+				<div class="summary">
+					Adding new functionality to existing classes which you may not have access to.
+				</div>
+				<div class="content">
+					<p>
+						For example, you can add a new method to the <code class="inline">String</code> class to capitalize the first letter of each word in a sentence.
+					</p>
+					<pre>
+						<code data-trim data-noescape class="hljs kotlin">
+							fun String.capitalizeWords(): String {
+								return this.split(" ").joinToString(" ") { it.capitalize() }
+							}
+						</code>
+					</pre>
+					<p>
+						You can then use this extension function on any <code class="inline">String</code> object.
+					</p>
+					<pre>
+						<code data-trim data-noescape class="hljs kotlin">
+							fun main() {
+								val sentence = "hello world from kotlin"
+								println(sentence.capitalizeWords()) // Output: "Hello World From Kotlin"
+							}
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>Extension functions: Examples</h3>
+				<div class="summary">
+					Using extension functions to create a more fluent API and DSLs.
+				</div>
+				<div class="content">
+					<p>
+						You can use extension functions to create a more fluent API by adding methods to existing classes that allow you to chain method calls together.
+					</p>
+					<pre>
+						<code data-trim data-noescape class="hljs kotlin">
+							data class Person(
+								val name: String,
+								val age: Int,
+								val country: String
+							)
+						</code>
+					</pre>
+					<pre>
+						<code data-trim data-noescape class="hljs kotlin">
+							fun List&lt;Person&gt;.filterByCountry(country: String): List&lt;Person&gt; {
+								return this.filter { it.country.lowercase() == country.lowercase()) }
+							}
+
+							fun List&lt;Person&gt;.sortByName(): List&lt;Person&gt; {
+								return this.sortedBy { person -> person.name }
+							}
+						</code>
+					</pre>
+					<p>
+						You can then use these extension functions to create a more readable and expressive code.
+					</p>
+					<pre>
+						<code data-trim data-noescape class="hljs kotlin">
+							val people = listOf(
+								// list of people
+							)
+
+							val filteredPeople = people
+								.filterByCountry("Thailand")
+								.sortByName()
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>Extension functions: Examples</h3>
+				<div class="summary">
+					Improving readability and maintainability of code by encapsulating and naming logic in extension functions.
+				</div>
+				<div class="content">
+					<pre>
+						<code data-trim data-noescape class="hljs kotlin">
+							data class Person(
+								val name: String,
+								val age: Int,
+								val country: String
+							)
+						</code>
+					</pre>
+					<pre>
+						<code data-trim data-noescape class="hljs kotlin">
+							fun Person.canDrinkBeer(): Boolean {
+								val legalAge = when (country) {
+									"USA" -> 21
+									else -> 18
+								}
+								return age >= legalAge
+							}
+						</code>
+					</pre>
+					<pre>
+						<code data-trim data-noescape class="hljs kotlin">
+							fun main() {
+								val person = Person("John", 21, "USA")
+								println("${person.name} can drink beer: ${person.canDrinkBeer()}")
+							}
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>Extension functions: Examples</h3>
+				<div class="summary">
+					Using extension functions to transform objects into other objects.
+				</div>
+				<div class="content">
+					<pre>
+						<code data-trim data-noescape class="hljs kotlin">
+							data class Person(
+								val name: String,
+								val age: Int,
+								val country: String
+							)
+						</code>
+					</pre>
+					<pre>
+						<code data-trim data-noescape class="hljs kotlin">
+							data class Student(
+								val name: String,
+								val country: String,
+								val dateEnrolled: LocalDate
+							)
+						</code>
+					</pre>
+					<pre>
+						<code data-trim data-noescape class="hljs kotlin">
+							fun Person.toStudent() = Student(
+								name = name,
+								country = country,
+								dateEnrolled = LocalDate.now()
+							)
+						</code>
+					</pre>
+					<pre>
+						<code data-trim data-noescape class="hljs kotlin">
+							val person = Person("John", 21, "USA")
+    						val student = person.toStudent()
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>Scope Functions</h3>
+				<div class="summary">
+					Scope functions allow you to execute a block of code within the context of an object.
+				</div>
+				<div class="content">
+					<p>
+						When you use a scope function, you can access the object's properties and functions without having to use the object's name.
+					</p>
+					<p>
+						The scope functions in Kotlin are
+						<code class="inline">let</code>,
+						<code class="inline">run</code>,
+						<code class="inline">with</code>,
+						<code class="inline">apply</code>,
+						and <code class="inline">also</code>.
+					</p>
+					<p>
+						Each scope function has a different context object and return value, which makes them useful for different use cases.
+					</p>
+					<br />
+					<table style="font-size: 80%">
+						<thead>
+						<tr>
+							<td><strong>Function</strong></td>
+							<td><strong>Context object</strong></td>
+							<td><strong>Return value</strong></td>
+							<td><strong>Usage</strong></td>
+						</tr>
+						</thead>
+						<tbody>
+						<tr>
+							<td><code class="inline">let</code></td>
+							<td><strong>it</strong></td>
+							<td>Result of the lambda expression</td>
+							<td>Execute a block of code on the result of a call chain or to work with nullable objects</td>
+						</tr>
+						<tr>
+							<td><code class="inline">run</code></td>
+							<td><strong>this</strong></td>
+							<td>Result of the lambda expression</td>
+							<td>Often used when you want to perform multiple operations on an object and return a result</td>
+						</tr>
+						<tr>
+							<td><code class="inline">with</code></td>
+							<td><strong>this</strong></td>
+							<td>Result of the lambda expression</td>
+							<td>Execute a block of code on an object</td>
+						</tr>
+						<tr>
+							<td><code class="inline">apply</code></td>
+							<td><strong>this</strong></td>
+							<td>The context object itself</td>
+							<td>Typically used for initializing or configuring an object.</td>
+						</tr>
+						<tr>
+							<td><code class="inline">also</code></td>
+							<td><strong>it</strong></td>
+							<td>The context object itself</td>
+							<td>Perform additional operations on an object without changing the object itself</td>
+						</tbody>
+					</table>
+				</div>
+			</section>
+			<section>
+				<h3>let</h3>
+				<div class="summary">
+					Execute a block of code on the result of a call chain or to work with nullable objects.
+				</div>
+				<div class="content">
+					<p>
+						The context object of the <code class="inline">let</code> function is referred to as <code class="inline">it</code>
+						and the return value is the result of the lambda expression.
+					</p>
+					<p>
+						The <code class="inline">let</code> function is particularly useful when used with a nullable types,
+						because it allows us to chain multiple operations on a nullable object.
+					</p>
+					<br />
+					<strong>Example:</strong> using <code class="inline">let</code> to work with nullable objects
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							data class Message(
+								val text: String?,
+								var acknowledged: Boolean = false
+							) {
+								fun send(): Message {
+									TODO("Response message")
+								}
+							}
+						</code>
+					</pre>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val message = Message(text = "Hello")
+
+							val response = message.send()
+
+							val text = response.text?.let {
+								println("Received message: $it")
+							}
+
+							// process text
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>run</h3>
+				<div class="summary">
+					Often used when you want to perform multiple operations on an object and return a result.
+				</div>
+				<div class="content">
+					<p>
+						The context object of the <code class="inline">run</code> function is referred to as <code class="inline">this</code>
+						and the return value is the result of the lambda expression.
+					</p>
+					<strong>Example 1:</strong> Using run to initialize an object
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							data class Message(
+								val text: String?,
+								var acknowledged: Boolean = false
+							) {
+								fun send(): Message {
+									TODO("Response message")
+								}
+							}
+						</code>
+					</pre>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val message = Message(text = "Hello").run {
+								if (send().acknowledged) {
+									println("Message acknowledged")
+								} else {
+									println("Message not acknowledged")
+								}
+								this
+							}
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>with</h3>
+				<div class="summary">
+					User when you want to execute a block of code on an object.
+				</div>
+				<div class="content">
+					Example 1: Using run to initialize an object
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							data class Message(
+								val text: String?,
+								var acknowledged: Boolean = false
+							) {
+								fun send(): Message {
+									TODO("Response message")
+								}
+							}
+						</code>
+					</pre>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val message =  Message(text = "Hello")
+
+							with(message) {
+								if (send().acknowledged) {
+									println("Message acknowledged")
+								} else {
+									println("Message not acknowledged")
+								}
+							}
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>apply</h3>
+				<div class="summary">
+					Typically used for initializing or configuring an object.
+				</div>
+				<div class="content">
+					<strong>Example 1:</strong> Using apply to initialize an object
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							data class Message(
+								val text: String?,
+								var acknowledged: Boolean = false
+							) {
+								fun send(): Message {
+									TODO("Response message")
+								}
+							}
+						</code>
+					</pre>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							   val message =  Message(text = "Hello").apply {
+									acknowledged = true
+								}
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>also</h3>
+				<div class="summary">
+					used when you want to perform additional operations on an object without changing the object itself.
+				</div>
+				<div class="content">
+					<strong>Example 1:</strong> Using also to print the object
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							data class Message(
+								val text: String?,
+								var acknowledged: Boolean = false
+							) {
+								fun send(): Message {
+									TODO("Response message")
+								}
+							}
+						</code>
+					</pre>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val message = Message(text = "Hello")
+								.also { println(it)  }
+
+							val response = message.send()
+								.also { println(it)  }
+						</code>
+					</pre>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
 				<h2>Next Lesson</h2>
 			</section>
 			<section>
 				<h3>Next Lesson</h3>
-				<div class="content">
+				<div class="content content-center">
 					<p>
-						In the next lesson, we will cover <strong>Classes and Objects</strong>.
+						The topic of the next lesson will be <strong>Object-Oriented Programming in Kotlin</strong>.
 					</p>
 					<p>
-						We will learn about classes, objects, inheritance, interfaces, and more.
-					</p>
-					<p>
-						Stay tuned!
+						We will also cover Classes and Objects.
 					</p>
 				</div>
-		</section>
+			</section>
 	</div>
 </div>
 
