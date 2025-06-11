@@ -822,14 +822,34 @@
 			</section>
 			<section>
 				<h3>Data Models</h3>
-				<div class="summary">TODO</div>
-				<div class="content">TODO</div>
+				<div class="summary">
+					A data model is a conceptual representation of how data is structured and related in your application.
+				</div>
+				<div class="content">
+					<p>
+						A data model defines the shape and structure of data in terms of classes, properties, and relationships.
+					</p>
+					<ul>
+						<li>
+							In object-oriented programming, data models are typically expressed using classes
+							that reflect real-world entities (e.g., <code>User</code>, <code>User</code>, <code>Product</code>).
+						</li>
+						<li>
+							A good data model serves as a bridge between:
+							<ul>
+								<li>the <strong>business logic</strong> (how the system behaves),</li>
+								<li>the <strong>data storage</strong> (like a database),</li>
+								<li>and the <strong>API</strong> layer (how other systems communicate with it).</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
 			</section>
 			<section>
 				<section>
 					<h3>Data Classes</h3>
 					<div class="summary">
-						Data classes are a special type of class in Kotlin that are used to represent data.
+						Kotlin provides a special kind of class called a <code class="inline">data class</code> to make data modeling more concise and expressive.
 					</div>
 					<div class="content">
 						<p>
@@ -850,10 +870,10 @@
 						</code>
 					</pre>
 						<p>
-							There are few rules for data classes:
+							There are a few rules for data classes:
 						</p>
 						<ul>
-							<li>Primary constructor must have at least one parameter.</li>
+							<li>The primary constructor must have at least one parameter.</li>
 							<li>Primary constructor must have <code class="inline">val</code> or <code class="inline">var</code> keyword.</li>
 							<li>Data classes cannot be abstract, open, sealed, or inner.</li>
 							<li>Data classes cannot inherit from other classes.</li>
@@ -1037,23 +1057,6 @@
 				</div>
 			</section>
 		</section>
-
-		<section>
-			<section data-background-gradient="var(--kotlin-gradient)">
-				<em>Practice</em>
-				<h2>Data Models & Encapsulation</h2>
-			</section>
-			<section>
-				<h3>Practice</h3>
-				<div class="summary">
-					TODO
-				</div>
-				<div class="content">
-					TODO
-				</div>
-			</section>
-		</section>
-
 		<section>
 			<section data-background-gradient="var(--kotlin-gradient)">
 				<em>OOP Principle #2</em>
@@ -1442,12 +1445,6 @@
 		</section>
 		<section>
 			<section data-background-gradient="var(--kotlin-gradient)">
-				<em>Practice</em>
-				<h2>Inheritance</h2>
-			</section>
-		</section>
-		<section>
-			<section data-background-gradient="var(--kotlin-gradient)">
 				<em>OOP Principle #3</em>
 				<h2>Polymorphism</h2>
 				<p></p>
@@ -1579,12 +1576,6 @@
 						</tbody>
 					</table>
 				</div>
-			</section>
-		</section>
-		<section>
-			<section data-background-gradient="var(--kotlin-gradient)">
-				<em>Practice</em>
-				<h2>Polymorphism</h2>
 			</section>
 		</section>
 		<section>
@@ -1970,8 +1961,28 @@
 		</section>
 		<section>
 			<section data-background-gradient="var(--kotlin-gradient)">
-				<em>Practice</em>
-				<h2>Abstraction</h2>
+				<h2>Next Lesson</h2>
+			</section>
+			<section>
+				<h3>Next Lesson</h3>
+				<div class="content">
+					<p>
+						In the following lesson, we will learn fundamentals of <strong>Testing</strong> software
+					</p>
+					<p>
+						We will cover:
+					</p>
+					<ul>
+						<li>What is testing?</li>
+						<li>Why do we test?</li>
+						<li>Types of tests</li>
+						<li>Levels of tests</li>
+						<li>Test design techniques</li>
+					</ul>
+					<p>
+						We will also write some tests using <strong>Kotest</strong>.
+					</p>
+				</div>
 			</section>
 		</section>
 	</div>
