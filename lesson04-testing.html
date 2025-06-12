@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="./src/dist/theme/kotlin.css">
 
 	<!-- Theme used for syntax highlighted code -->
-	<link rel="stylesheet" href="plugin/highlight/vs.css">
+	<link rel="stylesheet" href="./src/plugin/highlight/vs.css">
 </head>
 <body>
 <div class="reveal">
@@ -99,7 +99,7 @@
 				</div>
 				<div class="content">
 					<p>
-						Several login frameworks are available in Java, such as <strong>Log4j</strong>, <strong>Logback</strong> and <strong>java.common.logging</strong>.
+						Several logging frameworks are available in Java, such as <strong>Log4j</strong>, <strong>Logback</strong> and <strong>java.common.logging</strong>.
 					</p>
 					<p>
 						One of the popular Kotlin-specific logging frameworks is <strong>Kotlin-logging</strong>.
@@ -149,7 +149,6 @@
 					<p>
 						Add a Gradle dependency for <strong>Kotlin-logging</strong> and use it in your project by adding
 						the following to the <strong>build.gradle.kts</strong> file dependencies section, so it might look like:
-						So it might look like this:
 					</p>
 					<pre>
 						<code data-trim data-noescape class="hljs kotlin">
@@ -537,7 +536,7 @@
 						<strong>Title:</strong> User is blocked after 3 failed login attempts<br />
 					</p>
 					<p>
-						<strong>Pre-Conditios:</strong><br />
+						<strong>Pre-Conditions:</strong><br />
 						User test.user@harbourspace.com exists and is not blocked.
 					</p>
 					<p>
@@ -811,7 +810,7 @@
 				<div class="content">
 					<p>
 						<h4>Unit</h4>
-						Unit is he smallest testable parts of the software, such as individual method, function or objects.
+						Unit is the smallest testable parts of the software, such as individual method, function or objects.
 					</p>
 					<br />
 					<p>
@@ -911,91 +910,178 @@
 				</div>
 			</section>
 		</section>
-
 		<section>
 			<section data-background-gradient="var(--kotlin-gradient)">
-				<h2>JUnit</h2>
+				<h2>Kotest</h2>
 			</section>
 			<section>
-				<h3>JUnit</h3>
+				<h3>Testing Frameworks</h3>
 				<div class="summary">
-					<strong>JUnit</strong> of the most commonly used testing frameworks for Java and also for Kotlin.
+					Unit testing framework is a set of tools that provides features helpful for writing, executing and evaluating test cases.
 				</div>
 				<div class="content">
 					<p>
-						Unit testing framework is a set of tools that provides features to:
+						Main features of a unit testing framework include:
 					</p>
 					<ul>
 						<li>Write test cases</li>
-						<li>Executed test cases</li>
+						<li>Execute test cases</li>
 						<li>Evaluate test results</li>
 					</ul>
 					<p>
-						There are other of unit testing frameworks available in Kotlin, such as <strong>Kotest</strong><br />
+						There are several options available for Kotlin, such as <strong>JUnit</strong>, which is a Java framework,
+						and <strong>Kotest</strong>.
 					</p>
+					<ul>
+						<li><strong>JUnit</strong> is one of the most commonly used testing frameworks for Java and also for Kotlin.</li>
+						<li><strong>Kotest</strong> is a Kotlin-specific testing framework.</li>
+					</ul>
 					<p>
-						The concepts that we will learn with JUnit generally apply to all unit testing frameworks.
+						We will use <strong>Kotest</strong> in this course, but the concepts that we will learn with generally apply to all unit testing frameworks.
 					</p>
 				</div>
 			</section>
-
 			<section>
-				<h3>JUnit Test</h3>
+				<h3>Kotest</h3>
+				<div class="summary">
+					<strong>Kotest</strong> is a Kotlin-specific testing framework that provides a rich set of features for writing tests in a more expressive and idiomatic way.
+				</div>
 				<div class="content">
+					<p>
+						It is actually based on the <strong>JUnit</strong>, so it can be used alongside JUnit tests.
+					</p>
+					<p>
+						It supports various styles of testing, such as <strong>behavior-driven development (BDD)</strong>, <strong>data-driven testing</strong>, and <strong>property-based testing</strong>.
+					</p>
+				</div>
+			</section>
+			<section>
+				<h3>Tests written in Kotest</h3>
+				<div class="summary">
+					Kotlin provides a library of functions and abstract classes you can use to implement tests.
+				</div>
+				<div class="content">
+					<p>
+						There are several styles of writing tests in <strong>Kotest</strong>, which you can chose by extending a specific Kotest class,
+						or using a specific function.
+					</p>
+
+					<pre>
+						<code data-trim data-noescape class="hljs kotlin">
+							class ExampleTest : FunSpec({
+								test("test name") {
+									// test code
+								}
+							})
+						</code>
+					</pre>
+					<p>
+						A more realistic test might look like this:
+					</p>
+					<pre>
+						<code data-trim data-noescape class="hljs kotlin">
+							package com.motycka.edu.lesson04
+
+							import com.motycka.edu.lesson04.Coffee.*
+							import io.kotest.core.spec.style.FunSpec
+							import io.kotest.core.spec.style.ShouldSpec
+							import io.kotest.core.spec.style.StringSpec
+							import io.kotest.matchers.shouldBe
+
+							class PriceCalculatorTest : FunSpec({
+
+								val priceCalculator = PriceCalculator(applyDiscount = 4)
+
+								test("should apply discount for 4 coffees - cheapest one free") {
+									val order = listOf(ESPRESSO, ESPRESSO, CAPPUCCINO, AMERICANO)
+
+									val expectedTotal = order.sumOf { it.price } - AMERICANO.price
+
+									priceCalculator.calculatePrice(order).shouldBe(expectedTotal)
+								}
+							})
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>Kotest styles</h3>
+				<div class="summary">
+					As mentioned <strong>Kotest</strong> supports several styles of writing tests.
+				</div>
+				<div class="content">
+					<p>
+						<strong>Kotest</strong> supports several styles of writing tests, such as:
+					</p>
 					<ul>
-						<li>JUnit test, generally, is a class that contains one or more test methods.</li>
-						<li>Each test method is a method annotated with <code class="inline">@Test</code> annotation.</li>
 						<li>
-							Besides being annotated with <code class="inline">@Test</code> annotation, in order for a method considered a test,
-							<strong>it must contain at least one assertion</strong>.
+							<strong>FunSpec</strong> - a style that uses functions to define tests.
+							<pre>
+								<code data-trim data-noescape class="hljs kotlin">
+									class ExampleFunTest : FunSpec({
+										test("test name") {
+											// test code
+										}
+									})
+								</code>
+							</pre>
 						</li>
-						<li>By convention, test classes are usually suffixed with <code class="inline">Test</code></li>
 						<li>
-							While program sources are plces in <code class="inline">/src/main/kotlin</code> directory,
-							test sources are conventionally placed in <code class="inline">/src/test/kotlin</code> directory.
+							<strong>StringSpec</strong> - a style that uses strings to define tests.
+							<pre>
+								<code data-trim data-noescape class="hljs kotlin">
+									class ExampleStringTest : StringSpec({
+										"test name" {
+											// test code
+										}
+									})
+								</code>
+							</pre>
 						</li>
 						<li>
-							It is important, that the test code is as readable as possible.
-							Therefore, good naming conventions are essential.
+							<strong>ShouldSpec</strong> - a style that uses "should" to define tests.
+							<pre>
+								<code data-trim data-noescape class="hljs kotlin">
+									class ExampleTest : ShouldSpec({
+										should("test name") {
+											// test code
+										}
+									})
+								</code>
+							</pre>
 						</li>
 					</ul>
 				</div>
 			</section>
-
 			<section>
-				<h3>JUnit Test</h3>
+				<h3>Assertions in Kotest</h3>
 				<div class="summary">
-					JUnit tests are just regular Java classes, where methods annotated with <code class="inline">@Test</code>
-					are treated little different from regular methods by the testing framework.
+					Assertions are functions that evaluate the actual value against the expected value.
+					When the actual value does not match the expected value, the assertion fails.
 				</div>
 				<div class="content">
-					<p>
-						Assertions are just regular method calls, where the testing framework evaluates the result of the assertion.
-						In JUnit, we can use <code class="inline">Assertions</code> class to make assertions.
-					</p>
+					Example of assertion in Kotest:
 					<pre>
 						<code data-trim data-noescape class="hljs kotlin">
-							package lesson03
+							number.shouldBeGreaterThan(3.0)
+							number.shouldBeGreaterThanOrEqualTo(3.15)
+							number.shouldBeLessThan(4.0)
+							number.shouldBeBetween(a = 3.0, b = 4.0, tolerance = 0.01)
 
-							import org.junit.jupiter.api.Assertions
-							import org.junit.jupiter.api.DisplayName
-							import org.junit.jupiter.api.Test
+							string.shouldBe("Hello, Kotest!")
+							string.shouldNotBeNull()
+							string.shouldNotBeEmpty()
 
-							// By convention the name of the test class should be the name of the class under test + "Test"
-							class TemperatureConverterTest {
+							list.shouldBe(listOf(1, 2, 3, 4, 5))
+							list.shouldHaveSize(5)
+							list.shouldNotBeEmpty()
+							list.shouldBeSorted()
+							list.shouldBeMonotonicallyIncreasing()
+							list.shouldContain(2)
+							list.shouldContainAll(1, 2, 3)
 
-								@Test
-								@DisplayName("should convert Celsius to Fahrenheit - 0C = 32F")
-								fun testConvertCelsiusToFahrenheit() {
-									Assertions.assertEquals(32.0, TemperatureConverter.toFahrenheit(0.0));
-								}
-
-								// different style of test name
-								@Test
-								fun `should convert Fahrenheit to Celsius - 32F = 0C`() {
-									Assertions.assertEquals(0.0, TemperatureConverter.toCelsius(32.0));
-								}
-							}
+							booleanValue.shouldBeTrue()
+							booleanValue.shouldBeFalse()
 						</code>
 					</pre>
 				</div>
@@ -1036,33 +1122,60 @@
 				</div>
 			</section>
 			<section>
-				<h4>Descriptive tests</h4>
+				<h3>Descriptive tests</h3>
 				<div class="summary">
 					One of the ways you can make your test code easier to understand is using descriptive names and well-designed assertions.
 				</div>
 				<div class="content">
 					<p>
-						With <strong>JUnit</strong>, we can use <code class="inline">@DisplayName</code> annotation to give our tests descriptive name.
-						Notice that the test names express state of the SUT, but also what we expect from the SUT.
+						<strong>Kotest</strong> supports nesting of tests within contexts.
+						This allows you to logically group tests together and provide more context and better readability
+						in test results.
 					</p>
 					<pre>
 						<code data-trim data-noescape class="hljs kotlin">
-							@Test
-							@DisplayName("should convert Celsius to Fahrenheit - 0C = 32F")
-							fun testConvertCelsiusToFahrenheit() {
-								Assertions.assertEquals(32.0, TemperatureConverter.toFahrenheit(0.0));
-							}
-						</code>
-					</pre>
-					<p>
-						Another option is to use Kotlin's string templates to make test names more descriptive.
-					</p>
-					<pre>
-						<code data-trim data-noescape class="hljs kotlin">
-							@Test
-							fun `should convert Fahrenheit to Celsius - 32F = 0C`() {
-								Assertions.assertEquals(0.0, TemperatureConverter.toCelsius(32.0));
-							}
+							class PriceCalculatorTests: StringSpec({
+
+								"Price Calculator" {
+
+									"should not allow discount less than 2" {
+										val exception = kotlin.runCatching { PriceCalculator(applyDiscount = 1) }
+										exception.isFailure shouldBe true
+									}
+								}
+
+								"when calculating with discount on every 4th coffee" {
+
+									val priceCalculator = PriceCalculator(applyDiscount = 4)
+
+									"should apply no discount for 3 coffees" {
+										val order = listOf(ESPRESSO, CAPPUCCINO, AMERICANO)
+										val expectedTotal = order.sumOf { it.price }
+
+										priceCalculator.calculatePrice(order).shouldBe(expectedTotal)
+									}
+
+									"should apply discount for 4 coffees - cheapest one is free" {
+										val order = listOf(ESPRESSO, ESPRESSO, CAPPUCCINO, AMERICANO)
+										val expectedTotal = order.sumOf { it.price } - AMERICANO.price
+
+										priceCalculator.calculatePrice(order).shouldBe(expectedTotal)
+									}
+
+									"should apply discount for 9 coffees - cheapest two are free" {
+										val order = listOf(
+											ESPRESSO,
+											CAPPUCCINO, CAPPUCCINO, CAPPUCCINO,
+											FLAT_WHITE, FLAT_WHITE,
+											LATTE, LATTE,
+											AMERICANO
+										)
+										val expectedTotal = order.sumOf { it.price } - AMERICANO.price - ESPRESSO.price
+
+										priceCalculator.calculatePrice(order).shouldBe(expectedTotal)
+									}
+								}
+							})
 						</code>
 					</pre>
 				</div>
@@ -1074,34 +1187,38 @@
 				</div>
 				<div class="content">
 					<p>
-						To make understanding test results easier, we can use <code class="inline">Assertions</code> class methods in a way that when they fail, the output is as descriptive of the problem as possible.
-					</p>
-					<p>
-						For example, these two assertions would both work, the first one provides much clearer information
-						when it fails.
+						To make understanding test results easier, we should choose the right assertion methods that will give us the most information about the failure.
+						All of these assertions would work, but the first two provide much clearer information
 					</p>
 					<strong>Example 1</strong>
 					<pre>
 						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
-							@Test
-							fun testConvertCelsiusToFahrenheit() {
-								Assertions.assertEquals(32.1, TemperatureConverter.toFahrenheit(0.0));
-							}
+							number.shouldBe(100.0)
 						</code>
 					</pre>
 					<pre>
 						<code data-trim data-noescape class="hljs text">
-							Expected :32.1
-							Actual   :32.0
+							expected:<100.0> but was:<99.0>
+							Expected :100.0
+							Actual   :99.0
+						</code>
+					</pre>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							string.shouldBe("Hello, Kotlin!")
+						</code>
+					</pre>
+					<pre>
+						<code data-trim data-noescape class="hljs text">
+							expected:<"Hello, Kotlin!"> but was:<"Hello, Kotest!">
+							Expected :"Hello, Kotlin!"
+							Actual   :"Hello, Kotest!"
 						</code>
 					</pre>
 					<strong>Example 2</strong>
 					<pre>
 						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
-							@Test
-							fun testConvertCelsiusToFahrenheit() {
-								Assertions.assertTrue(32.1 == TemperatureConverter.toFahrenheit(0.0));
-							}
+							(string == "Hello, Kotlin!").shouldBeTrue()
 						</code>
 					</pre>
 					<pre>
@@ -1119,33 +1236,75 @@
 				</div>
 				<div class="content">
 					<p>
-						Several annotations can be used to control the test lifecycle.
+						Several annotations can be used to control the test lifecycle. They might be specific to the test style you chose, but in general they look like this.
 						These annotations are: <br />
-						<code class="inline">@BeforeAll</code>, <code class="inline">@BeforeEach</code>, <code class="inline">@AfterEach</code> and <code class="inline">@AfterAll</code>
 					</p>
+					<pre>
+						<code data-trim data-noescape class="hljs kotlin">
+							class ExampleSpec : FunSpec({
+
+								beforeTest {
+									println("this block executes before each test")
+								}
+
+								afterTest {
+									println("this block executes after each test")
+								}
+
+								beforeSpec {
+									println("this block executes before spec")
+								}
+
+								afterSpec {
+									println("this block executes after spec")
+								}
+
+								test("test name") {
+									// test code
+								}
+							})
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>JUnit</h3>
+				<div class="summary">
+					JUnit is a Java-based testing framework widely used for unit testing in Java and Kotlin.
+				</div>
+				<div class="content">
 					<p>
-						<strong>
-							When JUnit test case is started:
-						</strong>
+						Here is an example of a simple JUnit test written in Kotlin.
 					</p>
-					<ol>
-						<li>JUnit Test class gets loaded and scanned for <code class="inline">@Test</code> annotation marking individual test cases</li>
-						<li><code class="inline">@BeforeAll</code> - is run before all <code class="inline">@Test</code> methods</li>
-						<li><code class="inline">@BeforeEach</code> - is run before each <code class="inline">@Test</code> methods</li>
-						<li><code class="inline">@AfterEach</code> - is run after each <code class="inline">@Test</code> methods</li>
-						<li><code class="inline">@AfterAll</code> - is run after all <code class="inline">@Test</code> methods</li>
-					</ol>
-					<p>
-						Note that <code class="inline">@Test</code> methods may run in any order, or may run in parallel.
-					</p>
+					<pre>
+						<code data-trim data-noescape class="hljs kotlin">
+							import org.junit.jupiter.api.Assertions
+							import org.junit.jupiter.api.DisplayName
+							import org.junit.jupiter.api.Test
+
+							// By convention the name of the test class should be the name of the class under test + "Test"
+							class TemperatureConverterTest {
+
+								@Test
+								@DisplayName("should convert Celsius to Fahrenheit - 0C = 32F")
+								fun testConvertCelsiusToFahrenheit() {
+									Assertions.assertEquals(32.0, TemperatureConverter.toFahrenheit(0.0));
+								}
+
+								// different style of test name
+								@Test
+								fun `should convert Fahrenheit to Celsius - 32F = 0C`() {
+									Assertions.assertEquals(0.0, TemperatureConverter.toCelsius(32.0));
+								}
+							}
+						</code>
+					</pre>
 				</div>
 			</section>
 			<section>
 				<h3>JUnit Test Lifecycle</h3>
 				<pre>
 					<code data-trim data-noescape data-line-numbers class="hljs kotlin">
-						package lesson03
-
 						import org.junit.jupiter.api.AfterAll
 						import org.junit.jupiter.api.AfterEach
 						import org.junit.jupiter.api.Assertions
@@ -1199,7 +1358,18 @@
 		</section>
 		<section>
 			<section data-background-gradient="var(--kotlin-gradient)">
-				<h2>Practice</h2>
+				<h2>Next Lesson</h2>
+			</section>
+			<section>
+				<h3>Next Lesson</h3>
+				<div class="content">
+					<p>Introduction to application development in <strong>Ktor</strong></p>
+					<ul>
+						<li>APIs</li>
+						<li>Application layers and models</li>
+						<li>Routing and controllers</li>
+					</ul>
+				</div>
 			</section>
 		</section>
 	</div>
