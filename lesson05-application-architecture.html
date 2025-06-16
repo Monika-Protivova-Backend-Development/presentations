@@ -883,23 +883,6 @@
 				<em>using Ktor</em>
 			</section>
 			<section>
-				<h3>Application</h3>
-				<div class="summary">
-					Let's get started building application using Ktor.
-				</div>
-				<div class="content">
-					<p>
-						As any developer, you would start by looking at <a href="https://ktor.io/docs/welcome.html" target="_blank">Ktor documentation</a>.
-					</p>
-					<p>
-						I have already created a <strong>Ktor</strong> project for you, which you can find <strong>TODO</strong>.
-					</p>
-					<p>
-						The repository already contains a <code class="inline">build.gradle.kts</code> file with all the necessary dependencies.
-					</p>
-				</div>
-			</section>
-			<section>
 				<h3>What is Ktor</h3>
 				<div class="summary">
 					Ktor is a framework for building asynchronous servers and clients in connected systems using the Kotlin programming language.
@@ -917,6 +900,9 @@
 						We will briefly look at <strong>Kotlin Coroutines</strong> in the next lesson,
 						for now, don't worry about understanding them.
 					</p>
+					<blockquote>
+						As any developer, you would start by looking at <a href="https://ktor.io/docs/welcome.html" target="_blank">Ktor documentation</a>.
+					</blockquote>
 				</div>
 			</section>
 			<section>
@@ -949,7 +935,47 @@
 					Here is a simple application example with json serialization and simple routing.
 				</div>
 				<div class="content">
-					TODO
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							fun main() {
+
+								val helloService = HelloService(HelloRepository())
+
+								embeddedServer(Netty, port = 8080, host = "0.0.0.0") {
+
+									install(ContentNegotiation) {
+										json(Json {
+											prettyPrint = true
+											isLenient = true
+										})
+									}
+
+									routing {
+
+										route("/api") {
+
+											route("/hello") {
+
+												get {
+													val name = call.request.queryParameters["name"] ?: "Student"
+													val locale = call.request.queryParameters["locale"] ?: "en"
+													val localizedHello = helloService.getLocalizedHello(name, locale)
+													call.respond(localizedHello)
+												}
+
+												post {
+													val request = call.receive&lt;HelloRequest&gt;()
+													val localizedHello = helloService.getLocalizedHello(request.name, request.locale)
+													call.respond(localizedHello)
+												}
+											}
+										}
+									}
+								}.start(wait = true)
+							}
+
+						</code>
+					</pre>
 				</div>
 			</section>
 		</section>
