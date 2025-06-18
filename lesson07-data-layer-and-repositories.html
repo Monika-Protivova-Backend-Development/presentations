@@ -20,7 +20,7 @@
 			<i>Week 2 | Lesson 7</i>
 			<h1>Data Layer</h1>
 			<em>Repositories</em><br />
-			<em>Testing repositories</em><br />
+			<em>Testing Application Layers</em><br />
 		</section>
 
 		<section>
@@ -28,19 +28,567 @@
 				<h2>Repositories</h2>
 			</section>
 			<section>
-				<h3>Repositories</h3>
+				<h3>Repository</h3>
 				<div class="summary">
-					TODO
+					The repository layer is responsible for managing the data access logic and performing CRUD <sub>(Create, Read, Update, Delete) </sub> operations on the database.
 				</div>
 				<div class="content">
-					TODO
+					<p>
+						Repository is typically a layer between service and data storage (e.g., database).
+					</p>
+					<p>
+						It provides methods for interacting with the data, such as retrieving, creating, updating, and deleting data.
+						These methods don't contain any business logic, but rather focus on data access and manipulation.
+					</p>
+					<p>
+						Repositories are often implemented using some data access technology,
+						such as an ORM (Object-Relational Mapping) framework or a SQL library.
+					</p>
+					<p>
+						Service layer uses repository to access data and perform business logic.
+					</p>
+				</div>
+			</section>
+			<section>
+				<h3>Data Access Frameworks</h3>
+				<div class="summary">
+					There is a variety of ways and frameworks you can use to implement the repository layer.
+				</div>
+				<div class="content">
+					<ul>
+						<li>
+							<strong class="highlight">Exposed</strong><br />
+							Kotlin SQL framework that provides a DSL for building SQL queries and mapping results to Kotlin objects.
+							<br />
+							<br />
+						</li>
+						<li>
+							<strong class="highlight">JOOQ</strong><br />
+							Java SQL framework that provides a fluent API for building SQL queries and mapping results to Java objects.
+							It supports generating code from database schemas, allowing for typesafe SQL queries.
+							<br />
+							<br />
+						</li>
+						<li>
+							<strong class="highlight">SQLDelight</strong><br />
+							Kotlin Multiplatform library that generates typesafe Kotlin APIs from SQL statements.
+							<br />
+							<br />
+						</li>
+						<li>
+							<strong class="highlight">Raw SQL</strong><br />
+							You can use raw SQL queries to interact with the database directly.
+							I would advise this only for simple applications or for specific cases where you need full control over the SQL queries.
+							<br />
+							<br />
+						</li>
+						<li>
+							<strong class="highlight">and more ..</strong>
+							<br />
+							<br />
+						</li>
+					</ul>
+				</div>
+			</section>
+			<section>
+				<h3>Exposed Framework</h3>
+				<div class="summary">
+					Exposed is a Kotlin SQL framework that provides a DSL for building SQL queries and mapping results to Kotlin objects.
+				</div>
+				<div class="content">
+					<ul>
+						<li>
+							It allows you to define your database schema using Kotlin code and provides a fluent API for querying the database.
+						</li>
+						<li>
+							It is developed by JetBrains, the same company that created Kotlin, and is designed to be used with Kotlin applications.
+						</li>
+						<li>
+							The Exposed uses a DSL (Domain Specific Language) to build SQL queries and map results to Kotlin objects.
+						</li>
+						<li>
+							It also provides a DAO (Data Access Object) layer that allows you to define your database schema and perform CRUD operations
+							in an object-oriented way, similar to how you would work with an ORM (Object-Relational Mapping) framework.
+						</li>
+						<li>
+							Optionally, you can also write raw SQL queries using Exposed, which allows you to have full control over the SQL queries while still benefiting from the Kotlin type system and IDE support.
+						</li>
+						<li>
+							It uses JDBC (Java Database Connectivity) under the hood to interact with the database.
+						</li>
+					</ul>
+				</div>
+			</section>
+			<section>
+				<h3>Implementing Repositories</h3>
+				<div class="summary">
+					In Exposed
+				</div>
+				<div class="content">
+					<p>
+						To implement a repository in Exposed, you typically define an interface that specifies the methods for accessing the data,
+						and then create a class that implements this interface using Exposed's DSL or DAO layer.
+					</p>
+					<p>
+						We will not define an interface yet, as we will cover this when we talk about dependency injection.
+					</p>
+				</div>
+			</section>
+			<section>
+				<h3>Implementing Repositories</h3>
+				<div class="summary">
+					Defining a schema and a table in Exposed
+				</div>
+				<div class="content">
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							object MenuItemTable : LongIdTable("menu_item") {
+								val name = text("name")
+								val description = text("description")
+								val price = double("price")
+								val isDeleted = bool("is_deleted").default(false)
+							}
+
+							object OrderTable : LongIdTable("menu_item") {
+								val customerName = text("customer_name")
+								val orderDate = datetime("order_date")
+								val totalAmount = double("total_amount")
+							}
+
+							object OrderItemTable : Table("order_item") {
+								val menuItemId = long("id").references(MenuItemTable.id)
+								val orderId = long("order_id").references(OrderTable.id)
+							}
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>Implementing Repositories</h3>
+				<div class="summary">
+					Defining a DTO (Data Transfer Object) in Exposed
+				</div>
+				<div class="content">
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							class MenuItemDAO(id: EntityID&lt;Long&gt;) : LongEntity(id) {
+							var name by MenuItemTable.name
+							var description by MenuItemTable.description
+							var price by MenuItemTable.price
+							var isDeleted by MenuItemTable.isDeleted
+
+							companion object : LongEntityClass&lt;MenuItemDAO&gt;(MenuItemTable)
+
+								fun toDTO(): MenuItemDTO {
+									return MenuItemDTO(
+										id = id.value,
+										name = name,
+										description = description,
+										price = price,
+										isDeleted = isDeleted
+									)
+								}
+							}
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>Implementing Repositories</h3>
+				<div class="summary">
+					Implementing a repository layer class.
+				</div>
+				<div class="content">
+					<p>
+						The actual repository to be used in the application will implement the methods for accessing the data,
+						but it is actually agnostic to the underlying data access technology.
+					</p>
+					<p>
+						This is why it is preferable to define an interface for the repository.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							interface MenuRepository {
+								suspend fun addMenuItem(item: MenuItemDTO): MenuItemDTO
+								suspend fun getMenuItemById(id: MenuItemId): MenuItemDTO?
+								suspend fun getAllMenuItems(filter: String? = null): Set&lt;MenuItemDTO&gt;
+								suspend fun updateMenuItem(updatedItem: MenuItemDTO): Int
+								suspend fun deleteMenuItem(id: MenuItemId): Int
+							}
+						</code>
+					</pre>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							class MenuRepositoryImpl: MenuRepository {
+
+								override suspend fun addMenuItem(item: MenuItemDTO): MenuItemDTO = suspendTransaction {
+									MenuItemDAO.new {
+										name = item.name
+										description = item.description
+										price = item.price
+										isDeleted = false
+									}.toDTO()
+								}
+
+								override suspend fun getMenuItemById(id: MenuItemId): MenuItemDTO? = suspendTransaction {
+									MenuItemDAO.find { (MenuItemTable.id eq id) and (MenuItemTable.isDeleted eq false) }
+										.firstOrNull()
+										?.toDTO()
+								}
+							}
+						</code>
+					</pre>
 				</div>
 			</section>
 		</section>
-
 		<section>
 			<section data-background-gradient="var(--kotlin-gradient)">
-				<h2>Practice</h2>
+				<h2>Testing of Application Layers</h2>
+			</section>
+			<section>
+				<h3>General Idea</h3>
+				<div class="summary">
+					<ul>
+						<li>Testing units in isolation</li>
+						<li>Testing layers in isolation</li>
+						<li>Testing integrations</li>
+					</ul>
+				</div>
+				<div class="content">
+					<p>
+						This approach allows us in detail test each part of the application, verifying it's core functionality,
+						without the overhead of testing the entire application at once.
+					</p>
+					<p>
+						Interaction between layers and components can be tested using mocks and stubs.
+					</p>
+					<p>
+						Integration tests can be used to verify real interaction between different layers and components of the application,
+						but because we have tested each part in isolation, we don't need to cover all functionality so deeply.
+					</p>
+					<p>
+						The aim is to acchieve maximum coverage with minimum resources (and time)
+						but still give us a high level of confidence that the application is working correctly.
+					</p>
+				</div>
+			</section>
+			<section>
+				<h3>Mocking</h3>
+				<div class="summary">
+					Mocking is a technique used in unit testing to create a fake implementation of a class or interface,
+					which can be used to simulate the behavior of the real implementation.
+				</div>
+				<div class="content">
+					<p>
+						This allows us to isolate the unit being tested from its dependencies,
+						so we can focus on testing the unit's behavior without worrying about the behavior of its dependencies.
+					</p>
+					<p>
+						In Kotlin, we can use libraries like <strong class="highlight">MockK</strong> or <strong class="highlight">Mockito</strong> to create mocks and stubs for our tests.
+					</p>
+				</div>
+			</section>
+			<section>
+				<h3>Mocking</h3>
+				<div class="summary">
+					Using MockK
+				</div>
+				<div class="content">
+					<p>
+						MockK is a powerful mocking library for Kotlin that allows you to create mocks, stubs, and spies for your tests.
+						It provides a simple and intuitive API for creating mocks and verifying their behavior.
+					</p>
+					<p>
+						We can mock any class or interface, and define the behavior of the mocked object.
+					</p>
+					<ul>
+						<li>The mocked object is defined using <code class="inline">mockk()</code> function.</li>
+						<li>We can define the behavior of the mocked object using <code class="inline">every { ... } returns ...</code> syntax.</li>
+						<li>We can verify that the mocked object was called with the expected arguments using <code class="inline">verify { ... }</code> syntax.</li>
+
+					</ul>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							// create the mocked object
+							val myService: MyService = mockk() // or val myService = mockk&lt;MyService&gt;()
+
+							// define the behavior of the mocked object
+							every { myService.doSomething(any()) } returns "Mocked Result"
+
+							// use the mocked object in your test
+							val result = myService.doSomething("Test Input")
+
+							// verify that the mocked object was called with the expected arguments
+							verify(exactly = 1) { myService.doSomething("Test Input") }
+						</code>
+					</pre>
+					<ul>
+						<li>
+							We can also spy on an existing object, which allows us to verify its behavior without modifying the original object.
+						</li>
+					</ul>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val myRealObject = spyk(MyRealObject())
+							verify { myRealObject.someMethod("Was called with an argument) }
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>Testing units in isolation</h3>
+				<div class="summary">
+					Unit tests are used to test individual units of code in isolation,
+					without any dependencies on other parts of the application.
+				</div>
+				<div class="content">
+					<p>
+						This allows for fast and efficient testing of the application logic,
+						ensuring that each unit of code is functioning correctly.
+					</p>
+					<div class="row">
+						<div class="column">
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									data class Customer(
+										val id: Long,
+										val discountPercent: Double
+									)
+
+									data class OrderItem(
+										val menuItemId: Long,
+										val quantity: Int,
+										val price: Double
+									)
+
+									data class Order(
+										val id: Long,
+										val customer: Customer,
+										val items: List&lt;OrderItem&gt;,
+									) {
+
+										fun getPrice(): Double {
+											val fullPrice = items.sumOf { it.price * it.quantity }
+											val discountedPrice = fullPrice * ((100.0 - customer.discountPercent) / 100.0)
+											return discountedPrice
+										}
+									}
+								</code>
+							</pre>
+						</div>
+						<div class="column">
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									class SampleUnitTest: FunSpec({
+
+										test("Order price calculation") {
+											val order = Order(
+												id = 1,
+												customer = Customer(
+													id = 1,
+													discountPercent = 5.0
+												),
+												items = listOf(
+													OrderItem(
+														menuItemId = 1,
+														quantity = 2,
+														price = 100.0
+													),
+													OrderItem(
+														menuItemId = 2,
+														quantity = 1,
+														price = 200.0
+													)
+												)
+											)
+
+											order.getPrice() shouldBe 380
+										}
+									})
+								</code>
+							</pre>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section>
+				<h3>Testing Routing Layer</h3>
+				<div class="summary">
+					The purpose of testing the routing layer is to ensure that the application routes are correctly defined and that the routing logic is functioning as expected,
+					including the correct handling of HTTP methods, parameters, and responses.
+				</div>
+				<div class="content">
+					<p>
+						To test the routing layer, we can mock the services that it depends on
+						and verify that the the services are called with the expected parameters.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							class MenuEndpointsTest : FunSpec({
+
+								val menuService = mockk&lt;MenuService&gt;()
+								val jwtToken = "sample.jwt.token"
+
+								beforeTest {
+									clearAllMocks()
+								}
+
+								test("GET /api/menuitems should return all menu items") {
+									val menuItems = setOf(
+										MenuItemResponse(id = 1, name = "Item 1", description = "Description 1", price = 10.99),
+										MenuItemResponse(id = 2, name = "Item 2", description = "Description 2", price = 12.99)
+									)
+
+									coEvery { menuService.getMenuItems(any()) } returns menuItems
+
+									testApplication {
+										application {
+											install(ContentNegotiation) {
+												json()
+											}
+											routing {
+												menuRoutes(menuService, "/api")
+											}
+										}
+
+										val response = client.get("/api/menuitems") {
+											header(HttpHeaders.Authorization, "Bearer $jwtToken")
+										}
+
+										response.status shouldBe HttpStatusCode.OK
+										val responseBody = response.bodyAsText()
+										val expectedJson = Json.encodeToString(menuItems)
+										responseBody shouldBe expectedJson
+
+										coVerify(exactly = 1) { menuService.getMenuItems(any()) }
+									}
+								}
+							})
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>Testing Service Layer</h3>
+				<div class="summary">
+					Similarly, we want to test the service layer in isolation to have the most control over
+					the test conditions. Again, we can verify the data layer is called with the expected parameters.
+				</div>
+				<div class="content">
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							@ExtendWith(MockKExtension::class)
+							class MenuServiceTest : FunSpec({
+
+								val menuRepository = mockk&lt;MenuRepositoryImpl&gt;()
+								val menuService = MenuService(menuRepository)
+
+								val adminIdentity = IdentityDTO(principal = "admin", role = UserRole.STAFF)
+								val customerIdentity = IdentityDTO(principal = "user", role = UserRole.CUSTOMER)
+								val menuItem1 = MenuItemDTO(id = 1,name = "Espresso", description = "Strong coffee", price = 2.50, isDeleted = false)
+								val menuItem2 = MenuItemDTO(id = 2, name = "Cappuccino", description = "Espresso with milk", price = 3.50, isDeleted = false)
+
+								beforeTest {
+									clearAllMocks()
+								}
+
+								test("getMenuItems should return all menu items from repository") {
+
+									val menuItems = setOf(menuItem1, menuItem2)
+									coEvery { menuRepository.getAllMenuItems(null) } returns menuItems
+
+									val result = menuService.getMenuItems(null)
+
+									// Assertions ...
+
+									coVerify(exactly = 1) { menuRepository.getAllMenuItems(null) }
+								}
+							})
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>Testing Repository Layer</h3>
+				<div class="summary">
+					To test the repository layer, we need a database to test with.
+				</div>
+				<div class="content">
+					<p>
+						We should mock the database,
+						but we can use an in-memory database or containerized database to test the repository layer in isolation.
+					</p>
+					<p>
+						We can also use a containerized database, using for example testcontainers library.
+					</p>
+					<p>
+						We usually need to seed the database with some initial data to test the repository layer.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+
+							class MenuRepositoryTest : FunSpec({
+
+								beforeTest {
+									Database.connect(
+										url = "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1",
+										driver = "org.h2.Driver",
+										user = "root",
+										password = ""
+									)
+
+									transaction {
+										SchemaUtils.create(MenuItemTable)
+									}
+								}
+
+								afterTest {
+									transaction {
+										SchemaUtils.drop(MenuItemTable)
+									}
+								}
+
+								test("addMenuItem should add a menu item to the database") {
+									val repository = MenuRepositoryImpl()
+									val menuItem = MenuItemDTO(id = null, name = "Test Item", description = "Test Description", price = 9.99, isDeleted = false)
+
+									val result = repository.addMenuItem(menuItem)
+
+									// Assertions ...
+								}
+							})
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>Integration Testing</h3>
+				<div class="summary">
+					The purpose of integration testing is to verify that the different layers of the application work together as expected.
+				</div>
+				<div class="content">
+					<p>
+						For integration testing, the application is started either in a test instance or in a container,
+						and a real database is used.
+					</p>
+					<p>
+						This is the only way to test certain aspects of the application, such as dependency injection.
+					</p>
+					<p>
+						The tests are executed as client-like requests to the application, so in our case calls to the REST API.
+					</p>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Next Lesson</h2>
+			</section>
+			<section>
+				<h3>Next Lesson</h3>
+				<div class="content">
+					Next lesson will be a practical lesson, where you will implement a routing layer, service layer and a repository layer yourself.
+				</div>
 			</section>
 		</section>
 
