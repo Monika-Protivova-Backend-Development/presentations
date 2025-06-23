@@ -1,0 +1,1556 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>reveal.js</title>
+
+	<link rel="stylesheet" href="./src/dist/reset.css">
+	<link rel="stylesheet" href="./src/dist/reveal.css">
+	<link rel="stylesheet" href="./src/dist/theme/kotlin.css">
+
+	<!-- Theme used for syntax highlighted code -->
+	<link rel="stylesheet" href="./src/plugin/highlight/vs.css">
+</head>
+<body>
+<div class="reveal">
+	<div class="slides">
+		<section data-background-gradient="var(--kotlin-gradient)">
+			<i>Week 3 | Lesson 9</i>
+			<h1>The SOLID Principle</h1>
+			<em>Object Oriented Design Patterns</em><br />
+<!--			<em>Functional Programming Principles</em><br />-->
+<!--			<em>Generics</em>-->
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>The SOLID Principle</h2>
+			</section>
+			<section>
+				<h3>The SOLID Principle</h3>
+				<div class="summary">
+					The <span class="highlight">SOLID</span> principle is a set of five principles that help us write better code,
+					making it more maintainable, readable, and easier to upgrade and modify.
+				</div>
+				<div class="content">
+					<p>
+						These principles are not specific to Kotlin, but they are applicable to any object-oriented language.
+					</p>
+					<p>
+						The <span class="highlight">SOLID</span> principle is an acronym for the following:
+					</p>
+					<ul>
+						<li><span class="highlight">S</span>ingle Responsibility Principle</li>
+						<li><span class="highlight">O</span>pen/Closed Principle</li>
+						<li><span class="highlight">L</span>iskov Substitution Principle</li>
+						<li><span class="highlight">I</span>nterface Segregation Principle</li>
+						<li><span class="highlight">D</span>ependency Inversion Principle</li>
+					</ul>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Single Responsibility Principle</h2>
+			</section>
+			<section>
+				<h3>Single Responsibility Principle</h3>
+				<div class="summary">
+					Each class should have a single responsibility or reason to change.
+					This helps to build a system that is better defined, modular, and easier to maintain.
+				</div>
+				<div class="content">
+					<p>
+						We have seen this principle applied when we talked about encapsulation. Also, you will
+						find that if this principle is applied correctly, your code will be much easier to test.
+					</p>
+					<div class="row">
+						<div class="column">
+							<p>
+								Here, the <code class="inline">UserService</code> class has two responsibilities,
+								so if we need to change either of the responsibilities, we introduce a change in the UserService class.
+							</p>
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									class UserService(
+										private val userRepository: UserRepository,
+										private val emailClient: EmailClient
+									) {
+										fun createUser(name: String) {
+											// Create user logic
+										}
+
+										fun sendEmail(email: String) {
+											// Send email logic
+										}
+									}
+								</code>
+							</pre>
+						</div>
+						<div class="column">
+							<p>
+								It is better to separate the responsibilities into two classes, each with a single responsibility.
+							</p>
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									class UserService(
+										private val userRepository: UserRepository
+									) {
+										fun createUser(name: String) {
+											// Create user logic
+										}
+									}
+								</code>
+							</pre>
+									<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									class EmailService(
+										private val emailClient: EmailClient
+									) {
+										fun sendEmail(email: String) {
+											// Send email logic
+										}
+									}
+								</code>
+							</pre>
+						</div>
+					</div>
+					<blockquote>
+						With responsibilities separated, <strong>UserService</strong> can now be tested without needing to mock the <strong>EmailClient</strong>.
+						Each class can be tested independently, with fewer dependencies and simpler setup.
+					</blockquote>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Open/Closed Principle</h2>
+			</section>
+			<section>
+				<h3>Open/Closed Principle</h3>
+				<div class="summary">
+					Software entities (classes, modules, functions, etc.) should be open for extension but closed for modification.
+					This prevents issues introduced by changes to existing code.
+				</div>
+				<div class="content">
+					<p>
+						This principle is often applied in object-oriented programming through the use of inheritance and polymorphism.
+					</p>
+					<p>
+						It allows us to add new functionality to a class without changing its existing code,
+						thus preventing bugs and making the code more maintainable.
+					</p>
+					<p>
+						For example, if we have a class that calculates the area of a shape, we can extend it to support new shapes
+						without modifying the existing code.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							abstract class Shape {
+								abstract fun area(): Double
+							}
+
+							class Circle(private val radius: Double) : Shape() {
+								override fun area() = Math.PI * radius * radius
+							}
+
+							class Rectangle(private val width: Double, private val height: Double) : Shape() {
+								override fun area() = width * height
+							}
+						</code>
+					</pre>
+					<p>
+						Here, the <code class="inline">Shape</code> class is open for extension, as we can add new shapes by creating new classes that extend it.
+						However, it is closed for modification, as we do not need to change the existing code to add new shapes.
+					</p>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Liskov Substitution Principle</h2>
+			</section>
+			<section>
+				<h3>Liskov Substitution Principle</h3>
+				<div class="summary">
+					It indicates that one should be able to use any derived class instead of a parent class and have it behave in the same manner without modification.
+				</div>
+				<div class="content">
+					<p>
+						This principle is often applied in object-oriented programming through the use of inheritance and polymorphism.
+					</p>
+					<p>
+						It allows us to use derived classes in place of their base classes without affecting the correctness of the program.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							interface Shape {
+								fun area(): Double
+							}
+
+							open class Rectangle(private val width: Double, private val height: Double) : Shape {
+								override fun area() = width * height
+							}
+
+							open class Square(private val side: Double) : Shape {
+								override fun area() = side * side
+							}
+						</code>
+					</pre>
+					<p>
+						Here, the <code class="inline">printArea</code> function accepts a <code class="inline">Shape</code> interface,
+						which means it can accept any class that implements the <code class="inline">Shape</code> interface,
+						or any class that extends a class that implements the <code class="inline">Shape</code> interface.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+
+							fun printArea(shape: Shape) {
+								println("Area: ${shape.area()}")
+							}
+
+							fun main() {
+								val rectangle: Shape = Rectangle(4.0, 6.0)
+								val square: Shape = Square(5.0)
+
+								printArea(rectangle)
+								printArea(square)
+							}
+						</code>
+					</pre>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Interface Segregation Principle</h2>
+			</section>
+			<section>
+				<h3>Interface Segregation Principle</h3>
+				<div class="summary">
+					Many specific client-specific interfaces are better than one general-purpose interface.
+					This means that you should not impose the clients with interfaces that they don't use.
+				</div>
+				<div class="content">
+					<p>
+						Imagine you have a class that represents a printer.
+						You could have the class implement one interface with methods print(), scan(), etc.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							interface Printer {
+								fun print()
+								fun scan()
+							}
+
+							class SimplePrinter : Printer { /* ... */ }
+							class MultiPrinter : Printer { /* ... */ }
+						</code>
+					</pre>
+					<p>
+						Or you could have the class implement multiple interfaces, each with a single method.
+						<!--						<br />-->
+						<!--						<br />-->
+						<!--						Simply put, don't clutter your code with stuff you won't use.-->
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							interface Printing {
+								fun print()
+							}
+
+							interface Scanning {
+								fun scan()
+							}
+
+							class SimplePrinter : Printing { /* ... */ }
+							class MultiPrinter : Printing, Scanning { /* ... */ }
+						</code>
+					</pre>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Dependency Inversion Principle</h2>
+			</section>
+			<section>
+				<h3>Dependency Inversion Principle</h3>
+				<div class="summary">
+					One should depend upon abstractions, rather than concrete implementations.
+					This way, modules can remain decoupled, leading to systems that are easier to refactor, change, and deploy.
+				</div>
+				<div class="content">
+					<div class="row">
+						<div class="column">
+							<p>
+								Given an interface:
+							</p>
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									interface UserRepository {
+										fun selectUsers(): List&lt;User&gt;
+									}
+								</code>
+							</pre>
+							<p>
+								And an implementation of that interface:
+							</p>
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									interface UserRepositoryImpl {
+										override fun selectUsers(): List&lt;User&gt; {
+											// Implementation logic
+										}
+
+									}
+								</code>
+							</pre>
+						</div>
+						<div class="column">
+							<p>
+								Recommended:
+							</p>
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									class UserService(
+										private val userRepository: UserRepository
+									) {
+
+										fun getUsers(): List&lt;User&gt; {
+											return userRepository.selectUsers()
+										}
+									}
+								</code>
+							</pre>
+							<p>
+								Not recommended:
+							</p>
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									class UserService(
+										private val userRepository: UserRepositoryImpl
+									) {
+
+										fun getUsers(): List&lt;User&gt; {
+											return userRepository.selectUsers()
+										}
+									}
+								</code>
+							</pre>
+						</div>
+					</div>
+					</p>
+					<blockquote>
+						By depending on abstractions (interfaces), we can inject mock implementations in unit tests. This makes it easy to isolate the class under test without relying on real services or databases.
+					</blockquote>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Design for Testability</h2>
+			</section>
+			<section>
+				<h3>Design for Testability</h3>
+				<div class="content">
+					<ul>
+						<li><strong class="highlight">Single Responsibility Principle (SRP)</strong><br/>
+							→ Smaller classes with one job are easier to isolate and test
+							<br />
+							<br />
+						</li>
+						<li>
+							<strong class="highlight">Open/Closed Principle (OCP)</strong><br/>
+							→ Extend functionality without changing existing code, reducing risk of breaking functionality
+							<br />
+							<br />
+						</li>
+						<li><strong class="highlight">Liskov Substitution Principle (LSP)</strong><br/>
+							→ Use derived classes without breaking functionality, guards against unwanted changes in behavior
+							and also allows for flexible test doubles
+							<br />
+							<br />
+						</li>
+						<li>
+							<strong class="highlight">Interface Segregation Principle (ISP)</strong><br/>
+							→ Smaller, focused interfaces make it easier to implement functionality and also to mock them in tests
+							<br />
+							<br />
+						</li>
+						<li><strong class="highlight">Dependency Inversion Principle (DIP)</strong><br/>
+							→ Rely on interfaces, so you can easily swap in mocks or fakes
+							<br />
+							<br />
+						</li>
+						<li><strong class="highlight">Constructor Injection</strong><br/>
+							→ Makes it simple to provide test doubles without frameworks
+							<br />
+							<br />
+						</li>
+						<li><strong class="highlight">Fewer Dependencies = Simpler Tests</strong><br/>
+							→ Cleaner test setup, fewer mocks, and better reliability
+							<br />
+							<br />
+						</li>
+					</ul>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Inversion of Control</h2>
+				<em>
+					Implementation of Dependency Inversion Principle
+				</em>
+			</section>
+			<section>
+				<h3>Inversion of Control (IoC)</h3>
+				<div class="summary">
+					Inversion of Control is a principle in software engineering by which the control is transferred
+					from higher-level components to the lower-level components
+				</div>
+				<div class="content">
+					This allows the higher-level and lower-level components to focus on their functionalities,
+					promotes better decoupling, more flexibility, and easier maintenance.
+				</div>
+			</section>
+			<section>
+				<h3>Dependency Injection</h3>
+				<div class="summary">
+					Dependency Injection is a design pattern that implements IoC.
+					It allows us to inject dependencies into a class, rather than creating them inside the class.
+				</div>
+				<div class="content">
+					<p>
+						There are three types of dependency injection:
+					</p>
+					<ul>
+						<li>Constructor Injection</li>
+						<li>Setter Injection</li>
+						<li>Interface Injection</li>
+					</ul>
+				</div>
+			</section>
+			<section>
+				<h3>Dependency Injection: Examples</h3>
+				<div class="summary">
+					No Dependency Injection example. The class is tightly coupled with the dependency.
+				</div>
+				<div class="content">
+					<div class="row">
+						<div class="column">
+							<p>
+								Given the following model:
+							</p>
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									interface Vehicle {
+										val passengerCapacity: Int
+										val engineType: EngineType
+										val vehicleType: VehicleType
+										val description: String
+											get() = "$engineType $vehicleType "
+														+ "with capacity of $passengerCapacity passengers."
+									}
+
+									interface Taxi {
+										fun callTaxi()
+									}
+
+									enum class EngineType {
+										ELECTRIC,
+										HYBRID,
+										GASOLINE,
+										DIESEL
+									}
+
+									enum class VehicleType {
+										CAR,
+										MOTORCYCLE
+									}
+								</code>
+							</pre>
+							<p>
+								The <code class="inline">Vehicle</code> implementation:
+							</p>
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									class ElectricCar(
+										override val passengerCapacity: Int
+									) : Vehicle {
+										override val engineType = EngineType.ELECTRIC
+										override val vehicleType = VehicleType.CAR
+									}
+								</code>
+							</pre>
+						</div>
+						<div class="column">
+							<p>
+								<code class="inline">NoInjectionTaxiService</code> implements <code class="inline">Taxi</code> interface and uses hardcoded <code class="inline">Vehicle</code> implementation.
+							</p>
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									class NoInjectionTaxiService : Taxi {
+
+										private val vehicle = ElectricCar(passengerCapacity = 4)
+
+										override fun callTaxi() {
+											println("Calling ${vehicle.description}")
+										}
+									}
+								</code>
+							</pre>
+							<p>
+								And the <code class="inline">main</code> function:
+							</p>
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									fun main() {
+										val taxiService = NoInjectionTaxiService()
+										taxiService.callTaxi()
+									}
+								</code>
+							</pre>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section>
+				<h3>Dependency Injection: Examples</h3>
+				<div class="summary">
+					Constructor Injection example. The dependency is injected into the class through its constructor.
+				</div>
+				<div class="content">
+					<div class="row">
+						<div class="column">
+							<p>
+								Given the following model:
+							</p>
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									interface Vehicle {
+										val passengerCapacity: Int
+										val engineType: EngineType
+										val vehicleType: VehicleType
+										val description: String
+											get() = "$engineType $vehicleType "
+														+ "with capacity of $passengerCapacity passengers."
+									}
+
+									interface Taxi {
+										fun callTaxi()
+									}
+
+									enum class EngineType {
+										ELECTRIC,
+										HYBRID,
+										GASOLINE,
+										DIESEL
+									}
+
+									enum class VehicleType {
+										CAR,
+										MOTORCYCLE
+									}
+								</code>
+							</pre>
+							<p>
+								The <code class="inline">Vehicle</code> implementation:
+							</p>
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									class Motorcycle: Vehicle {
+										override val passengerCapacity = 2
+										override val engineType = EngineType.GASOLINE
+										override val vehicleType = VehicleType.MOTORCYCLE
+									}
+								</code>
+							</pre>
+						</div>
+						<div class="column">
+							<p>
+								<code class="inline">ConstructorInjectionTaxiService</code> implements <code class="inline">Taxi</code> and accepts a <code class="inline">Vehicle</code> implementation as a constructor parameter.
+							</p>
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									class ConstructorInjectionTaxiService(
+										private val vehicle: Vehicle
+									) : Taxi {
+
+										override fun callTaxi() {
+											println("Calling ${vehicle.description}")
+										}
+									}
+								</code>
+							</pre>
+							<p>
+								In the <code class="inline">main</code> function,
+								the dependency is injected through the constructor of <code class="inline">ConstructorInjectionTaxiService</code>:
+							</p>
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									fun main() {
+										val taxiService = ConstructorInjectionTaxiService(vehicle = Motorcycle())
+										taxiService.callTaxi()
+									}
+								</code>
+							</pre>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section>
+				<h3>Dependency Injection: Examples</h3>
+				<div class="summary">
+					Setter Injection example. The dependency is injected into the class through a setter method.
+				</div>
+				<div class="content">
+					<div class="row">
+						<div class="column">
+							<p>
+								Given the following model:
+							</p>
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									interface Vehicle {
+										val passengerCapacity: Int
+										val engineType: EngineType
+										val vehicleType: VehicleType
+										val description: String
+											get() = "$engineType $vehicleType "
+														+ "with capacity of $passengerCapacity passengers."
+									}
+
+									interface Taxi {
+										fun callTaxi()
+									}
+
+									enum class EngineType {
+										ELECTRIC,
+										HYBRID,
+										GASOLINE,
+										DIESEL
+									}
+
+									enum class VehicleType {
+										CAR,
+										MOTORCYCLE
+									}
+								</code>
+							</pre>
+							<p>
+								The <code class="inline">Vehicle</code> implementation:
+							</p>
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									class TukTuk: Vehicle {
+										override val passengerCapacity = 2
+										override val engineType = EngineType.GASOLINE
+										override val vehicleType = VehicleType.MOTORCYCLE
+									}
+								</code>
+							</pre>
+						</div>
+						<div class="column">
+							<p>
+								<code class="inline">NoInjectionTaxiService</code> implements <code class="inline">Taxi</code> interface and uses hardcoded <code class="inline">Vehicle</code> implementation.
+							</p>
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+								class SetterInjectionTaxiService : Taxi {
+
+									private lateinit var vehicle: Vehicle
+
+									fun setVehicle(vehicle: Vehicle) {
+										this.vehicle = vehicle
+									}
+
+									override fun callTaxi() {
+										if (!::vehicle.isInitialized) {
+											throw IllegalStateException("Vehicle is not set")
+										}
+										println("Calling ${vehicle.description}")
+									}
+								}
+								</code>
+							</pre>
+							<p>
+								The service is instantiated in the <code class="inline">main</code> function
+								and its dependency is injected through a setter method.
+							</p>
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									fun main() {
+										val taxiService = SetterInjectionTaxiService()
+										taxiService.setVehicle(TukTuk())
+										taxiService.callTaxi()
+									}
+								</code>
+							</pre>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section>
+				<h3>Dependency Injection: Examples</h3>
+				<div class="summary">
+					Interface Injection example. The dependency is injected into the class through an interface.
+				</div>
+				<div class="content">
+					<p>
+						This usually requires an injector to provide the dependency. Application frameworks usually provide such an injector for us.
+					</p>
+					<div class="row">
+						<div class="column">
+							<p>
+								We have the basic model:
+							</p>
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									interface Vehicle {
+										val passengerCapacity: Int
+										val engineType: EngineType
+										val vehicleType: VehicleType
+										val description: String
+											get() = "$engineType $vehicleType "
+														+ "with capacity of $passengerCapacity passengers."
+									}
+
+									interface Taxi {
+										fun callTaxi()
+									}
+
+									enum class EngineType {
+										ELECTRIC,
+										HYBRID,
+										GASOLINE,
+										DIESEL
+									}
+
+									enum class VehicleType {
+										CAR,
+										MOTORCYCLE
+									}
+								</code>
+							</pre>
+						</div>
+						<div class="column">
+							<p>
+								I have upgraded the model with <code class="inline">PickupService</code> interface.
+							</p>
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									interface PickupService {
+										fun orderPickup(
+											pickupAt: ZonedDateTime,
+											from: String,
+											to: String
+										)
+									}
+								</code>
+							</pre>
+							<p>
+								The <code class="inline">Vehicle</code> implementation also needs
+								to implement <code class="inline">KoinComponent</code> interface to become injectable.
+							</p>
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									class Van: Vehicle, KoinComponent {
+										override val passengerCapacity = 8
+										override val engineType = EngineType.DIESEL
+										override val vehicleType = VehicleType.CAR
+									}
+								</code>
+							</pre>
+							<p>
+								<code class="inline">KoinComponent</code> is an interface provided by Koin that allows a class to access dependencies via the by inject() delegate.
+								Any class that wants to retrieve dependencies this way must implement <code class="inline">KoinComponent</code>.
+							</p>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section>
+				<h3>Dependency Injection: Examples</h3>
+				<div class="summary">
+					Interface Injection example. The dependency is injected into the class through an interface.
+				</div>
+				<div class="content" style="font-size: 70%">
+					<div class="row">
+						<div class="column">
+							<p>
+								The <code class="inline">Vehicle</code> implementation needs
+								to implement <code class="inline">KoinComponent</code> interface to become injectable.
+							</p>
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									class Van: Vehicle, KoinComponent {
+										override val passengerCapacity = 8
+										override val engineType = EngineType.DIESEL
+										override val vehicleType = VehicleType.CAR
+									}
+								</code>
+							</pre>
+								<p>
+									The <code class="inline">Taxi</code> service has a dependency on <code class="inline">Vehicle</code>.
+									<br />
+									Both of them also implement <code class="inline">KoinComponent</code> to become injectable.
+									<br />
+									Their dependencies will be injected through the <code class="inline">by inject()</code> property delegate.
+								</p>
+								<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									class TaxiService : Taxi, KoinComponent {
+
+										private val vehicle: Vehicle by inject()
+
+										override fun callTaxi() {
+											println(vehicle.description)
+										}
+									}
+								</code>
+							</pre>
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									class TaxiPickupService: PickupService, KoinComponent {
+
+										private val taxiService: Taxi by inject()
+
+										override fun orderPickup(
+											pickupAt: ZonedDateTime,
+											from: String,
+											to: String,
+										) {
+											println("Pickup at $pickupAt from $from to $to using taxi service:")
+											taxiService.callTaxi()
+										}
+									}
+								</code>
+							</pre>
+						</div>
+						<div class="column">
+
+							<p>
+								In order for <strong>Koin</strong> to know how to inject the dependencies, we define a Koin <code class="inline">module</code>,
+								declaring all the dependencies and their types.
+							</p>
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									val appModule = module {
+
+										singleOf(::Van) { bind&lt;Vehicle&gt;() }
+
+										singleOf(::TaxiService) { bind&lt;Taxi&gt;() }
+
+										singleOf(::TaxiPickupService) { bind&lt;PickupService&gt;() }
+									}
+								</code>
+							</pre>
+							<p>
+								And finally, we start the Koin application in the <code class="inline">main</code> function,
+								and get the <code class="inline">PickupService</code> implementation from Koin.
+							</p>
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									fun main() {
+
+										val koinApp = startKoin {
+											modules(appModule)
+										}
+
+										val pickupService = koinApp.koin.get&lt;PickupService&gt;()
+
+										pickupService.orderPickup(
+											pickupAt = ZonedDateTime.now(),
+											from = "123 Main St",
+											to = "456 Elm St"
+										)
+									}
+								</code>
+							</pre>
+						</div>
+					</div>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>IoC in Ktor</h2>
+			</section>
+			<section>
+				<h3>IoC in Ktor</h3>
+				<div class="summary">
+					What do we have so far?
+				</div>
+				<div class="content">
+					<p>
+						So far, we have been using the <strong>IoC</strong> principle in our Ktor application
+						with the <strong>constructor injection</strong> in application main.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+						fun main() {
+
+							embeddedServer(Netty, port = 8080, host = "0.0.0.0") {
+
+								// ...
+
+								val menuRepository = MenuRepositoryImpl()
+								val menuService = MenuService(menuRepository = menuRepository)
+								val jwtGenerator = JwtService(config = applicationConfig)
+								val userRepository = UserRepositoryImpl()
+								val authenticationService = AuthenticationService(
+									userRepository = userRepository,
+									internalCustomerService = InternalCustomerService(customerRepository = CustomerRepositoryImpl()),
+									jwtService = jwtGenerator
+								)
+
+								// ...
+
+								install(Authentication) {
+									configureJWT(applicationConfig)
+								}
+
+								routing {
+									loginRoutes(authenticationService, API_PATH)
+
+									authenticate(AUTH_JWT) {
+										menuRoutes(menuService, API_PATH)
+										orderRoutes(orderService, API_PATH)
+									}
+								}
+							}.start(wait = true)
+						}
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>IoC in Ktor</h3>
+				<div class="summary">
+					Using dependency injection framework.
+				</div>
+				<div class="content">
+					<p>
+						While dependency injection using constructor is a good start,
+						it is not very practical for larger applications.
+					</p>
+					<p>
+						For larger applications, we can use a dependency injection framework,
+						such as <strong>Koin</strong> or <strong>Dagger</strong>.
+					</p>
+					<p>
+						Dependency injection framework allows us to define dependencies by their type,
+						and the framework will take care of creating and injecting them into the classes that need them.
+					</p>
+					<p>
+						Ktor framework has built-in support for dependency injection using <strong>Koin</strong>.
+					</p>
+				</div>
+			</section>
+			<section>
+				<h3>Koin</h3>
+				<div class="summary">
+					Ktor with Koin
+				</div>
+				<div class="content">
+					<div class="row">
+						<div class="column">
+							<p>
+								We use the same Koin module declaration as before.
+							</p>
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									fun appModule(config: ApplicationConfig) = module {
+										single { config }
+										singleOf(::MenuRepositoryImpl) { bind&lt;MenuRepository&gt;() }
+										singleOf(::MenuService)
+										singleOf(::JwtService)
+										singleOf(::AuthenticationService)
+									}
+								</code>
+							</pre>
+							<p>
+								Start Koin in the <code class="inline">main</code> function and inject the dependencies into the Ktor application.
+							</p>
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									fun main() {
+										val applicationConfig = ApplicationConfig("application.yaml")
+
+										embeddedServer(Netty, port = 8080, host = "0.0.0.0") {
+
+											startKoin {
+												modules(
+													appModule(applicationConfig)
+												)
+											}
+
+											// ...
+
+											routing {
+												loginRoutes(API_PATH)
+
+												authenticate(AUTH_JWT) {
+													menuRoutes(API_PATH)
+												}
+											}
+										}.start(wait = true)
+									}
+								</code>
+							</pre>
+						</div>
+						<div class="column">
+							<p>
+								All that remains is to inject the dependencies into the routes.
+							</p>
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									fun Route.menuRoutes(basePath: String) {
+
+										val menuService by inject&lt;MenuService&gt;()
+
+										route(basePath) {
+											// ...
+										}
+									}
+								</code>
+							</pre>
+							<p>
+								We can use the same mechanism to inject the dependencies into the services.
+								However, it is actually quite practical to do it through the constructor,
+								as it makes the services easier to test (no need to instantiate Koin in tests).
+							</p>
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									class MenuService(
+										private val menuRepository: MenuRepository
+									) {
+										// ...
+									}
+								</code>
+							</pre>
+						</div>
+					</div>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Generics</h2>
+				<em>Bonus</em>
+			</section>
+			<section>
+				<h3>Generics</h3>
+				<div class="summary">
+					Generics allow us to create classes, interfaces, and methods that take types as parameters.
+				</div>
+				<div class="content">
+					<p>
+						They are a way to make our code more reusable by allowing us to use the same code with different types.
+					</p>
+					<p>
+						Generics are used to create classes, interfaces, and methods that operate on a type parameter.
+					</p>
+					<p>
+						We mave have already seen generics in action with the <code class="inline">List</code> interface.
+						For example, all of these methods use generics:
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val list = mutableListOf&lt;String&gt;()
+
+							list.add("Hello")
+							list.add("World")
+
+							list.forEach {
+								println(it)
+							}
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>Generics</h3>
+				<div class="summary">
+					How to define a generic class
+				</div>
+				<div class="content">
+					<p>
+						To define a generic class, need to create a type parameter in the class definition.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							class MyClass&lt;T&gt;(private val id: T) {
+
+								fun getId(): T {
+									return id
+								}
+
+							}
+						</code>
+					</pre>
+					<p>
+						Classes may have multiple type parameters.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							class MyClassEnhanced&lt;T1, T2&gt; {
+
+								fun equals(value1: T1, value2: T2 ): Boolean {
+									return value1 == value2
+								}
+
+							}
+						</code>
+					</pre>
+					<p>
+						Usage:
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val myClass1 = MyClass&lt;String&gt;("ABC")
+							println(myClass1.getId())
+
+							val myClass2 = MyClass&lt;Int&gt;(123)
+							println(myClass2.getId())
+
+							val myClassEnhanced = MyClassEnhanced&lt;Int, Double&gt;()
+    						println(myClassEnhanced.equals(123, 123.0))
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>Generics</h3>
+				<div class="summary">
+					How to define a generic function
+				</div>
+				<div class="content">
+					<p>
+						Similarly, you define generic functions by adding a type parameter to the function definition.
+					</p>
+					<p>
+						Functions can also have multiple type parameters and the type parameters can have constraints (types).
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							fun &lt;T1: Number, T2: Number&gt; myFunction(value1: T1, value2: T2 ): Double {
+								return value1.toDouble() + value2.toDouble()
+							}
+						</code>
+					</pre>
+					<p>
+						You can also define generic return types.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							interface MyInterface&lt;T1, T2, R&gt; {
+								fun myFunction(a: T1, b: T2): R
+							}
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>Exercises</h3>
+				<div class="content">
+					<h4>Exercise 1: class generics</h4>
+					<p>
+						Create a generic class <code class="inline">Box</code> that can hold any type of item.
+						The class should have two methods:
+					</p>
+					<ul>
+						<li><code class="inline">putItem(item: T)</code> that puts an item into the box</li>
+						<li><code class="inline">getItem(): T?</code> that returns the item from the box</li>
+						<li>Store the <strong class="inline">item</strong> as a private property in the class</li>
+					</ul>
+					<p>
+						Create an instance of the <code class="inline">Box</code> class with different types and test the methods.
+					</p>
+
+					<h4>Exercise 2: function generics</h4>
+					<p>
+						Create a generic function <code class="inline">insertIntoBox</code> that takes two parameters:
+					</p>
+					<ul>
+						<li>item1 of type <code class="inline">T1</code></li>
+						<li>item2 of type <code class="inline">T2</code></li>
+						<li>func of type <code class="inline">(T1, T2) -> R</code></li>
+					</ul>
+					<p>
+						The function should return the result of calling the func with item1 and item2 as arguments.
+						Call the function with two different types of items and a lambda that combines the items into a string.
+					</p>
+					<h4>Exercise 3: interface generics</h4>
+					<p>
+						Create a generic interface  <code class="inline">MyComparator</code> hat has three type parameters:
+						<code class="inline">T1</code>, <code class="inline">T2</code> and <code class="inline">R</code>.
+						The interface should have a single method <code class="inline">returnGreater</code>
+						that takes two parameters of type <code class="inline">T1</code>
+						and <code class="inline">T2</code> greater of the two as  type <code class="inline">R</code>.
+					</p>
+				</div>
+			</section>
+			<section>
+				<h3>Exercises</h3>
+				<div class="summary">
+					Solutions
+				</div>
+				<div class="content">
+					<div class="row">
+						<div class="column">
+							<h4>Exercise 1: class generics</h4>
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									class Box&lt;T&gt; {
+										private var item: T? = null
+
+										fun putItem(item: T) {
+											this.item = item
+										}
+
+										fun getItem(): T? {
+											return item
+										}
+									}
+
+									fun main() {
+										val box = Box&lt;String&gt;()
+										box.putItem("Hello")
+										println(box.getItem()) // Output: Hello
+
+										val intBox = Box&lt;Int&gt;()
+										intBox.putItem(42)
+										println(intBox.getItem()) // Output: 42
+									}
+								</code>
+							</pre>
+						</div>
+						<div class="column">
+							<h4>Exercise 2: function generics</h4>
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									fun &lt;T1, T2, R&gt; insertIntoBox(item1: T1, item2: T2, func: (T1, T2) -> R): R {
+										return func(item1, item2)
+									}
+
+									fun main() {
+										val result = insertIntoBox(5, " apples") { a, b -> "$a$b" }
+										println(result) // Output: 5 apples
+									}
+								</code>
+							</pre>
+							<h4>Exercise 3: interface generics</h4>
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									interface MyComparator&lt;T1, T2, R&gt; {
+										fun returnGreater(a: T1, b: T2): R
+									}
+
+									fun main() {
+										val comparator = object : MyComparator&lt;Int, Int, Int&gt; {
+											override fun returnGreater(a: Int, b: Int): Int {
+												return if (a > b) a else b
+											}
+										}
+
+										val greater = comparator.returnGreater(10, 20)
+										println(greater) // Output: 20
+									}
+								</code>
+							</pre>
+						</div>
+					</div>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Functional Programming</h2>
+				<em>Bonus</em>
+			</section>
+			<section>
+				<h3>Functional Programming</h3>
+				<div class="summary">
+					So far, we have been using mostly <strong>imperative programming</strong> style.
+					<br />
+					There is another programming paradigm called <strong>functional programming</strong>.
+				</div>
+				<div class="content">
+					<p>
+						The <strong class="highlight">imperative programing</strong> style is characterized by explicit statements that change a program's state.
+					</p>
+					<p>
+						<strong class="highlight">Functional programming</strong> is a programming paradigm where programs are constructed by applying and composing functions.
+						It emphasizes the use of <strong>pure functions</strong> that avoid changing state and mutable data.
+					</p>
+					<p>
+						<strong class="highlight">Pure function</strong> is a function where the return value is only determined by its input values, without observable <strong>side effects</strong>.
+					</p>
+					<p>
+						<strong class="highlight">Side effects</strong> are changes in the state of the program that are observable outside the called function other than the return value.
+					</p>
+					<p>
+						Kotlin has by design very good support for functional programming,
+						and we have already seen some examples of it.
+					</p>
+				</div>
+			</section>
+			<section>
+				<h3>Principles of functional programming</h3>
+				<div class="content">
+					<ul>
+						<li>
+							<strong>Immutability</strong>
+							<ul>
+								<li>Once an object is created, it cannot be changed.</li>
+								<li>Instead of changing the object, a new object is created with the new value.</li>
+							</ul>
+						</li>
+						<li>
+							<strong>Pure functions</strong>
+							<ul>
+								<li>Functions that always return the same result for the same input.</li>
+								<li>They do not produce or rely on side effects.</li>
+							</ul>
+						</li>
+						<li>
+							<strong>First-class functions</strong>
+							<ul>
+								<li>Functions are treated as first-class citizens, meaning they can be passed as arguments to other functions, returned as values from other functions, and assigned to variables.</li>
+							</ul>
+						</li>
+						<li>
+							<strong>Higher-order functions</strong>
+							<ul>
+								<li>Functions that take other functions as arguments or return them as results.</li>
+							</ul>
+						</li>
+						<li>
+							<strong>Referential transparency</strong>
+							<ul>
+								<li>It means that a function will always return the same result for the same input.</li>
+								<li>This means that the function call can be replaced with its corresponding value without changing the program’s behavior.</li>
+
+							</ul>
+						</li>
+						<li>
+							There may be other principles mentioned such as <strong>Recursion</strong> or <strong>Functional composition</strong>
+						</li>
+					</ul>
+					<blockquote>
+						Programming in a functional style is not about using functions, but about using functions as the primary building blocks of your program.
+					</blockquote>
+				</div>
+			</section>
+			<section>
+				<h3>Functional Programming</h3>
+				<div class="summary">
+					Example of a pure function and a function with side effects.
+				</div>
+				<div class="content">
+					<p>
+						Function with side effects:
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							var counter = 0
+
+							fun unPureFunction(increment: Int): Int {
+								return counter += increment
+							}
+						</code>
+					</pre>
+					<p>
+						Pure function:
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							fun pureFunction(counter: Int, increment: Int): Int {
+								return counter + increment
+							}
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>Function as an argument</h3>
+				<div class="summary">
+					You can pass a function as an argument to another function.
+				</div>
+				<div class="content">
+					<p>
+						Here is an example of a function that takes a function with a single parameter and returns an integer.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							fun execute(input: String, function: (String) -> Int): Int {
+								return function(input)
+							}
+						</code>
+					</pre>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val result = execute("Hello Function!") { input ->
+								println("Got input: $input")
+								input.length
+							}
+
+							println(result)
+						</code>
+					</pre>
+					<p>
+						Here is an example of a function that takes a function with two parameters and returns a boolean.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							fun execute(input1: String, input2: Double, function: (String, Double) -> Boolean): Boolean {
+								return function(input1, input2)
+							}
+						</code>
+					</pre>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val result2 = execute("12.34", 12.34) { p1, p2 ->
+								p1.toDouble() == p2
+							}
+
+							println(result2)
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>Benefits of functional programming</h3>
+				<div class="content">
+					<ul>
+						<li>
+							<strong class="highlight">No side effects</strong>
+							<ul>
+								<li>
+									Pure functions do not change the state of the program,
+									and do not rely on external state, making them easier to reason about.
+								</li>
+								<li>
+									Side effects are source of many bugs in imperative programming.
+								</li>
+							</ul>
+						</li>
+						<li>
+							<strong class="highlight">Code reusability</strong>
+							<ul>
+								<li>Functions can be reused in different contexts.</li>
+								<li>Higher-order functions allow for more flexible and reusable code.</li>
+							</ul>
+						</li>
+						<li>
+							<strong class="highlight">Improved readability</strong>
+							<ul>
+								<li>Code is often more concise and easier to understand.</li>
+								<li>Functions can be composed to create more complex behavior.</li>
+							</ul>
+						</li>
+						<li>
+							<strong class="highlight">Easier testing</strong>
+							<ul>
+								<li>Pure functions are easier to test because they do not rely on external state.</li>
+								<li>Referential transparency allows for easier reasoning about code behavior.</li>
+							</ul>
+						</li>
+						<li>
+							<strong class="highlight">Concurrency support</strong>
+							<ul>
+								<li>Immutability and pure functions make it easier to write concurrent code without worrying about shared state.</li>
+							</ul>
+						</li>
+					</ul>
+					<blockquote>
+						Functional programming and object-oriented programming are not mutually exclusive.
+						They can be used together to create more powerful and flexible code.
+					</blockquote>
+				</div>
+			</section>
+		</section>
+<!--		<section>-->
+<!--			<section data-background-gradient="var(&#45;&#45;kotlin-gradient)">-->
+<!--				<h2>Design Patterns</h2>-->
+<!--			</section>-->
+<!--			<section>-->
+<!--				<h3>Design Patterns</h3>-->
+<!--				<div class="summary">-->
+<!--					In software engineering, a design pattern is a general repeatable solution to a commonly occurring-->
+<!--					problem in software design. They are best practices that the programmer can use to solve common problems when designing an application or system.-->
+<!--				</div>-->
+<!--				<div class="content">-->
+<!--					<p>As a simplification, we can divide design patterns into 3 categories ...</p>-->
+<!--					<ul>-->
+<!--						<li>-->
+<!--							<strong>Creational Design Patterns</strong>-->
+<!--							deal with object creation mechanisms, helping with complexities of object creation and providing convenient ways to do so.-->
+<!--							<br />-->
+<!--							<sub>Builder Pattern, Singleton Pattern, Factory Pattern, Abstract Factory Pattern, Prototype Pattern ...</sub>-->
+<!--							<br />-->
+<!--							<br />-->
+<!--						</li>-->
+<!--						<li>-->
+<!--							<strong>Structural Design Patterns</strong>-->
+<!--							concern with composition of classes and objects which form larger structures.-->
+<!--							<br />-->
+<!--							<sub>Decorator Pattern, Adapter Pattern, Proxy Pattern, Composite Pattern, Bridge Pattern ...</sub>-->
+<!--							<br />-->
+<!--							<br />-->
+<!--						</li>-->
+<!--						<li>-->
+<!--							<strong>Behavioral Design Patterns</strong>-->
+<!--							are specifically concerned with communication between objects, how they interact, and distribute the work.-->
+<!--							<br />-->
+<!--							<sub>Observer Pattern, Strategy Pattern, Iterator Pattern, Command Pattern, Template Method Pattern ...</sub>-->
+<!--						</li>-->
+<!--					</ul>-->
+<!--					<hr />-->
+<!--					<p>-->
+<!--						I will not go into detail, but I encourage you <a href="https://en.wikipedia.org/wiki/Software_design_pattern">to read about them</a>.-->
+<!--					</p>-->
+<!--				</div>-->
+<!--			</section>-->
+<!--		</section>-->
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Next Lesson</h2>
+				<em>↓</em>
+			</section>
+			<section>
+				<h3>Next Lesson</h3>
+				<div class="content content-center">
+					<ul>
+						<li>Memory structure and management</li>
+						<li>JVM, JRE, JDK, compiler</li>
+						<li>Multithreading</li>
+						<li>Coroutines ♡</li>
+					</ul>
+				</div>
+			</section>
+		</section>
+	</div>
+</div>
+
+<script src="./src/dist/reveal.js"></script>
+<script src="./src/plugin/notes/notes.js"></script>
+<script src="./src/plugin/markdown/markdown.js"></script>
+<script src="./src/plugin/highlight/highlight.js"></script>
+<script>
+	// More info about initialization & config:
+	// - https://revealjs.com/initialization/
+	// - https://revealjs.com/config/
+	Reveal.initialize({
+		hash: true,
+
+		// Learn about plugins: https://revealjs.com/plugins/
+		plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+	});
+</script>
+</body>
+</html>
