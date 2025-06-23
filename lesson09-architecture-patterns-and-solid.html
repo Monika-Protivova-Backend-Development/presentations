@@ -1039,6 +1039,213 @@
 		</section>
 		<section>
 			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Functional Programming</h2>
+				<em>Bonus</em>
+			</section>
+			<section>
+				<h3>Functional Programming</h3>
+				<div class="summary">
+					So far, we have been using mostly <strong>imperative programming</strong> style.
+					<br />
+					There is another programming paradigm called <strong>functional programming</strong>.
+				</div>
+				<div class="content">
+					<p>
+						The <strong class="highlight">imperative programing</strong> style is characterized by explicit statements that change a program's state.
+					</p>
+					<p>
+						<strong class="highlight">Functional programming</strong> is a programming paradigm where programs are constructed by applying and composing functions.
+						It emphasizes the use of <strong>pure functions</strong> that avoid changing state and mutable data.
+					</p>
+					<p>
+						<strong class="highlight">Pure function</strong> is a function where the return value is only determined by its input values, without observable <strong>side effects</strong>.
+					</p>
+					<p>
+						<strong class="highlight">Side effects</strong> are changes in the state of the program that are observable outside the called function other than the return value.
+					</p>
+					<p>
+						Kotlin has by design very good support for functional programming,
+						and we have already seen some examples of it.
+					</p>
+				</div>
+			</section>
+			<section>
+				<h3>Principles of functional programming</h3>
+				<div class="content">
+					<ul>
+						<li>
+							<strong>Immutability</strong>
+							<ul>
+								<li>Once an object is created, it cannot be changed.</li>
+								<li>Instead of changing the object, a new object is created with the new value.</li>
+							</ul>
+						</li>
+						<li>
+							<strong>Pure functions</strong>
+							<ul>
+								<li>Functions that always return the same result for the same input.</li>
+								<li>They do not produce or rely on side effects.</li>
+							</ul>
+						</li>
+						<li>
+							<strong>First-class functions</strong>
+							<ul>
+								<li>Functions are treated as first-class citizens, meaning they can be passed as arguments to other functions, returned as values from other functions, and assigned to variables.</li>
+							</ul>
+						</li>
+						<li>
+							<strong>Higher-order functions</strong>
+							<ul>
+								<li>Functions that take other functions as arguments or return them as results.</li>
+							</ul>
+						</li>
+						<li>
+							<strong>Referential transparency</strong>
+							<ul>
+								<li>It means that a function will always return the same result for the same input.</li>
+								<li>This means that the function call can be replaced with its corresponding value without changing the program’s behavior.</li>
+
+							</ul>
+						</li>
+						<li>
+							There may be other principles mentioned such as <strong>Recursion</strong> or <strong>Functional composition</strong>
+						</li>
+					</ul>
+					<blockquote>
+						Programming in a functional style is not about using functions, but about using functions as the primary building blocks of your program.
+					</blockquote>
+				</div>
+			</section>
+			<section>
+				<h3>Functional Programming</h3>
+				<div class="summary">
+					Example of a pure function and a function with side effects.
+				</div>
+				<div class="content">
+					<p>
+						Function with side effects:
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							var counter = 0
+
+							fun unPureFunction(increment: Int): Int {
+								return counter += increment
+							}
+						</code>
+					</pre>
+					<p>
+						Pure function:
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							fun pureFunction(counter: Int, increment: Int): Int {
+								return counter + increment
+							}
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>Function as an argument</h3>
+				<div class="summary">
+					You can pass a function as an argument to another function.
+				</div>
+				<div class="content">
+					<p>
+						Here is an example of a function that takes a function with a single parameter and returns an integer.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							fun execute(input: String, function: (String) -> Int): Int {
+								return function(input)
+							}
+						</code>
+					</pre>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val result = execute("Hello Function!") { input ->
+								println("Got input: $input")
+								input.length
+							}
+
+							println(result)
+						</code>
+					</pre>
+					<p>
+						Here is an example of a function that takes a function with two parameters and returns a boolean.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							fun execute(input1: String, input2: Double, function: (String, Double) -> Boolean): Boolean {
+								return function(input1, input2)
+							}
+						</code>
+					</pre>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							val result2 = execute("12.34", 12.34) { p1, p2 ->
+								p1.toDouble() == p2
+							}
+
+							println(result2)
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>Benefits of functional programming</h3>
+				<div class="content">
+					<ul>
+						<li>
+							<strong class="highlight">No side effects</strong>
+							<ul>
+								<li>
+									Pure functions do not change the state of the program,
+									and do not rely on external state, making them easier to reason about.
+								</li>
+								<li>
+									Side effects are source of many bugs in imperative programming.
+								</li>
+							</ul>
+						</li>
+						<li>
+							<strong class="highlight">Code reusability</strong>
+							<ul>
+								<li>Functions can be reused in different contexts.</li>
+								<li>Higher-order functions allow for more flexible and reusable code.</li>
+							</ul>
+						</li>
+						<li>
+							<strong class="highlight">Improved readability</strong>
+							<ul>
+								<li>Code is often more concise and easier to understand.</li>
+								<li>Functions can be composed to create more complex behavior.</li>
+							</ul>
+						</li>
+						<li>
+							<strong class="highlight">Easier testing</strong>
+							<ul>
+								<li>Pure functions are easier to test because they do not rely on external state.</li>
+								<li>Referential transparency allows for easier reasoning about code behavior.</li>
+							</ul>
+						</li>
+						<li>
+							<strong class="highlight">Concurrency support</strong>
+							<ul>
+								<li>Immutability and pure functions make it easier to write concurrent code without worrying about shared state.</li>
+							</ul>
+						</li>
+					</ul>
+					<blockquote>
+						Functional programming and object-oriented programming are not mutually exclusive.
+						They can be used together to create more powerful and flexible code.
+					</blockquote>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
 				<h2>Generics</h2>
 				<em>Bonus</em>
 			</section>
@@ -1264,213 +1471,6 @@
 							</pre>
 						</div>
 					</div>
-				</div>
-			</section>
-		</section>
-		<section>
-			<section data-background-gradient="var(--kotlin-gradient)">
-				<h2>Functional Programming</h2>
-				<em>Bonus</em>
-			</section>
-			<section>
-				<h3>Functional Programming</h3>
-				<div class="summary">
-					So far, we have been using mostly <strong>imperative programming</strong> style.
-					<br />
-					There is another programming paradigm called <strong>functional programming</strong>.
-				</div>
-				<div class="content">
-					<p>
-						The <strong class="highlight">imperative programing</strong> style is characterized by explicit statements that change a program's state.
-					</p>
-					<p>
-						<strong class="highlight">Functional programming</strong> is a programming paradigm where programs are constructed by applying and composing functions.
-						It emphasizes the use of <strong>pure functions</strong> that avoid changing state and mutable data.
-					</p>
-					<p>
-						<strong class="highlight">Pure function</strong> is a function where the return value is only determined by its input values, without observable <strong>side effects</strong>.
-					</p>
-					<p>
-						<strong class="highlight">Side effects</strong> are changes in the state of the program that are observable outside the called function other than the return value.
-					</p>
-					<p>
-						Kotlin has by design very good support for functional programming,
-						and we have already seen some examples of it.
-					</p>
-				</div>
-			</section>
-			<section>
-				<h3>Principles of functional programming</h3>
-				<div class="content">
-					<ul>
-						<li>
-							<strong>Immutability</strong>
-							<ul>
-								<li>Once an object is created, it cannot be changed.</li>
-								<li>Instead of changing the object, a new object is created with the new value.</li>
-							</ul>
-						</li>
-						<li>
-							<strong>Pure functions</strong>
-							<ul>
-								<li>Functions that always return the same result for the same input.</li>
-								<li>They do not produce or rely on side effects.</li>
-							</ul>
-						</li>
-						<li>
-							<strong>First-class functions</strong>
-							<ul>
-								<li>Functions are treated as first-class citizens, meaning they can be passed as arguments to other functions, returned as values from other functions, and assigned to variables.</li>
-							</ul>
-						</li>
-						<li>
-							<strong>Higher-order functions</strong>
-							<ul>
-								<li>Functions that take other functions as arguments or return them as results.</li>
-							</ul>
-						</li>
-						<li>
-							<strong>Referential transparency</strong>
-							<ul>
-								<li>It means that a function will always return the same result for the same input.</li>
-								<li>This means that the function call can be replaced with its corresponding value without changing the program’s behavior.</li>
-
-							</ul>
-						</li>
-						<li>
-							There may be other principles mentioned such as <strong>Recursion</strong> or <strong>Functional composition</strong>
-						</li>
-					</ul>
-					<blockquote>
-						Programming in a functional style is not about using functions, but about using functions as the primary building blocks of your program.
-					</blockquote>
-				</div>
-			</section>
-			<section>
-				<h3>Functional Programming</h3>
-				<div class="summary">
-					Example of a pure function and a function with side effects.
-				</div>
-				<div class="content">
-					<p>
-						Function with side effects:
-					</p>
-					<pre>
-						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
-							var counter = 0
-
-							fun unPureFunction(increment: Int): Int {
-								return counter += increment
-							}
-						</code>
-					</pre>
-					<p>
-						Pure function:
-					</p>
-					<pre>
-						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
-							fun pureFunction(counter: Int, increment: Int): Int {
-								return counter + increment
-							}
-						</code>
-					</pre>
-				</div>
-			</section>
-			<section>
-				<h3>Function as an argument</h3>
-				<div class="summary">
-					You can pass a function as an argument to another function.
-				</div>
-				<div class="content">
-					<p>
-						Here is an example of a function that takes a function with a single parameter and returns an integer.
-					</p>
-					<pre>
-						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
-							fun execute(input: String, function: (String) -> Int): Int {
-								return function(input)
-							}
-						</code>
-					</pre>
-					<pre>
-						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
-							val result = execute("Hello Function!") { input ->
-								println("Got input: $input")
-								input.length
-							}
-
-							println(result)
-						</code>
-					</pre>
-					<p>
-						Here is an example of a function that takes a function with two parameters and returns a boolean.
-					</p>
-					<pre>
-						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
-							fun execute(input1: String, input2: Double, function: (String, Double) -> Boolean): Boolean {
-								return function(input1, input2)
-							}
-						</code>
-					</pre>
-					<pre>
-						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
-							val result2 = execute("12.34", 12.34) { p1, p2 ->
-								p1.toDouble() == p2
-							}
-
-							println(result2)
-						</code>
-					</pre>
-				</div>
-			</section>
-			<section>
-				<h3>Benefits of functional programming</h3>
-				<div class="content">
-					<ul>
-						<li>
-							<strong class="highlight">No side effects</strong>
-							<ul>
-								<li>
-									Pure functions do not change the state of the program,
-									and do not rely on external state, making them easier to reason about.
-								</li>
-								<li>
-									Side effects are source of many bugs in imperative programming.
-								</li>
-							</ul>
-						</li>
-						<li>
-							<strong class="highlight">Code reusability</strong>
-							<ul>
-								<li>Functions can be reused in different contexts.</li>
-								<li>Higher-order functions allow for more flexible and reusable code.</li>
-							</ul>
-						</li>
-						<li>
-							<strong class="highlight">Improved readability</strong>
-							<ul>
-								<li>Code is often more concise and easier to understand.</li>
-								<li>Functions can be composed to create more complex behavior.</li>
-							</ul>
-						</li>
-						<li>
-							<strong class="highlight">Easier testing</strong>
-							<ul>
-								<li>Pure functions are easier to test because they do not rely on external state.</li>
-								<li>Referential transparency allows for easier reasoning about code behavior.</li>
-							</ul>
-						</li>
-						<li>
-							<strong class="highlight">Concurrency support</strong>
-							<ul>
-								<li>Immutability and pure functions make it easier to write concurrent code without worrying about shared state.</li>
-							</ul>
-						</li>
-					</ul>
-					<blockquote>
-						Functional programming and object-oriented programming are not mutually exclusive.
-						They can be used together to create more powerful and flexible code.
-					</blockquote>
 				</div>
 			</section>
 		</section>
