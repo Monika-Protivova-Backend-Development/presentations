@@ -8,30 +8,829 @@
 
 	<link rel="stylesheet" href="./src/dist/reset.css">
 	<link rel="stylesheet" href="./src/dist/reveal.css">
-	<link rel="stylesheet" href="./src/dist/theme/dracula.css">
+	<link rel="stylesheet" href="./src/dist/theme/kotlin.css">
 
 	<!-- Theme used for syntax highlighted code -->
-	<link rel="stylesheet" href="./src/plugin/highlight/monokai.css">
+	<link rel="stylesheet" href="./src/plugin/highlight/vs.css">
 </head>
 <body>
 <div class="reveal">
 	<div class="slides">
 		<section data-background-gradient="var(--kotlin-gradient)">
 			<i>Week 3 | Lesson 11</i>
-			<h1>Validation, Exceptions and Robustness</h1>
-			<em>TODO</em>
+			<h1>Handling Errors</h1>
+			<em>Exceptions</em><br />
+			<em>Validations</em><br />
+			<em>Robustness</em><br />
 		</section>
 		<section>
 			<section data-background-gradient="var(--kotlin-gradient)">
-				<h2>TODO</h2>
+				<h2>Exceptions</h2>
+				<em>and error handling</em>
 			</section>
 			<section>
-				<h3>TODO</h3>
+				<h3>What is an Exception</h3>
 				<div class="summary">
-					TODO
+					Exceptions are events that disrupt the normal flow of program execution.
 				</div>
 				<div class="content">
-					TODO
+					<ul>
+						<li>
+							They can arise due to various types of errors such as IO errors, arithmetic errors, null pointer access, etc.
+						</li>
+						<li>
+							Exception is just another type of Kotlin object:
+							<ul>
+								<li>Exception is an instance of a <code class="inline">Exception</code> class or one of its <strong>subclasses</strong>.</li>
+								<li>There are several subclasses of Exception provided in Kotlin by default, but we can create our own by extending these superclases.</li>
+								<li>There are two types of exceptions: <strong>Checked</strong> or <strong>Unchecked</strong></li>
+							</ul>
+						</li>
+						<li>
+							The Exception object usually carries information about the error that occurred.
+						</li>
+						<li>
+							Exception handling allows us to control the program flow and prevent the program from terminating abruptly, which leads to a more robust and fault-tolerant software.
+						</li>
+					</ul>
+				</div>
+			</section>
+
+			<section>
+				<h3>Checked Exceptions</h3>
+				<div class="summary">
+					These are exceptional conditions that a well-written application should anticipate and recover from.
+				</div>
+				<div class="content">
+					<p>
+						Checked exceptions are the classes that extend Throwable class except RuntimeException and Error.
+					</p>
+					<p>
+						Checked exceptions are checked at compile-time.
+						The compiler forces the programmer to catch these exceptions, i.e., the programmer needs to provide an exception handling mechanism through a try-catch block or throws keyword for checked exceptions.
+						If not, the code will not compile.
+					</p>
+					<p>
+						For example, <code class="inline">FileNotFoundException</code> will be thrown when a file that needs to be opened cannot be found.
+					</p>
+				</div>
+			</section>
+
+			<section>
+				<h3>Unchecked Exceptions</h3>
+				<div class="summary">
+					These represent defects in the program (bugs), often invalid arguments passed to a non-private method.
+				</div>
+				<div class="content">
+					<p>
+						Unchecked exceptions are the classes that extend RuntimeException class and the Error class.
+					</p>
+					<p>
+						Unchecked exceptions are not checked at compile-time, but at runtime.
+					</p>
+					<p>
+						Examples are <code class="inline">ArrayIndexOutOfBoundsException</code>, <code class="inline">NullPointerException</code>, <code class="inline">ArithmeticException</code>, <code class="inline">NumberFormatException</code> etc.
+					</p>
+				</div>
+			</section>
+
+			<section>
+				<h3>Handling exceptions</h3>
+				<div class="summary">
+					Kotlin provides a standard mechanisms to handle exceptions using <code><strong>try</strong></code>, <code><strong>catch</strong></code>, <code><strong>finally</strong></code> blocks.
+				</div>
+				<div class="content">
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							try {
+								// code that might throw an exception
+							} catch (ex: ExceptionType) {
+								// code to handle the exception
+							} finally {
+								// code that will execute irrespective of an exception occurred or not
+							}
+						</code>
+					</pre>
+					<ul>
+						<li>
+							The <code class="inline">try</code> block contains the code that <strong>might</strong> throw an exception.
+						</li>
+						<li>
+							The <code class="inline">catch</code> block contains the code that is executed when an exception of <strong>given type</strong> occurs in the try block.
+						</li>
+						<li>
+							The <code class="inline">finally</code> block contains the code that is always executed, regardless of whether an exception occurs or not.
+						</li>
+					</ul>
+				</div>
+			</section>
+			<section>
+				<h3>Throwing exceptions</h3>
+				<div class="summary">
+					"Throwing an exception" refers to the process of creating an instance of an Exception (or its subclass) and handing it off to the runtime system to handle.
+				</div>
+				<div class="content">
+					<p>
+						It's a way of signaling that a method cannot complete its normal computation due to some kind of exceptional condition.
+					</p>
+					<p>
+						There are two keywords associated with throwing exceptions:
+					</p>
+					<ul>
+						<li>
+							The <code class="inline">throw</code> keyword is used to "emit" an exception from any block of code.
+							We can throw either checked or unchecked exceptions.
+						</li>
+						<li>
+							If you want to declare that a method may throw an exception,
+							you can use the <code class="inline">@Throws</code> annotation.
+						</li>
+						<li>
+							Declaring that a method throws an exception is a way of signaling to the caller that the method may not complete normally, so that the caller can handle it.
+						</li>
+					</ul>
+				</div>
+			</section>
+			<section>
+				<h3>Throwing and handling exceptions</h3>
+				<div class="content">
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							fun main() {
+								val car = Car(3)
+
+								try {
+									car.drive(4)
+								} catch (e: NoFuelException) { // compiler will force catch block here
+									println(e.message)
+									// somehow handle car out of fuel situation
+								}
+							}
+						</code>
+					</pre>
+					<table style="width: 100%">
+						<tbody>
+						<tr>
+							<td>
+								Class that throws exception
+								<pre>
+									<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+										 class Car(private var fuelKm: Int) {
+
+											@Throws(NoFuelException::class)
+											fun drive(driveKm: Int) {
+												var driveKm = driveKm
+												while (driveKm > 0) {
+													if (fuelKm <= 0) {
+														// exception in thrown on car out of fuel event
+														throw NoFuelException()
+													} else {
+														println("drove 1 km")
+														fuelKm--
+														driveKm--
+													}
+												}
+											}
+										}
+									</code>
+								</pre>
+							</td>
+							<td>
+								NoFuelException exception definition
+								<pre>
+									<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+										class NoFuelException : Throwable("The car is out of fuel!")
+									</code>
+								</pre>
+								<p>
+									Running this code will print
+								<pre>
+									<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+										drove 1 km
+										drove 1 km
+										drove 1 km
+										The car is out of fuel!
+									</code>
+								</pre>
+							</td>
+						</tr>
+						</tbody>
+					</table>
+				</div>
+			</section>
+			<section>
+				<h3>Throwing and handling exceptions</h3>
+				<div class="content">
+					In this example we try to divide number by 0, which is illegal.
+					The compiler will let us compile this code, because there is no checked exception.
+					When executed, the program will end with:
+					<br />
+					<br />
+					<code class="inline">Exception in thread "main" java.lang.ArithmeticException: / by zero</code>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							fun main() {
+								int number = 100 / 0; // will end with "Exception in thread "main" java.lang.ArithmeticException: / by zero"
+							}
+						</code>
+					</pre>
+					<p>
+						However, we can still handle the unchecked exception too, we are just not warned by the compiler.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							fun main() {
+								val dividend = 100
+								val divisor = 0
+
+								try {
+									val quotient = dividend / divisor
+								} catch (e: Exception) {
+									println(e.message)
+								}
+							}
+						</code>
+					</pre>
+				</div>
+			</section>
+				<section>
+					<h3>Common Exceptions</h3>
+					<div class="summary">
+						Java and Kotlin provide a rich set of built-in exceptions that can be used to handle common error conditions.
+					</div>
+					<div class="content" style="font-size: 60%">
+						<ul>
+							<li>
+								<strong class="highlight">NullPointerException</strong><br />
+								Thrown when an application attempts to use <code class="inline">null</code> in a case where an object is required.
+								<br />
+								<br />
+							</li>
+							<li>
+								<strong class="highlight">IllegalArgumentException</strong><br />
+								Thrown to indicate that a method has been passed an illegal or inappropriate argument.
+								<br />
+								<br />
+							</li>
+							<li>
+								<strong class="highlight">IllegalStateException</strong><br />
+								Thrown to indicate that program reached an illegal state,
+								such as illegal combination of parameters or illegal sequence of method calls.
+								<br />
+								<br />
+							</li>
+							<li>
+								<strong class="highlight">IndexOutOfBoundsException</strong><br />
+								Thrown to indicate that an index of some sort (such as an array or string) is out of range.
+								<br />
+								<br />
+							</li>
+							<li>
+								<strong class="highlight">NumberFormatException</strong><br />
+								Thrown when an attempt is made to convert a string to a numeric type, but the string does not have the appropriate format.
+								<br />
+								<br />
+							</li>
+							<li>
+								<strong class="highlight">FileNotFoundException</strong><br />
+								Thrown when an attempt to open the file denoted by a specified pathname has failed.
+								<br />
+								<br />
+							</li>
+							<li>
+								<strong class="highlight">IOException</strong><br />
+								Thrown when an I/O operation fails or is interrupted.
+								<br />
+								<br />
+							</li>
+							<li>
+								<strong class="highlight">SQLException</strong><br />
+								Thrown when an error occurs while accessing a database.
+								<br />
+								<br />
+							</li>
+						</ul>
+					</div>
+				</section>
+			<section>
+				<h3>Exercise</h3>
+				<div class="content exercise-formatting">
+					<p>
+						Create a class <strong>OutOfFuelException</strong> that extends <strong>Throwable</strong> and sets the message to <code class="inline">"Car is out of fuel."</code>
+					</p>
+					<p>
+						Create a class <strong>Car</strong> with the following properties and methods:
+					</p>
+					<ul>
+						<li><code class="inline">private var fuelKm: Int</code></li>
+						<li><code class="inline">fun drive(distance: Int)</code> that will check if car has enough fuel to drive the distance and reduce the fuelKm by the distance</li>
+					</ul>
+					<p>
+						Create an instance of the <strong>Car</strong> class and test the drive method with a distance that is greater than the fuelKm.
+					</p>
+					<p>
+						Use a <code class="inline">try-catch-finally</code> block to catch the <strong>OutOfFuelException</strong> and print the message.
+					</p>
+					<p>
+						Add another catch block to catch any other Exception and print the message.
+					</p>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Kotlin Validation</h2>
+			</section>
+			<section>
+				<h3>Kotlin Validation</h3>
+				<div class="summary">
+					Kotlin provides a way to validate data using the <code class="inline">require</code> and <code class="inline">check</code> functions.
+				</div>
+				<div class="content">
+					<p>
+						These functions are a convenient way to throw exceptions when a condition is not met.
+					</p>
+					<div class="row">
+						<div class="column">
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									val condition = a > b
+
+									check(condition) { "Condition not met!" }
+								</code>
+							</pre>
+						</div>
+						<div class="column">
+							<ul>
+								<li>
+									Validates that a condition is true.
+								</li>
+								<li>
+									If the condition is false, throws an <code class="inline">IllegalStateException</code>.
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="row">
+						<div class="column">
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									val condition = a > b
+
+									require(condition) { "Condition not met!" }
+								</code>
+							</pre>
+						</div>
+						<div class="column">
+							<ul>
+								<li>
+									Validates that a condition is true.
+								</li>
+								<li>
+									If the condition is false, throws an <code class="inline">IllegalArgumentException</code>.
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="row">
+						<div class="column">
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+									val nullableValue: String? = null
+
+									requireNotNull(nullableValue) { "Value must not be null!" }
+								</code>
+							</pre>
+						</div>
+						<div class="column">
+							<ul>
+								<li>
+									Validates that a value is not null.
+								</li>
+								<li>
+									If the value is null, throws an <code class="inline">IllegalArgumentException</code>.
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section>
+				<h3>Usage Examples</h3>
+				<div class="content">
+					<p>
+						These functions are often used to validate input parameters, state of an object, or any other condition that must be true for the program to continue executing.
+					</p>
+					<p>
+						For example, you can use <code class="inline">require</code> to validate that a list is not empty:
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							fun processOrder(items: List&lt;MenuItem&gt;) {
+								require(items.isNotEmpty()) { "Order must not be empty!" }
+								// Order processing logic ...
+							}
+						</code>
+					</pre>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							@Serializable
+							data class OrderRequest(
+								val items: List&lt;OrderItemRequest&gt;
+							) {
+								init {
+									require(items.isNotEmpty()) { "Order must not be empty!" }
+								}
+							}
+						</code>
+					</pre>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Application Errors</h2>
+			</section>
+			<section>
+				<h3>General Concepts</h3>
+				<div class="summary">
+					Applications can encounter various types of errors during their execution.
+					These errors can be due to user input, system state, or business logic violations.
+				</div>
+				<div class="content">
+					<p>
+						So far, we have not paid great attention to the errors that can occur in our applications.
+					</p>
+					<p>
+						We know how to respond with different HTTP status codes base on expected service retuned values,
+						but we didn't deal with error states that can occur in our applications.
+					</p>
+					<p>
+						Under normal operation, most application calls will not result in an exception.
+						But there are valid reasons why an exception might be thrown.
+					</p>
+					<ul>
+						<li>
+							<strong class="highlight">Input validation</strong><br />
+							For example, we may want to validate user inputs, such as valid JSON request body, or valid query parameter values.
+							Example: non empty list, string, valid email address, etc.
+						</li>
+						<li>
+							<strong class="highlight">State validation</strong><br />
+							For example, we may want to validate the state of the application, such as whether a user is logged in, or whether a resource exists.
+						</li>
+						<li>
+							<strong class="highlight">Business logic validation</strong><br />
+							For example, we may want to validate the business logic of the application, such as whether a user has permission to perform an action, or whether a resource is available.
+						</li>
+					</ul>
+				</div>
+			</section>
+			<section>
+				<h3>Defining Exceptions</h3>
+				<div class="summary">
+					It is often a good idea to define custom exceptions for specific error conditions in your application.
+				</div>
+				<div class="content">
+					<p>
+						Defining custom exceptions allows you to provide more meaningful error messages and handle specific error conditions in a more granular way.
+						It also allows you to treat same class of errors consistently across your application.
+					</p>
+					<p>Here are few examples of programmer-defined exceptions:</p>
+					<ul>
+						<li>
+							<code class="inline">InvalidCredentialsException</code><br />
+							Thrown when a user fails to authenticate.
+							<br />
+							<br />
+						</li>
+						<li>
+							<code class="inline">UnauthorizedAccessException</code><br />
+							Thrown when a user is not authorized to perform an action.
+							<br />
+							<br />
+						</li>
+						<li>
+							<code class="inline">ResourceNotFoundException</code><br />
+							Thrown when a requested resource is not found.
+							<br />
+							<br />
+						</li>
+						<li>
+							<code class="inline">InvalidInputException</code><br />
+							Thrown when the input provided by the user is invalid.
+							<br />
+							<br />
+						</li>
+						<li>
+							<code class="inline">ConflictException</code><br />
+							Thrown when the action would result in a conflict (duplicate).
+							<br />
+							<br />
+						</li>
+					</ul>
+				</div>
+			</section>
+			<section>
+				<h3>Handling Exceptions</h3>
+				<div class="summary">
+					Handling exceptions individually is possible but impractical.
+					Application frameworks usually provide a way to handle exceptions globally.
+
+				</div>
+				<div class="content">
+					<p>
+						It is also a good idea to provide error responses in a standard format with a meaningful error message and maybe some additional information to help trace the error.
+					</p>
+					<p>
+						At the same time, it also a good idea to log all error messages in the application logs.
+					</p>
+					<p>
+						This can be later used to tie client errors to server logs.
+					</p>
+					<p>
+						<strong class="highlight">Ktor</strong> allows us to use a <strong class="highlight">StatusPages</strong> plugin to handle exceptions globally.
+					</p>
+				</div>
+			</section>
+			<section>
+				<h3>Using global error handling</h3>
+				<div class="summary">
+					In Ktor
+				</div>
+				<div class="content">
+					<p>
+						To enable global error handling in Ktor, we can use the <code class="inline">StatusPages</code> plugin.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							install(StatusPages) {
+
+								exception&lt;BadRequestException&gt; { call, cause ->
+									call.respond(HttpStatusCode.BadRequest, mapOf("error" to cause.message))
+								}
+
+								exception&lt;NotFoundException&gt; { call, cause ->
+									call.respond(HttpStatusCode.NotFound, mapOf("error" to cause.message))
+								}
+
+								exception&lt;Throwable&gt; { call, cause ->
+									call.respond(HttpStatusCode.InternalServerError, mapOf("error" to "Something went wrong"))
+								}
+
+							}
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>Application error handling example</h3>
+				<div class="content">
+					<p>
+						I have defined a few custom exceptions to handle common error conditions in my application.
+						They all extend <code class="inline">ApplicationException</code> class, because I want all
+						of them to contain a <code class="inline">traceId</code> and <code class="inline">time</code> properties.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							open class ApplicationException(
+								val applicationMessage: String,
+								val traceId: UUID = UUID.randomUUID(),
+								val time: ZonedDateTime = ZonedDateTime.now(),
+							) : RuntimeException("[$traceId] $applicationMessage")
+
+							class UnauthorizedAccessException(message: String) : ApplicationException(message)
+
+							class InvalidCredentialsException(userName: String) : ApplicationException("Login failed: $userName")
+
+							class ResourceNotFoundException(message: String) : ApplicationException(message)
+						</code>
+					</pre>
+					<p>
+						I have also defined convenience functions to throw these exceptions.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							fun unauthorizedAccess(message: String): Nothing {
+								throw UnauthorizedAccessException(message)
+							}
+
+							fun menuItemNotFound(id: MenuItemId): Nothing {
+								throw ResourceNotFoundException("Menu item with id: $id not found")
+							}
+
+							fun customerNotFound(userId: UserId): Nothing {
+								throw ResourceNotFoundException("User $userId doesn't have a customer account")
+							}
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>Application error handling example</h3>
+				<div class="content">
+					<p>
+						Now I need to configure the <code class="inline">StatusPages</code> plugin to handle these exceptions globally.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							private val logger = KotlinLogging.logger {}
+
+							fun StatusPagesConfig.configure() {
+
+								exception&lt;UnauthorizedAccessException&gt; { call, cause ->
+									logger.error(cause) { cause }
+									call.respond(
+										status = HttpStatusCode.Unauthorized,
+										message = cause.toResponse()
+									)
+								}
+
+								exception&lt;ResourceNotFoundException&gt; { call, cause ->
+									logger.error(cause) { cause }
+									call.respond(
+										status = HttpStatusCode.NotFound,
+										message = cause.toResponse()
+									)
+								}
+
+								// Generic 400 error, we just add some additional information
+								exception&lt;BadRequestException&gt; { call, cause ->
+									logger.error(cause) { cause }
+									call.respond(
+										status = HttpStatusCode.BadRequest,
+										message = ErrorResponse(
+											traceId = UUID.randomUUID(),
+											message = cause.message ?: "Unknown error occurred",
+											time = ZonedDateTime.now()
+										)
+									)
+								}
+
+								// Generic 404 error, we just add some additional information
+								exception&lt;NotFoundException&gt; { call, cause ->
+									logger.error(cause) { cause }
+									call.respond(
+										status = HttpStatusCode.NotFound,
+										message = ErrorResponse(
+											traceId = UUID.randomUUID(),
+											message = cause.message ?: "Unknown error occurred",
+											time = ZonedDateTime.now()
+										)
+									)
+								}
+
+								// Generic 500 error, we just add some additional information
+								exception&lt;Throwable&gt; { call, cause ->
+									logger.error(cause) { cause }
+									call.respond(
+										status = HttpStatusCode.InternalServerError,
+										message = ErrorResponse(
+											traceId = UUID.randomUUID(),
+											message = cause.message ?: "Unknown error occurred",
+											time = ZonedDateTime.now()
+										)
+									)
+								}
+							}
+						</code>
+					</pre>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							install(StatusPages) {
+								configure()
+							}
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<div class="content">
+					<h3>Application error handling example</h3>
+					<p>
+						Because I want application errors to be reported consistently and with enough information to trace the error
+						in application logs, I have defined a common serializable <code class="inline">ErrorResponse</code> data class,
+						and an extension function to convert my custom exceptions to this response object.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							@Serializable
+								data class ErrorResponse(
+								@Contextual
+								val traceId: UUID,
+								val message: String,
+								@Contextual
+								val time: ZonedDateTime,
+							)
+
+							fun ApplicationException.toResponse() = ErrorResponse(
+								traceId = traceId,
+								message = applicationMessage,
+								time = time
+							)
+						</code>
+					</pre>
+				</div>
+			</section>
+			<section>
+				<h3>Application error handling example</h3>
+				<div class="content">
+					<p>
+						In my services, whenever I recognize an error condition, I throw one of the custom exceptions
+						and the <code class="inline">StatusPages</code> plugin will handle it globally.
+					</p>
+					<pre>
+						<code data-trim data-noescape data-line-numbers class="hljs kotlin">
+							private val logger = KotlinLogging.logger {}
+
+							class MenuService(
+								private val menuRepository: MenuRepository
+							) {
+
+								suspend fun getMenuItem(id: MenuItemId): MenuItemResponse {
+									logger.info { "Getting menu item with id: $id" }
+									return menuRepository.selectMenuItemById(id)?.toResponse() ?: menuItemNotFound(id)
+								}
+
+								suspend fun createMenuItem(identity: IdentityDTO, request: MenuItemRequest): MenuItemResponse {
+									logger.info { "Creating menu item: ${request.name} by user: ${identity.userId}" }
+									return when (identity.role) {
+										UserRole.STAFF -> menuRepository.insertMenuItem(request.toDTO()).toResponse()
+										UserRole.CUSTOMER -> unauthorizedAccess("Only admin users can create menu items")
+									}
+								}
+							}
+						</code>
+					</pre>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Developing Resilient Applications</h2>
+			</section>
+			<section>
+				<h3>Developing Resilient Applications</h3>
+				<div class="summary">
+					Building robust backends means expecting failure and responding clearly, consistently, and safely.
+				</div>
+				<div class="content" style="font-size: 70%">
+					<ul>
+						<li>
+							<strong class="highlight">Validate Early</strong><br />
+							Use <code>require</code>, <code>check</code>, and null checks to catch errors before they propagate.
+							<br />
+							<br />
+						</li>
+						<li>
+							<strong class="highlight">Fail Fast, Fail Loud</strong><br />
+							Throw descriptive exceptions when invariants are broken.
+							<br />
+							<br />
+						</li>
+						<li>
+							<strong class="highlight">Define Custom Exceptions</strong><br />
+							Clarify intent and aid in debugging and response formatting.
+							<br />
+							<br />
+						</li>
+						<li>
+							<strong class="highlight">Handle Exceptions Globally</strong><br />
+							Centralize response behavior with <code>StatusPages</code> for consistency.
+							<br />
+							<br />
+						</li>
+						<li>
+							<strong class="highlight">Log Errors with Context</strong><br />
+							Include trace IDs and timestamps to help trace and debug issues.
+							<br />
+							<br />
+						</li>
+						<li>
+							<strong class="highlight">Use Standard Error Responses</strong><br />
+							Clients benefit from consistent, parseable error formats.
+							<br />
+							<br />
+						</li>
+						<li>
+							<strong class="highlight">Test Failure Scenarios</strong><br />
+							Robust apps are not those that never fail, but those that fail gracefully.
+							<br />
+							<br />
+						</li>
+					</ul>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Next Lesson</h2>
+				<em>↓</em>
+			</section>
+			<section>
+				<h3>Next Lesson</h3>
+				<div class="content content-center">
+					Application deployment and observability
 				</div>
 			</section>
 		</section>
