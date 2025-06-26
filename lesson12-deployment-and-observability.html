@@ -682,7 +682,7 @@ jobs:
 							<strong class="highlight">Pass configuration properties as command line arguments.</strong><br />
 							<pre>
 								<code data-trim data-noescape data-line-numbers class="hljs language-shell">
-									./gradlew run --args='-Dktor.deployment.port=8080'
+									./gradlew run --args='-Dktor.deployment.port=8090'
 								</code>
 							</pre>
 						</li>
@@ -690,7 +690,7 @@ jobs:
 							<strong class="highlight">Use environment variables to override specific properties.</strong><br />
 							<pre>
 								<code data-trim data-noescape data-line-numbers class="hljs language-shell">
-									export KTOR_DEPLOYMENT_PORT=8080
+									export KTOR_DEPLOYMENT_PORT=8090
 									./gradlew run
 								</code>
 							</pre>
