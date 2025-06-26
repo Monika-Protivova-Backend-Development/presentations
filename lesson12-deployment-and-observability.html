@@ -666,50 +666,51 @@ jobs:
 					</blockquote>
 				</div>
 			</section>
-			<section>
-				<h3>Ktor Configuration Example</h3>
-				<div class="content">
-					<p>
-						When you build your application, it usually contains <strong class="highlight">non-sensitive</strong> configuration defaults in
-						<code class="inline">src/main/resources/application.yaml</code> or <code class="inline">src/main/resources/application.conf</code>.
-					</p>
-					<p>
-						You will want to override some of these defaults in different environments.
-						You have few options to do this:
-					</p>
-					<ol>
-						<li>
-							<strong class="highlight">Pass configuration properties as command line arguments.</strong><br />
-							<pre>
-								<code data-trim data-noescape data-line-numbers class="hljs language-shell">
-									./gradlew run --args='-Dktor.deployment.port=8090'
-								</code>
-							</pre>
-						</li>
-						<li>
-							<strong class="highlight">Use environment variables to override specific properties.</strong><br />
-							<pre>
-								<code data-trim data-noescape data-line-numbers class="hljs language-shell">
-									export KTOR_DEPLOYMENT_PORT=8090
-									./gradlew run
-								</code>
-							</pre>
-						</li>
-						<li>
-							<strong class="highlight">Use a separate configuration file for each environment</strong><br />
-							<pre>
-								<code data-trim data-noescape data-line-numbers class="hljs language-shell">
-									./gradlew run --args="-config=application-prod.yaml"
-								</code>
-							</pre>
-						</li>
-						<li>
-							<strong class="highlight">Use a configuration server to manage and serve configurations dynamically.</strong><br />
-							This is useful but it a little more complex to set up.
-						</li>
-					</ol>
-				</div>
-			</section>
+<!--			<section>-->
+<!--				<h3>Ktor Configuration Example</h3>-->
+<!--				<div class="content">-->
+<!--					<p>-->
+<!--						When you build your application, it usually contains <strong class="highlight">non-sensitive</strong> configuration defaults in-->
+<!--						<code class="inline">src/main/resources/application.yaml</code> or <code class="inline">src/main/resources/application.conf</code>.-->
+<!--					</p>-->
+<!--					<p>-->
+<!--						You will want to override some of these defaults in different environments.-->
+<!--						You have few options to do this:-->
+<!--					</p>-->
+<!--					<ol>-->
+<!--						<li>-->
+<!--							<strong class="highlight">Pass configuration properties as command line arguments.</strong><br />-->
+<!--							<pre>-->
+<!--								<code data-trim data-noescape data-line-numbers class="hljs language-shell">-->
+<!--									java -Dktor.deployment.port=8090 -jar coffee-shop-application.jar-->
+<!--								</code>-->
+<!--							</pre>-->
+<!--						</li>-->
+<!--						<li>-->
+<!--							<strong class="highlight">Use environment variables to override specific properties.</strong><br />-->
+<!--							<pre>-->
+<!--								<code data-trim data-noescape data-line-numbers class="hljs language-shell">-->
+<!--									export KTOR_DEPLOYMENT_PORT=8090-->
+
+<!--									java -jar coffee-shop-application.jar-->
+<!--								</code>-->
+<!--							</pre>-->
+<!--						</li>-->
+<!--						<li>-->
+<!--							<strong class="highlight">Use a separate configuration file for each environment</strong><br />-->
+<!--							<pre>-->
+<!--								<code data-trim data-noescape data-line-numbers class="hljs language-shell">-->
+<!--									./gradlew run &#45;&#45;args="-config=application-prod.yaml"-->
+<!--								</code>-->
+<!--							</pre>-->
+<!--						</li>-->
+<!--						<li>-->
+<!--							<strong class="highlight">Use a configuration server to manage and serve configurations dynamically.</strong><br />-->
+<!--							This is useful but it a little more complex to set up.-->
+<!--						</li>-->
+<!--					</ol>-->
+<!--				</div>-->
+<!--			</section>-->
 		</section>
 		<section>
 			<section data-background-gradient="var(--kotlin-gradient)">
