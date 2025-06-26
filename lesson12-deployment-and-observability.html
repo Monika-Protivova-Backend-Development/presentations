@@ -18,20 +18,818 @@
 	<div class="slides">
 		<section data-background-gradient="var(--kotlin-gradient)">
 			<i>Week 3 | Lesson 12</i>
-			<h1>Deployment and Observability</h1>
-			<em>TODO</em><br />
+			<h1>Production</h1>
+			<em>Deployment</em><br />
+			<em>Configuration and Secrets</em><br />
+			<em>Observability</em><br />
+			<em>Monitoring</em><br />
 		</section>
 		<section>
 			<section data-background-gradient="var(--kotlin-gradient)">
-				<h2>TODO</h2>
+				<h2>Application Lifecycle</h2>
 			</section>
 			<section>
-				<h3>TODO</h3>
+				<h3>Application Lifecycle</h3>
 				<div class="summary">
-					TODO
+					Develop → Build → Package → Deploy → Run → Maintain → (back to Develop)
 				</div>
 				<div class="content">
-					TODO
+					<ol>
+						<li>
+							<strong class="highlight">Development</strong>
+<!--							<em>-->
+<!--								💡 You write code, but also think about: How will this work in production?-->
+<!--							</em>-->
+							<ul>
+								<li>Code is written and tested locally, focussing on features, correctness, and unit testing.</li>
+								<li>This phase involves development tools such as IDEs (like IntelliJ), local databases, and mocks.</li>
+							</ul>
+						</li>
+						<li>
+							<strong class="highlight">Build, Test, Integration</strong>
+<!--							<em>-->
+<!--								👷 This is where static analysis, linting, and automated tests come in.-->
+<!--							</em>-->
+							<ul>
+								<li>Code is built (compiled) and tests are run (often automated) to ensure the changes don't break existing behavior</li>
+								<li>This usually happens on an integration environment or CI.</li>
+							</ul>
+						</li>
+						<li>
+							<strong class="highlight">Packaging</strong>
+<!--							<em>-->
+<!--								📦 The app must be self-contained, portable, and environment-aware.-->
+<!--							</em>-->
+							<ul>
+								<li>Application is packaged for deployment.</li>
+								<li>Deployment artifacts are created, such as JAR files or Docker images.</li>
+								<li>Configuration is externalized (env vars, files).</li>
+								<li>The app must be self-contained, portable, and environment-aware.</li>
+							</ul>
+						</li>
+						<li>
+							<strong class="highlight">Deployment</strong>
+<!--							<em>🚀 At this stage, your code goes from ready to running.</em>-->
+							<ul>
+								<li>Application is pushed to an environment (dev/staging/prod).</li>
+								<li>This may be manual or automated (CI/CD) and may involve some orchestration (e.g., Kubernetes, Docker Compose).</li>
+							</ul>
+						</li>
+					</ol>
+				</div>
+			</section>
+			<section>
+				<h3>Application Lifecycle</h3>
+				<div class="summary">
+					Develop → Build → Package → Deploy → Run → Maintain → (back to Develop)
+				</div>
+				<div class="content">
+					<ol start="5">
+						<li>
+							<strong class="highlight">Runtime & Operation</strong>
+<!--							<em>-->
+<!--								🔍 This is where SLIs/SLOs, monitoring, and alerting matter.-->
+<!--							</em>-->
+							<ul>
+								<li>App is now serving users in production.</li>
+								<li>Needs to be observable (logs, metrics, traces).</li>
+								<li>Must handle failures gracefully.</li>
+							</ul>
+						</li>
+						<li>
+							<strong class="highlight">Maintenance & Evolution</strong>
+<!--							<em>♻️ The lifecycle is cyclical — each change goes through the same phases.</em>-->
+							<ul>
+								<li>Bugs are fixed, features are added.</li>
+								<li>Technical debt may be addressed.</li>
+								<li>App may be refactored or deprecated.</li>
+							</ul>
+						</li>
+					</ol>
+					<blockquote>
+						The lifecycle is cyclical — each change goes through the same phases.
+					</blockquote>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Development, Build, and Packaging</h2>
+			</section>
+			<section>
+				<h3>Development</h3>
+				<div class="summary">
+					Kotlin development typically uses Gradle for builds and IntelliJ for local development.
+				</div>
+				<div class="content">
+					<p><strong>Tools & Practices:</strong></p>
+					<ul>
+						<li>Use <strong>IntelliJ IDEA</strong> with Kotlin support.</li>
+						<li>Build system: <strong>Gradle</strong> (Kotlin DSL preferred).</li>
+						<li>Unit testing with <code>JUnit 5</code> or <code>Kotest</code>.</li>
+						<li>Mocking with <code>MockK</code>.</li>
+						<li>Code formatted with <code>ktlint</code> or <code>detekt</code> for linting.</li>
+					</ul>
+					<p>
+						All logic should be testable independently from infrastructure (e.g., DB, HTTP).
+					</p>
+				</div>
+			</section>
+			<section>
+				<h3>Build</h3>
+				<div class="summary">
+					The build process compiles source code and runs tests.
+				</div>
+				<div class="content">
+					<p><strong>Gradle Tasks:</strong></p>
+					<ul>
+						<li><code>./gradlew build</code> — compiles code and runs tests</li>
+						<li><code>./gradlew test</code> — runs unit tests</li>
+						<li><code>./gradlew check</code> — includes linting/formatting</li>
+					</ul>
+					<p><strong>Dependencies:</strong> Declared in <code>build.gradle.kts</code></p>
+					<pre><code class="language-kotlin">
+dependencies {
+    implementation("io.ktor:ktor-server-core:2.3.0")
+    testImplementation("io.kotest:kotest-runner-junit5:5.5.5")
+}
+		</code></pre>
+					<p>
+						Builds should be automated in CI (e.g. GitHub Actions).
+					</p>
+				</div>
+			</section>
+			<section>
+				<h3>Packaging</h3>
+				<div class="summary">
+					Once built and tested, applications are packaged for deployment.
+				</div>
+				<div class="content">
+					<p><strong>Common Kotlin packaging targets:</strong></p>
+					<ul>
+						<li><code>.jar</code>: Java archive – run with <code>java -jar</code></li>
+						<li><code>.war</code>: Web archive – for servlet containers (less common now)</li>
+						<li><strong>Docker image</strong>: preferred for modern deployments</li>
+					</ul>
+					<p><strong>Example: Dockerfile for a Ktor app</strong></p>
+					<pre><code class="language-dockerfile">
+FROM openjdk:17-jdk-slim
+COPY build/libs/app.jar app.jar
+ENTRYPOINT ["java", "-jar", "/app.jar"]
+					</code></pre>
+					<p>
+						Include configs via <code>ENV</code> or mounted files; secrets should not be baked into the image.
+					</p>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Application Deployment</h2>
+				<em>and Infrastructure</em>
+			</section>
+			<section>
+				<h3>Deployment</h3>
+				<div class="summary">
+					Deployment is the process of making an application available for use on a specific environment.
+				</div>
+				<div class="content">
+					<p>
+						Deployment can include various tasks such as:
+					</p>
+					<ul>
+						<li>
+							Building an application package (jar, Docker image, binary).
+						</li>
+						<li>
+							Configuring the target environment.
+						</li>
+						<li>
+							Copying files to the target environment.
+						</li>
+						<li>
+							Configuring the application for the target environment.
+						</li>
+						<li>
+							Running database migrations.
+						</li>
+						<li>
+							Starting or restarting services, setting up logging, monitoring, and alerting.
+						</li>
+					</ul>
+				</div>
+			</section>
+			<section>
+				<h3>Environments</h3>
+				<div class="summary">
+					Environments are used at distinct stages in the software development lifecycle,
+					each serving a specific purpose.
+				</div>
+				<div class="content">
+					<p>
+						Each environment has its own configuration, data, and access controls to ensure that changes
+						can be tested safely before going live.
+					</p>
+					<p>
+						<strong>
+							However, it is beneficial to keep the environments as similar to production as possible
+							to avoid issues when deploying to production.
+						</strong>
+					</p>
+					<p>Typical environments include:</p>
+					<ul>
+						<li>Local</li>
+						<li>Development / Integration</li>
+						<li>Staging</li>
+						<li>Production</li>
+					</ul>
+				</div>
+			</section>
+			<section>
+				<h3>Environments</h3>
+				<div class="summary">
+					Environments are used at distinct stages in the software development lifecycle.
+				</div>
+				<div class="content" style="font-size: 70%">
+					<h4>Local</h4>
+					<ul>
+						<li>Usually the developer's machine, where they can run and test the application locally.</li>
+						<li>Often uses containerization tools like Docker to ensure consistency across different developer machines.</li>
+						<li>If running everything locally is not possible, and developers may use dedicated cloud resources for development.</li>
+					</ul>
+					<br />
+					<br />
+					<h4>Development</h4>
+					<ul>
+						<li>A shared environment where developers can deploy their changes for testing and integration.</li>
+						<li>It is often used for collaborative development, allowing multiple developers to work on the same codebase.</li>
+						<li>May include automated tests to ensure that changes do not break existing functionality.</li>
+					</ul>
+					<br />
+					<br />
+					<h4>Staging</h4>
+					<ul>
+						<li>A pre-production environment that closely mirrors the production environment.</li>
+						<li>It is used for final testing and validation of the application before it goes live.</li>
+						<li>Staging environments often use production-like data and configurations to ensure that the application behaves as expected in production.</li>
+					</ul>
+					<br />
+					<br />
+					<h4>Production</h4>
+					<ul>
+						<li>The live environment where the application is accessible to end users.</li>
+						<li>It is critical to ensure that the application is stable, secure, and performs well in this environment.</li>
+					</ul>
+				</div>
+			</section>
+			<section>
+				<h3>Infrastructure</h3>
+				<div class="summary">
+					Infrastructure refers to the underlying hardware and software components that support the deployment and operation of applications.
+					<!--					Physical machines, virtual machines, and containers are the three main types of environments used for deployment.-->
+				</div>
+				<div class="content">
+					<p>
+						Infrastructure can be categorized into different types based on how applications are deployed and run.
+					</p>
+					<ul>
+						<li>
+							<strong class="highlight">Physical machines</strong> are dedicated hardware servers that run the application directly on the operating system.
+						</li>
+						<li>
+							<strong class="highlight">Virtual machines (VMs)</strong> are software emulations of physical machines that run on a hypervisor,
+							allowing multiple VMs to run on a single physical server.
+						</li>
+						<li>
+							<strong class="highlight">Containers</strong> are lightweight, portable, and isolated environments that package an application and its dependencies together.
+							They run on a shared operating system kernel, making them more efficient than VMs.
+						</li>
+					</ul>
+					<p>
+						You can also distinguish between <strong class="highlight">self-managed infrastructure</strong> and <strong class="highlight">managed services</strong>.
+					</p>
+					<ul>
+						<li><strong class="highlight">Self-managed infrastructure</strong> requires you to set up and maintain the servers, networking, and storage.</li>
+						<li><strong class="highlight">Managed services</strong> provide a fully managed environment where the provider takes care of the infrastructure.</li>
+					</ul>
+					<blockquote>
+						Different strategies come with a different cost and maintenance overhead.
+					</blockquote>
+				</div>
+			</section>
+			<section>
+				<h3>Platform as Service (PaaS)</h3>
+				<div class="summary">
+					<strong>PaaS</strong> delivers a platform that allows developers to build, run, and manage applications without dealing with infrastructure management.
+				</div>
+				<div class="content">
+					<p>
+						It includes the operating system, programming language runtime, databases, and web servers.
+					</p>
+					<p>
+						<strong>Key Features:</strong>
+					</p>
+					<ul>
+						<li>Users manage: applications and data.</li>
+						<li>Provider manages: runtime, OS, infrastructure.</li>
+						<li>Speeds up development and deployment with built-in tools and integrations.</li>
+					</ul>
+					<p>
+						<strong>Examples:</strong>
+					</p>
+					<p>Heroku, Google App Engine, Microsoft Azure App Services.</p>
+				</div>
+			</section>
+			<section>
+				<h3>Infrastructure as Service</h3>
+				<div class="summary">
+					Infrastructure as a Service (IaaS) is a cloud computing model that provides virtualized computing resources over the internet.
+				</div>
+				<div class="content">
+					<p>It delivers fundamental IT infrastructure—like virtual machines, storage, networks, and operating systems—on a pay-as-you-go basis.</p>
+					<p>
+						<strong>Key Features:</strong>
+					</p>
+					<ul>
+						<li>Users manage: OS, applications, runtime, and data.</li>
+						<li>Provider manages: physical hardware, networking, virtualization.</li>
+						<li>Offers flexibility and control over infrastructure.</li>
+					</ul>
+					<p>
+						<strong>Examples:</strong>
+					</p>
+					<p>
+						Amazon EC2, Microsoft Azure VMs, Google Compute Engine.
+					</p>
+				</div>
+			</section>
+			<section>
+				<h3>Infrastructure as Code</h3>
+				<div class="summary">
+					Infrastructure as Code (IaC) is a practice of managing and provisioning infrastructure using code and automation tools.
+				</div>
+				<div class="content">
+					<p>
+						It utilizes machine-readable definition files, rather than physical hardware configuration or interactive configuration tools.
+					</p>
+					<p>
+						<strong>Key Features:</strong>
+					</p>
+					<ul>
+						<li>Infrastructure is version-controlled, testable, and reproducible.</li>
+						<li>Reduces human error and enables automation and consistency.</li>
+						<li>Often used with tools like Terraform, Ansible, or AWS CloudFormation.</li>
+					</ul>
+					<p>
+						<strong>Example Use:</strong>
+					</p>
+					<p>
+						Defining and deploying cloud infrastructure (like networks, VMs, and services) with code, rather than clicking through a UI or configuring everything manually on servers.
+					</p>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Deployment Strategies</h2>
+			</section>
+			<section>
+				<h3>Blue-Green Deployment</h3>
+				<div class="summary">
+					The Blue-Green strategy involves maintaining two identical production environments,
+					referred to as "blue" and "green".
+				</div>
+				<div class="content">
+					<p>
+						The goal of this strategy is to reduce downtime and risk by running two identical production environments.
+					</p>
+					<ul>
+						<li>One environment (blue) is live production,</li>
+						<li>while the other (green) is idle or used for staging.</li>
+					</ul>
+					<p>
+						When a new version of the application is ready, it is deployed to the idle environment (green).
+					</p>
+					<p>
+						After testing and validation, traffic is switched from the live environment (blue) to the new environment (green).
+					</p>
+					<p>
+						This allows for quick rollback if issues arise, as the previous version is still running in the blue environment.
+					</p>
+					<p>
+						It also allows for (near) zero-downtime deployments, as the switch can be done instantly without affecting users.
+					</p>
+				</div>
+			</section>
+			<section>
+				<h3>Canary Releases</h3>
+				<div class="summary">
+					Canary releases involve deploying a new version of an application to a small subset of users before rolling it out to the entire user base.
+				</div>
+				<div class="content">
+					<p>
+						This approach allows you to test new features or changes in production with reduced risk.
+					</p>
+					<ul>
+						<li>A small portion of traffic is routed to the new version (the "canary").</li>
+						<li>The rest of the traffic continues to use the stable version.</li>
+						<li>If metrics and error rates are acceptable, the new version is gradually rolled out to more users.</li>
+						<li>If issues are detected, the canary can be rolled back quickly without impacting most users.</li>
+					</ul>
+					<p>
+						<b>Used in:</b> systems with real user traffic analysis, automated monitoring and rollback capabilities.
+					</p>
+				</div>
+			</section>
+			<section>
+				<h3>Rolling Updates</h3>
+				<div class="summary">
+					Rolling updates involve gradually updating instances of an application in a production environment.
+				</div>
+				<div class="content">
+					<p>
+						Instead of stopping and replacing all instances at once, rolling updates upgrade one or a few instances at a time.
+					</p>
+					<ul>
+						<li>Minimizes downtime and avoids a full system restart.</li>
+						<li>Each instance is updated and verified before moving to the next.</li>
+						<li>Common in container orchestrators (e.g., Kubernetes), which handle update strategies automatically.</li>
+						<li>Risk is distributed over time; partial rollback may be possible if issues are detected.</li>
+					</ul>
+					<p>
+						<b>Trade-off:</b> More complex monitoring needed to detect errors mid-rollout.
+					</p>
+				</div>
+			</section>
+			<section>
+				<h3>Feature Toggles</h3>
+				<div class="summary">
+					Feature toggles (or feature flags) are a technique that allows developers to enable or disable features in an application without deploying new code.
+				</div>
+				<div class="content">
+					<p>
+						Features can be turned on/off at runtime via configuration, targeting specific users or segments.
+					</p>
+					<ul>
+						<li>Enables safe testing of features in production (with limited exposure).</li>
+						<li>Facilitates A/B testing and gradual feature rollouts.</li>
+						<li>Allows quick disabling of problematic features without rollback.</li>
+						<li>Useful for separating deploy from release (deployment happens first, feature is turned on later).</li>
+					</ul>
+					<p>
+						<b>Tools:</b> LaunchDarkly, Unleash, Flipt, or custom flag systems.
+					</p>
+					<blockquote>
+						"Deploy != Release" — feature toggles help decouple the two.
+					</blockquote>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Deployment Tools</h2>
+			</section>
+			<section>
+				<h3>Deployment Tools</h3>
+				<div class="summary">
+					Deployment tools help automate the process of delivering applications to various environments.
+				</div>
+				<div class="content">
+					<p>
+						They allow consistent, repeatable, and automated deployment workflows, reducing human error and enabling rapid iteration.
+					</p>
+					<p><strong>Common Categories:</strong></p>
+					<ul>
+						<li><strong>Scripted Deployments:</strong> Bash, Gradle, or Kotlin scripts for custom tasks.</li>
+						<li><strong>Container Orchestration:</strong> Kubernetes, Docker Compose.</li>
+						<li><strong>CI/CD Systems:</strong> GitHub Actions, GitLab CI/CD, Jenkins, CircleCI, Travis CI.</li>
+						<li><strong>Cloud Deployment Tools:</strong> AWS CodeDeploy, Google Cloud Deploy, Azure DevOps.</li>
+					</ul>
+					<p>
+						Choosing the right tool depends on your infrastructure, team size, complexity, and need for automation.
+					</p>
+				</div>
+			</section>
+			<section>
+				<h3>CI / CD</h3>
+				<div class="summary">
+					CI/CD stands for Continuous Integration and Continuous Delivery or Deployment.
+				</div>
+				<div class="content">
+					<p><strong>CI (Continuous Integration)</strong>:</p>
+					<ul>
+						<li>Automatically integrates code changes into a shared repository several times a day.</li>
+						<li>Each change triggers a build and a suite of automated tests.</li>
+						<li>Ensures code quality, catches bugs early, and supports team collaboration.</li>
+					</ul>
+					<p><strong>CD (Continuous Delivery/Deployment)</strong>:</p>
+					<ul>
+						<li><em>Continuous Delivery:</em> Automatically prepares every change for release but requires manual approval to deploy to production.</li>
+						<li><em>Continuous Deployment:</em> Automatically releases every passing change to production without manual intervention.</li>
+					</ul>
+					<p>
+						CI/CD encourages small, incremental, and reliable updates, leading to faster feedback and lower risk.
+					</p>
+				</div>
+			</section>
+			<section>
+				<h3>CI/CD Pipelines</h3>
+				<div class="summary">
+					CI/CD pipelines define a series of steps to build, test, and deploy software in an automated fashion.
+				</div>
+				<div class="content">
+					<p><strong>Typical stages of a CI/CD pipeline:</strong></p>
+					<ol>
+						<li><strong>Source:</strong> Code is pushed to the version control system (e.g., GitHub).</li>
+						<li><strong>Build:</strong> Application is compiled and packaged (e.g., Kotlin app → JAR or Docker image).</li>
+						<li><strong>Test:</strong> Unit, integration, and end-to-end tests are executed.</li>
+						<li><strong>Deploy:</strong> Code is deployed to dev/staging/production environments.</li>
+						<li><strong>Notify:</strong> Developers are informed of failures/success via email, Slack, etc.</li>
+					</ol>
+					<p><strong>Example (GitHub Actions):</strong></p>
+					<pre><code class="language-yaml">
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: ./gradlew build
+  </code></pre>
+					<p>
+						Pipelines allow versioned, reproducible automation — making CI/CD predictable and reliable.
+					</p>
+				</div>
+			</section>
+			<section>
+				<h3>GitHub Workflow Example</h3>
+				<div class="content">
+					<pre><code>
+# .github/workflows/ci.yml
+name: Kotlin CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up JDK
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Build with Gradle
+      run: ./gradlew build
+					</code></pre>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Configuration and Secrets</h2>
+			</section>
+			<section>
+				<h3>Configuration and Secrets</h3>
+				<div class="summary">
+					Managing configuration and secrets is one of the 12-Factor App principles.
+				</div>
+				<div class="content">
+					<p>
+						The configuration may contain settings that can change between different environments,
+						but also sensitive information and application secrets.
+					</p>
+					<p>Environment specific configuration:</p>
+					<ul>
+						<li>Application port</li>
+						<li>Database connection strings</li>
+						<li>Application specific settings</li>
+					</ul>
+					<p>Application secrets:</p>
+					<ul>
+						<li>Database credentials</li>
+						<li>API keys for third-party services</li>
+						<li>JWT secrets for signing tokens</li>
+					</ul>
+					<blockquote>
+						Any sensitive information should not be hard-coded in the application code or shipped with the application.
+					</blockquote>
+				</div>
+			</section>
+			<section>
+				<h3>Managing Configurations</h3>
+				<div class="summary">
+					Application configuration should be externalized and environment-specific.
+				</div>
+				<div class="content">
+					<p>
+						Configurations include settings like database URLs, API endpoints, log levels, and feature toggles.
+					</p>
+					<p><strong>Best Practices:</strong></p>
+					<ul>
+						<li>Do not hardcode configurations in code.</li>
+						<li>Use environment variables, config files, or config servers.</li>
+						<li>Use profiles (e.g., dev, staging, prod) to switch configurations easily.</li>
+						<li>Track configuration versions for auditability and rollback.</li>
+					</ul>
+					<p><strong>Tools:</strong> Spring Cloud Config, Consul, Kubernetes ConfigMaps, dotenv libraries.</p>
+				</div>
+			</section>
+			<section>
+				<h3>Managing Secrets</h3>
+				<div class="summary">
+					Secrets like passwords, tokens, and API keys must be stored securely and never hardcoded.
+				</div>
+				<div class="content">
+					<p><strong>Common Secrets:</strong></p>
+					<ul>
+						<li>Database passwords</li>
+						<li>Third-party API keys</li>
+						<li>Encryption keys, JWT signing secrets</li>
+					</ul>
+					<p><strong>Secure Practices:</strong></p>
+					<ul>
+						<li>Use secret management tools instead of config files.</li>
+						<li>Set secrets through environment variables or secret volumes.</li>
+						<li>Rotate secrets periodically and avoid printing them in logs.</li>
+					</ul>
+					<p><strong>Tools:</strong> HashiCorp Vault, AWS Secrets Manager, Azure Key Vault, Kubernetes Secrets.</p>
+					<blockquote>
+						If someone gets access to your secrets, they get access to your systems.
+					</blockquote>
+				</div>
+			</section>
+			<section>
+				<h3>Ktor Configuration Example</h3>
+				<div class="content">
+					<p>
+						When you build your application, it usually contains <strong class="highlight">non-sensitive</strong> configuration defaults in
+						<code class="inline">src/main/resources/application.yaml</code> or <code class="inline">src/main/resources/application.conf</code>.
+					</p>
+					<p>
+						You will want to override some of these defaults in different environments.
+						You have few options to do this:
+					</p>
+					<ol>
+						<li>
+							<strong class="highlight">Pass configuration properties as command line arguments.</strong><br />
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs language-shell">
+									./gradlew run --args='-Dktor.deployment.port=8080'
+								</code>
+							</pre>
+						</li>
+						<li>
+							<strong class="highlight">Use environment variables to override specific properties.</strong><br />
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs language-shell">
+									export KTOR_DEPLOYMENT_PORT=8080
+									./gradlew run
+								</code>
+							</pre>
+						</li>
+						<li>
+							<strong class="highlight">Use a separate configuration file for each environment</strong><br />
+							<pre>
+								<code data-trim data-noescape data-line-numbers class="hljs language-shell">
+									./gradlew run --args="-config=application-prod.yaml"
+								</code>
+							</pre>
+						</li>
+						<li>
+							<strong class="highlight">Use a configuration server to manage and serve configurations dynamically.</strong><br />
+							This is useful but it a little more complex to set up.
+						</li>
+					</ol>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Observability</h2>
+			</section>
+			<section>
+				<h3>Observability</h3>
+				<div class="summary">
+					Observability is the ability to understand what's happening inside your system from the outside.
+				</div>
+				<div class="content">
+					<p>
+						It enables engineers to ask new questions about their system’s behavior without deploying new code.
+					</p>
+					<p><strong>Three Pillars of Observability:</strong></p>
+					<ul>
+						<li><strong>Logs:</strong> Time-stamped, text-based records of events.</li>
+						<li><strong>Metrics:</strong> Numerical measurements over time (e.g. CPU usage, request latency).</li>
+						<li><strong>Traces:</strong> Records of a request's journey through distributed services.</li>
+					</ul>
+					<p>
+						Observability is critical for debugging, understanding performance bottlenecks, and ensuring reliability.
+					</p>
+					<p><strong>Common Tools:</strong> Grafana, Prometheus, ELK Stack (Elasticsearch, Logstash, Kibana), Jaeger, OpenTelemetry.</p>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Health Checks & Monitoring</h2>
+			</section>
+			<section>
+				<h3>Health Checks & Monitoring</h3>
+				<div class="summary">
+					Health checks and monitoring help you detect and respond to problems in production.
+				</div>
+				<div class="content">
+					<p><strong>Health Checks:</strong></p>
+					<ul>
+						<li><strong>Liveness check:</strong> Is the app still running?</li>
+						<li><strong>Readiness check:</strong> Can the app handle traffic?</li>
+						<li>Common in Kubernetes and other orchestrators to manage service lifecycles.</li>
+					</ul>
+					<p><strong>Monitoring:</strong></p>
+					<ul>
+						<li>Continuously collects data on application health and performance.</li>
+						<li>Monitors SLIs (e.g. latency, error rate, uptime) and triggers alerts if thresholds are crossed.</li>
+						<li>Helps operators respond quickly to failures or degradation.</li>
+					</ul>
+					<p><strong>Alerting Tools:</strong> Prometheus + Alertmanager, Datadog, Sentry, Grafana, PagerDuty.</p>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Release</h2>
+			</section>
+			<section>
+				<h3>Release</h3>
+				<div class="summary">
+					Deployment vs. Release: Deployment is about making code available; release is about making features available.
+				</div>
+				<div class="content">
+					<p>
+						<strong>Deployment:</strong> The process of getting code into an environment (e.g. staging, production).
+					</p>
+					<p>
+						<strong>Release:</strong> The moment when a feature becomes visible or usable to users.
+					</p>
+					<ul>
+						<li>Feature may be deployed but disabled via feature toggle.</li>
+						<li>Release can be a business decision — decoupled from technical delivery.</li>
+					</ul>
+					<p>
+						This separation allows for safer deployments, better testing in production, and flexibility in rollout strategies.
+					</p>
+					<blockquote>
+						You can deploy often and release cautiously.
+					</blockquote>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Production-First Mindset</h2>
+			</section>
+			<section>
+				<h3>Production-First Mindset</h3>
+				<div class="summary">
+					Designing with production in mind leads to more resilient and maintainable systems.
+				</div>
+				<div class="content">
+					<p>
+						Instead of treating production as an afterthought, a production-first approach builds with real-world usage in mind.
+					</p>
+					<ul>
+						<li>Plan for observability, deployment, scalability, and failure handling from the start.</li>
+						<li>Use production-like environments during development.</li>
+						<li>Automate everything: testing, builds, deployments, monitoring.</li>
+						<li>Prioritize user impact, uptime, and recovery strategies.</li>
+						<li>Include operational concerns (logging, alerting, maintenance) early in the development process.</li>
+					</ul>
+					<blockquote>
+						“If it doesn’t work in production, it doesn’t work.”
+					</blockquote>
+				</div>
+			</section>
+		</section>
+		<section>
+			<section data-background-gradient="var(--kotlin-gradient)">
+				<h2>Thank You</h2>
+				<em>↓</em>
+			</section>
+			<section>
+				<h3>Thank You for Attention</h3>
+				<div class="content content-center content-100">
+					<p><em>Thank You for attention!</em></p>
+					<p><em>I hope you learned something.</em></p>
+					<p><em>I wish you all the best in your journey!</em></p>
+					<p><em>If you have any questions, feel free to reach out.</em></p>
 				</div>
 			</section>
 		</section>
